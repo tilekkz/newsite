@@ -1,0 +1,55 @@
+/* Small, local movement preserves the selected kitten's identity and silhouette. */
+.cat-bob{position:relative}
+.living-kitten{position:absolute;left:0;top:-8px;width:100%;height:calc(100% + 16px);pointer-events:none;opacity:0;filter:drop-shadow(0 15px 15px #0c03085c)}
+.has-kitten-mesh>#kitten-image{opacity:0}
+.has-kitten-mesh>.living-kitten{opacity:1}
+.kitten-garden{position:absolute;inset:0;pointer-events:none;z-index:0;--look-x:0px;--look-y:0px}
+.kitten-garden *{pointer-events:none}
+.garden-aura{position:absolute;left:50%;top:49%;width:700px;height:600px;transform:translate(-50%,-50%);background:radial-gradient(ellipse,#e4a87618 0%,#b26b7811 36%,transparent 67%);animation:garden-warmth 9s ease-in-out infinite alternate}
+.garden-floor-ring{position:absolute;left:50%;bottom:26px;width:410px;height:68px;border:1px solid #d4a6811b;border-radius:50%;transform:translateX(-50%);box-shadow:0 0 40px #d7879810,inset 0 0 25px #d787980a}
+.garden-floor-ring::before,.garden-floor-ring::after{content:'';position:absolute;inset:7px -28px;border:1px solid #d4a6810e;border-radius:50%;transform:rotate(-5deg)}
+.garden-floor-ring::after{inset:-8px 20px;transform:rotate(4deg)}
+.garden-motes,.garden-petals,.garden-touch-dust{position:absolute;inset:0}
+.garden-motes>i{position:absolute;left:var(--mx);top:var(--my);width:var(--size);height:var(--size);border-radius:50%;background:#ffe2b6;box-shadow:0 0 8px 2px #eabb773b;opacity:.2;animation:garden-firefly var(--duration) var(--delay) ease-in-out infinite}
+.garden-petals{overflow:hidden}
+.garden-petals>i{position:absolute;left:var(--px);top:-22px;width:7px;height:11px;background:radial-gradient(ellipse at 25% 30%,#f0bcbe,#bd778f 65%,#854356);border-radius:70% 10% 65% 30%;opacity:0;animation:garden-petal var(--duration) var(--delay) linear infinite}
+.garden-petals>i:nth-child(3n){width:5px;height:8px;filter:blur(.6px);background:#e2bca6}
+.garden-touch-dust>i{position:absolute;left:0;top:0;width:3px;height:3px;border-radius:50%;background:#ffe4c3;box-shadow:0 0 12px 3px #f4b7bc50}
+.garden-sprig{position:absolute;width:88px;height:210px;bottom:8%;opacity:.37;transform:translate(var(--look-x),var(--look-y)) rotate(-17deg);transform-origin:50% 100%}
+.garden-sprig svg{width:100%;height:100%;stroke:#cbaa8b;stroke-width:.8;stroke-linecap:round}
+.garden-sprig svg path+path{fill:#ae847519}
+.sprig-0{left:18%}.sprig-1{right:17%;transform:translate(calc(var(--look-x)*-1),var(--look-y)) rotate(21deg) scaleX(-1);opacity:.27}
+.garden-rose{position:absolute;left:var(--rx);top:var(--ry);width:var(--rs);aspect-ratio:1;opacity:.65;transform:translate(-50%,-50%) rotate(var(--rr));animation:garden-rose 11s var(--delay) ease-in-out infinite}
+.garden-rose img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 12px #0004)}
+.garden-rose:nth-last-child(-n+2){opacity:.42}
+.garden-charm{position:absolute;top:2%;width:42px;transform-origin:50% 0;animation:garden-charm 8s ease-in-out infinite;opacity:.65}
+.charm-0{left:26%}.charm-1{right:25%;top:-1%;animation-delay:-3.6s}
+.charm-thread{display:block;width:1px;height:91px;margin:auto;background:linear-gradient(transparent,#d8b29564);position:relative}
+.charm-thread::after{content:'';position:absolute;bottom:12px;left:-2px;width:5px;height:5px;border-radius:50%;border:1px solid #d7ab8b70;background:#cda87a35}
+.charm-jewel{display:grid;place-items:center;margin:6px auto 0;width:28px;height:32px;border:1px solid #e2b4ad38;border-radius:50% 50% 45% 45%;font:21px var(--serif);color:#e2b4ad;box-shadow:0 0 20px #df987f10}
+.charm-1 .charm-thread{height:130px}.charm-1 .charm-jewel{border-radius:2px;transform:rotate(12deg);font-size:24px}
+.garden-aura,.garden-motes>i,.garden-petals>i,.garden-rose,.garden-charm,.cat-bob{animation-play-state:paused}
+.kitten-awake .garden-aura,.kitten-awake .garden-motes>i,.kitten-awake .garden-petals>i,.kitten-awake .garden-rose,.kitten-awake .garden-charm,.kitten-awake .cat-bob{animation-play-state:running}
+@keyframes garden-firefly{0%,100%{transform:translate(-7px,12px);opacity:.08}35%{opacity:.65}65%{transform:translate(11px,-16px);opacity:.27}85%{opacity:.12}}
+@keyframes garden-petal{0%{transform:translate3d(0,-12px,0) rotate(0);opacity:0}12%{opacity:.44}76%{opacity:.34}100%{transform:translate3d(var(--drift),710px,0) rotate(var(--turn)) rotateY(240deg);opacity:0}}
+@keyframes garden-warmth{from{opacity:.55;transform:translate(-50%,-50%) scale(.94)}to{opacity:1;transform:translate(-50%,-50%) scale(1.04)}}
+@keyframes garden-rose{0%,100%{transform:translate(-50%,-50%) translate(var(--look-x),var(--look-y)) rotate(var(--rr))}50%{transform:translate(-50%,-50%) translate(calc(var(--look-x) + 5px),calc(var(--look-y) - 9px)) rotate(calc(var(--rr) + 5deg))}}
+@keyframes garden-charm{0%,100%{transform:rotate(-2.4deg)}50%{transform:rotate(2.4deg)}}
+@media(max-width:760px){
+ .garden-aura{width:460px;height:520px}
+ .garden-floor-ring{width:260px;height:50px}
+ .garden-charm{top:1%;opacity:.5}.charm-0{left:7%}.charm-1{right:7%;top:-2%}
+ .charm-thread{height:68px}.charm-1 .charm-thread{height:92px}
+ .charm-jewel{width:21px;height:25px;font-size:16px}.charm-1 .charm-jewel{font-size:19px}
+ .garden-sprig{width:52px;height:160px;bottom:7%;opacity:.27}.sprig-0{left:6%}.sprig-1{right:5%}
+ .garden-rose{width:calc(var(--rs)*.65)}.garden-rose:nth-last-child(-n+2){display:none}
+ .garden-motes>i:nth-child(n+19),.garden-petals>i:nth-child(n+7){display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .kitten-garden *,.cat-bob{animation:none!important}
+ .garden-petals,.garden-touch-dust{display:none}
+ .garden-motes>i{opacity:.25}
+ .has-kitten-mesh>#kitten-image{opacity:1}
+ .has-kitten-mesh>.living-kitten{opacity:0}
+}
+

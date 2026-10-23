@@ -1,0 +1,22 @@
+# Local secrets and machine files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Local outputs and temporary files
+node_modules/
+coverage/
+playwright-report/
+test-results/
+*.log
+*.tmp
+*.bak
+__pycache__/
+

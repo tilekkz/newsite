@@ -1,0 +1,195 @@
+.afterglow-scene { position:relative; }
+.journey-sky-link { margin-top:30px; display:inline-flex; flex-direction:column; gap:7px; }
+.journey-sky-link small { font:italic 22px var(--serif); color:#c99eb4; }
+.afterglow-heading { margin:0; font-weight:400; }
+.afterglow-heading>.zh { display:block; font:400 clamp(21px,2vw,29px)/1.7 var(--zh); letter-spacing:.04em; color:#c9aebc; }
+.afterglow-heading>em { display:block; margin-top:17px; padding-bottom:8px; font:italic clamp(61px,6.5vw,91px)/1.08 var(--serif); letter-spacing:-.045em; color:#eddbd8; }
+.starlight { padding:100px 0 115px; isolation:isolate; }
+.sky-layout { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.25fr); align-items:center; gap:35px; }
+.sky-ambient { position:absolute; z-index:-1; inset:5% 0; pointer-events:none; background:radial-gradient(ellipse at 72% 42%,#7143591c,transparent 58%); }
+.sky-copy { padding:30px 0 0 20px; }
+.sky-invitation { margin-top:27px; color:#c1a6b5; font-size:11px; line-height:1.8; }
+.sky-invitation>span { display:block; margin-top:5px; font:italic 21px/1.3 var(--serif); color:#a98a9d; }
+.sky-note { min-height:215px; max-width:340px; margin-top:46px; padding-left:24px; border-left:1px solid #9c6f852e; }
+.sky-note-index { display:block; font:10px var(--mono); letter-spacing:.12em; color:#d3a5bc; margin-bottom:15px; }
+.sky-note h3 { font:400 15px/1.65 var(--zh); color:#e1c5d3; margin:0; }
+.sky-note h3>em { display:block; font:italic 30px/1.15 var(--serif); margin-top:4px; color:#edc5d7; }
+.sky-note>p { font-size:11px; line-height:1.9; color:#baa0af; margin-top:17px; }
+.sky-note>p[lang=en] { font:italic 20px/1.4 var(--serif); margin-top:8px; color:#b49aa9; }
+.sky-next-link { display:inline-flex; flex-direction:column; align-items:flex-start; gap:6px; margin-top:28px; font-size:10px; }
+.sky-next-link>span { font:italic 20px var(--serif); color:#c99eb4; }
+.sky-map-wrap { min-width:0; }
+.sky-board { position:relative; width:100%; height:600px; isolation:isolate; }
+.sky-moon-depth { position:absolute; top:1%; right:13%; pointer-events:none; }
+.sky-moon { display:block; position:relative; width:69px; height:69px; border-radius:50%; background:radial-gradient(circle at 35% 35%,#e6c5cb,#9f7189); box-shadow:0 0 45px #b97d9420; overflow:hidden; opacity:.7; }
+.sky-moon::after { content:''; position:absolute; width:70px; height:70px; left:18px; top:-9px; border-radius:50%; background:#1a1118; box-shadow:0 0 12px 4px #1a1118; }
+.sky-orbit { position:absolute; width:76%; height:58%; left:10%; top:17%; border:1px solid #bc91a518; border-radius:50%; transform:rotate(-27deg); pointer-events:none; }
+.sky-dust { position:absolute; inset:0; pointer-events:none; }
+.sky-dust::before { display:none; content:''; position:absolute; width:2px; height:2px; border-radius:50%; left:5%; top:15%; background:#c7a4b45c; box-shadow:70px 110px #c7a4b45c,190px -5px #c7a4b433,140px 250px #c7a4b440,380px 45px #c7a4b466,290px 170px #c7a4b433,65px 375px #c7a4b44d,445px 350px #c7a4b44d,490px 145px #c7a4b433,330px 410px #c7a4b444; }
+.sky-thread { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; fill:none; }
+.sky-guide { stroke:#a4778d26; stroke-width:.7; stroke-dasharray:2 9; }
+.sky-segment,.sky-filament { stroke:#e8b7cc; stroke-width:1.05; stroke-dasharray:1; stroke-dashoffset:1; stroke-linecap:round; vector-effect:non-scaling-stroke; }
+.sky-filament { stroke:#df90b7; stroke-width:5; opacity:.12; }
+.sky-traveler { fill:#ffe5ee; opacity:0; filter:drop-shadow(0 0 5px #ffbedc); }
+.sky-star { position:absolute; left:var(--sx); top:var(--sy); width:64px; height:64px; border:0; padding:0; background:none; transform:translate(-50%,-50%); color:#d1a6bc; touch-action:manipulation; }
+.sky-star-mark { display:grid; place-items:center; width:100%; height:100%; font:var(--star-size,38px) var(--serif); line-height:1; text-shadow:0 0 18px #d58cab45; transition:color .3s ease,filter .3s ease; }
+.sky-star-label { position:absolute; top:calc(100% - 2px); left:50%; width:120px; transform:translateX(-50%); font-size:10px; line-height:1.7; color:#ae8b9f; transition:color .3s ease; pointer-events:none; }
+.sky-star-label small { display:block; font:italic 17px/1.3 var(--serif); margin-top:3px; }
+.sky-star[aria-pressed=true] .sky-star-mark,.sky-star:hover .sky-star-mark { color:#ffe0eb; filter:drop-shadow(0 0 8px #df9db86e); }
+.sky-star[aria-pressed=true] .sky-star-label { color:#e1b3c8; }
+.sky-star.is-seen::after { content:''; position:absolute; width:4px; height:4px; border:1px solid #ce9fb7; border-radius:50%; left:calc(50% - 2px); top:calc(50% - 2px); }
+.sky-star:focus-visible { outline:1px solid #e3aec7; outline-offset:1px; border-radius:50%; }
+.sky-footnote { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; padding:0 25px; color:#a7899b; }
+.sky-footnote>span:first-child { flex-shrink:0; font:11px var(--mono); color:#d3acc0; padding-top:3px; }
+.sky-footnote i { color:#6d4f61; font-style:normal; margin:0 7px; }
+.sky-footnote>span:nth-child(2) { font-size:9px; line-height:1.7; }
+.sky-footnote small { display:block; font:italic 17px/1.4 var(--serif); }
+.sky-footnote button { border:0; background:none; color:#bc99ae; font-size:9px; padding:0; text-align:right; }
+.sky-footnote button:hover { color:#f0c6d9; }
+.sky-complete { text-align:center; margin:30px 0 0; padding:0 16px; font-size:11px; color:#e1b8cd; line-height:1.8; }
+.sky-complete em { display:block; font:italic 26px/1.3 var(--serif); margin-top:5px; }
+.sky-complete[hidden],.sky-footnote button[hidden] { display:none; }
+.keepsake { padding-top:85px; padding-bottom:70px; text-align:center; overflow-anchor:none; }
+.keepsake-heading { position:relative; }
+.keepsake-handwriting { display:block; color:#ac8198; font:italic 26px var(--serif); margin-bottom:22px; transform:rotate(-5deg); }
+.keepsake .afterglow-heading>em { font-size:clamp(57px,6.2vw,83px); }
+.keepsake-stage { position:relative; width:min(760px,100%); margin:50px auto 0; perspective:1400px; }
+.keepsake-envelope { position:relative; width:min(560px,calc(100% - 36px)); margin:auto; }
+.keepsake-paper { position:relative; width:88%; margin:0 auto; padding:38px 38px 30px; background:#dfd0c2; color:#5f3b4e; text-align:left; box-shadow:0 18px 55px #05000452; background-image:repeating-linear-gradient(0deg,#7d5c6410 0 1px,transparent 1px 28px); }
+.keepsake-recipient { font:8px/1.6 var(--mono); letter-spacing:.12em; color:#8a6475; }
+.keepsake-paper h3 { margin:28px 0 22px; font-weight:400; }
+.keepsake-paper h3>.zh { display:block; font-size:19px; color:#74495c; }
+.keepsake-paper h3>em { display:block; font:italic 37px/1.15 var(--serif); letter-spacing:-.025em; margin-top:8px; padding-bottom:3px; color:#7b4660; }
+.keepsake-zh { font:12px/2 var(--zh); color:#785467; margin-top:14px; }
+.keepsake-en { font:italic 22px/1.4 var(--serif); color:#775466; margin-top:16px; }
+.keepsake-signature { margin-top:27px; font-size:10px; line-height:1.7; color:#795163; }
+.keepsake-signature em { display:block; font:italic 20px/1.35 var(--serif); margin-top:6px; color:#795163; }
+.keepsake-signature>span { display:block; font:25px var(--serif); color:#9e5476; margin-top:18px; }
+.envelope-back,.envelope-fold,.envelope-flap,.envelope-address,.keepsake-seal,.keepsake-annotation { display:none; }
+.keepsake-ready { height:410px; }
+.keepsake-ready .keepsake-envelope { position:absolute; width:min(560px,calc(100% - 36px)); height:auto; aspect-ratio:1.7; left:50%; bottom:36px; margin:0; transform:translateX(-50%); }
+.keepsake-ready .keepsake-paper { position:absolute; z-index:2; left:6%; top:0; width:88%; margin:0; opacity:0; visibility:hidden; transform-origin:50% 90%; }
+.keepsake-ready .envelope-back { display:block; position:absolute; inset:0; background:#b2949e; box-shadow:0 25px 65px #0600056b; }
+.keepsake-ready .envelope-fold { display:block; position:absolute; inset:0; z-index:3; pointer-events:none; }
+.fold-left { background:linear-gradient(55deg,#bda3aa,#d0b7bc); clip-path:polygon(0 0,58% 54%,0 100%); }
+.fold-right { background:linear-gradient(-55deg,#b69aa3,#cbb0b7); clip-path:polygon(100% 0,42% 54%,100% 100%); }
+.fold-bottom { background:linear-gradient(0deg,#c9adb5,#d4bec3); clip-path:polygon(0 100%,50% 43%,100% 100%); }
+.keepsake-ready .envelope-flap { display:block; position:absolute; inset:0 0 39%; z-index:5; background:linear-gradient(170deg,#dac6ca,#b99ba7); clip-path:polygon(0 0,100% 0,50% 100%); transform-origin:50% 0; backface-visibility:visible; }
+.keepsake-ready .keepsake-seal { display:grid; place-items:center; position:absolute; z-index:6; left:50%; top:44%; width:74px; height:74px; padding:0; transform:translate(-50%,-50%); border:1px solid #bc6d8b; border-radius:44% 48% 46% 43%; background:radial-gradient(circle at 35% 30%,#ad607c,#77384f); box-shadow:inset 0 0 0 5px #8b435d,inset 0 0 0 6px #bd78925c,0 5px 10px #56323e40; color:#f0bdd2; }
+.keepsake-seal>span { font:33px var(--serif); }
+.keepsake-seal:not(:disabled):hover { filter:brightness(1.12); }
+.keepsake-seal:focus-visible { outline:2px solid #f4c3db; outline-offset:8px; }
+.keepsake-ready .envelope-address { display:block; position:absolute; z-index:4; right:25px; bottom:25px; font:italic 18px var(--serif); color:#8a6074; pointer-events:none; }
+.keepsake-ready .keepsake-annotation { display:block; position:absolute; left:0; top:20%; text-align:left; font-size:10px; color:#b18b9e; transform:rotate(-7deg); }
+.keepsake-annotation>em { display:block; font:italic 26px/1.1 var(--serif); margin-top:7px; }
+.keepsake-controls { position:relative; min-height:80px; margin-top:20px; }
+.keepsake-controls>p { color:#c3a1b4; font-size:11px; line-height:1.7; }
+.keepsake-controls>p>em { display:block; font:italic 23px/1.3 var(--serif); margin-top:4px; }
+.keepsake-controls>button { font-size:10px; display:inline-flex; flex-direction:column; align-items:center; gap:5px; }
+.keepsake-controls small { font:italic 21px var(--serif); }
+.keepsake-controls>button[hidden] { display:none; }
+.keepsake-stage.is-open .envelope-address { opacity:.55; }
+@media(max-width:1000px){
+ .sky-layout{gap:10px;grid-template-columns:minmax(0,.85fr) minmax(0,1fr)}
+ .sky-copy{padding-left:0}
+ .sky-board{height:490px}
+ .sky-star-label{width:100px;font-size:9px}
+ .sky-star-label small{font-size:16px}
+ .sky-footnote{padding:0 8px;gap:12px;flex-wrap:wrap}
+ .keepsake-ready .keepsake-annotation{left:1%;top:4%}
+}
+@media(max-width:760px){
+ .starlight{padding:70px 0 85px}
+ .sky-layout{display:grid;grid-template-columns:1fr;gap:15px}
+ .sky-copy{display:contents}
+ .sky-copy>.afterglow-heading{grid-row:1;padding-inline:7px}
+ .sky-invitation{grid-row:2;padding-inline:7px}
+ .sky-map-wrap{grid-row:3}
+ .sky-note{grid-row:4;margin-inline:7px}
+ .sky-next-link{grid-row:5;margin-inline:7px;justify-self:start}
+ .afterglow-heading>em{font-size:clamp(56px,13vw,76px)}
+ .afterglow-heading>.zh{font-size:21px}
+ .sky-invitation{margin-top:20px;font-size:10px}
+ .sky-invitation>span{font-size:19px}
+ .sky-note{margin-top:30px;min-height:190px;max-width:none;padding-left:19px}
+ .sky-note h3>em{font-size:28px}
+ .sky-next-link{margin-top:5px}
+ .sky-map-wrap{width:100%}
+ .sky-board{height:440px;margin-top:5px}
+ .sky-star{left:var(--mx);top:var(--my)}
+ .sky-star-label{width:87px;font-size:9px}
+ .sky-star-label small{font-size:15px}
+ .sky-moon-depth{right:14%;top:0}
+ .sky-moon{width:49px;height:49px}
+ .sky-moon::after{width:52px;height:52px;left:13px;top:-8px}
+ .sky-dust{overflow:hidden}
+ .sky-footnote{padding:0 5px;gap:12px}
+ .sky-footnote>span:nth-child(2){flex:1}
+ .sky-footnote>button{flex-basis:100%;text-align:right}
+ .sky-complete{font-size:10px;margin-top:24px}
+ .sky-complete>em{font-size:23px}
+ .keepsake{padding-top:65px;padding-bottom:35px}
+ .keepsake-handwriting{font-size:23px}
+ .keepsake .afterglow-heading>em{font-size:clamp(51px,12vw,69px)}
+ .keepsake-stage{margin-top:40px}
+ .keepsake-ready{height:325px}
+ .keepsake-ready .keepsake-envelope{width:calc(100% - 18px)}
+ .keepsake-ready .keepsake-annotation{top:10px;left:12px;font-size:9px}
+ .keepsake-annotation>em{font-size:23px}
+ .keepsake-paper{padding:27px 24px 23px}
+ .keepsake-paper h3{margin:20px 0 16px}
+ .keepsake-paper h3>.zh{font-size:16px}
+ .keepsake-paper h3>em{font-size:31px}
+ .keepsake-zh{font-size:11px}
+ .keepsake-en{font-size:20px;line-height:1.35}
+ .keepsake-signature{margin-top:22px;font-size:9px}
+ .keepsake-signature>em{font-size:18px}
+ .keepsake-ready .keepsake-seal{width:62px;height:62px}
+ .keepsake-seal>span{font-size:28px}
+ .keepsake-ready .envelope-address{right:17px;bottom:17px;font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.sky-star-mark,.sky-star-label,.sky-segment{transition:none}}
+@media(max-width:760px) and (max-height:700px){.sky-board{height:430px}}
+
+/* Separate depth layers preserve the scroll motion on the moon wrapper. */
+.sky-haze{position:absolute;inset:0 -3%;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 35% 55%,#8f4d7024,transparent 53%),radial-gradient(ellipse at 79% 27%,#81789c1c,transparent 45%);mask-image:radial-gradient(ellipse at 50% 50%,#000 20%,transparent 72%)}
+.sky-dust i{position:absolute;width:var(--mote);height:var(--mote);border-radius:50%;background:#e1bdcd;opacity:.25;box-shadow:0 0 5px #d4a6c566;animation:sky-twinkle var(--twinkle) ease-in-out var(--delay) infinite alternate;animation-play-state:paused}
+.sky-star::before{content:'';position:absolute;inset:9px;border-radius:50%;background:radial-gradient(circle,#f3b5d839,transparent 68%);pointer-events:none;opacity:.35;transition:opacity .45s}
+.sky-star.is-seen::before,.sky-star:hover::before{opacity:1}
+.sky-star-mark{animation:sky-breathe var(--shimmer) ease-in-out var(--phase) infinite alternate;animation-play-state:paused}
+.sky-click-ring{position:absolute;left:calc(50% - 20px);top:calc(50% - 20px);width:40px;height:40px;border:1px solid #edb2cf7a;border-radius:50%;opacity:0;visibility:hidden;pointer-events:none}
+.sky-board.is-sky-live .sky-dust i,.sky-board.is-sky-live .sky-star-mark{animation-play-state:running}
+.sky-board.is-constellation-complete .sky-orbit{border-color:#d5a2bf33;box-shadow:0 0 55px #c47fa50b;transition:border-color 1.5s,box-shadow 1.5s}
+@keyframes sky-twinkle{from{opacity:.12}to{opacity:.62}}
+@keyframes sky-breathe{from{opacity:.66}to{opacity:1}}
+@media(max-width:1000px) and (min-width:761px){.sky-board{height:570px}.sky-star-label{width:88px}.sky-star-label small{font-size:15px}}
+@media(max-width:760px){.sky-star-label small{font-size:14px}.sky-moon-depth{right:12%;top:-3%}.sky-haze{inset:0}.sky-star-mark{font-size:calc(var(--star-size) - 3px)}}
+@media(prefers-reduced-motion:reduce){.sky-star-mark,.sky-dust i{animation:none!important}.sky-board.is-constellation-complete .sky-orbit{transition:none}}
+
+/* A real pocket keeps the sheet behind the front folds throughout its travel. */
+.envelope-ground-shadow,.envelope-lining,.envelope-mouth{display:none}
+.keepsake-ready .keepsake-envelope{perspective:1300px}
+.keepsake-ready .keepsake-object{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:50% 70%}
+.keepsake-ready .envelope-ground-shadow{display:block;position:absolute;left:5%;right:5%;height:45px;bottom:-30px;border-radius:50%;background:radial-gradient(ellipse,#0200039c,transparent 70%);pointer-events:none;transform-origin:center}
+.keepsake-ready .envelope-back{z-index:0;border:1px solid #dfbdc638;box-shadow:0 18px 45px #05000345,inset 0 2px 6px #5e3b4b55}
+.keepsake-ready .envelope-lining{display:block;position:absolute;inset:2px;z-index:1;background:linear-gradient(180deg,#705061,#947082 70%,#b397a3);box-shadow:inset 0 10px 20px #38243266;pointer-events:none}
+.keepsake-ready .keepsake-pocket{position:absolute;inset:0;z-index:2;clip-path:inset(-1200px -30px 0 -30px)}
+.keepsake-ready .keepsake-paper{top:10px;z-index:auto;transform-origin:50% 90%;box-shadow:1px 2px 0 #c1a99b,-1px -1px 0 #f4e5d466,0 16px 30px #29141e33;border-top:1px solid #f4e8d799;border-left:1px solid #f4e8d744}
+.keepsake-ready .keepsake-paper::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,#fff7e6aa,transparent 45%,#70435c12);opacity:var(--paper-glow,.08)}
+.keepsake-ready .envelope-mouth{display:block;position:absolute;top:0;left:2px;right:2px;height:2px;z-index:4;background:linear-gradient(90deg,#f4d7dfaa,transparent 6%,transparent 94%,#f4d7dfaa);opacity:0;pointer-events:none}
+.keepsake-ready .envelope-fold{background-blend-mode:soft-light;border-bottom:1px solid #e7c8d155}
+.keepsake-ready .fold-left{background:linear-gradient(55deg,#a78594,#ceb1bc 72%,#e0c5cd)}
+.keepsake-ready .fold-right{background:linear-gradient(-55deg,#aa8697,#c4a2b2 72%,#ddc0cb)}
+.keepsake-ready .fold-bottom{background:linear-gradient(0deg,#c5a4b2,#dbc0ca);box-shadow:inset 0 -1px #efd3dc77}
+.keepsake-ready .envelope-flap{background:none;clip-path:none;transform-style:preserve-3d;backface-visibility:visible}
+.envelope-flap-face{position:absolute;inset:0;display:block;clip-path:polygon(0 0,100% 0,50% 100%);backface-visibility:hidden;pointer-events:none}
+.flap-front{background:linear-gradient(165deg,#e0c9d2,#c5a3b3 72%,#a67f92)}
+.flap-back{transform:rotateY(180deg);background:linear-gradient(0deg,#b994a6,#d7bdc9);box-shadow:inset 0 -2px 4px #f3dce733}
+.keepsake-ready .keepsake-seal{box-shadow:inset 0 0 0 5px #8b435d,inset 0 0 0 6px #bd78925c,0 7px 12px #56323e5c,0 1px 0 #e1a4bf88;transform-origin:center}
+.keepsake-stage[data-letter-state=open] .keepsake-annotation{opacity:.6}
+.keepsake-ready .envelope-flap{pointer-events:none}
+.keepsake-ready .keepsake-pocket{pointer-events:none}
+.keepsake-ready .keepsake-paper{pointer-events:auto}
+.keepsake-paper h3:focus{outline:none}
+.keepsake-paper h3:focus-visible{outline:1px solid #8f61764d;outline-offset:8px;border-radius:2px}
+@media(max-width:760px){.keepsake-ready .keepsake-pocket{clip-path:inset(-1200px -16px 0 -16px)}.keepsake-ready .envelope-ground-shadow{height:32px;bottom:-22px}}

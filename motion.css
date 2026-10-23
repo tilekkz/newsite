@@ -1,0 +1,32 @@
+/* The layout remains readable if the animation libraries are unavailable. */
+.statement-line { display: block; }
+.envelope-depth { display: block; }
+.motion-ready .reveal { transition: none; }
+html.motion-smooth { scroll-behavior: auto !important; }
+html { scrollbar-gutter: stable; }
+
+.night-dust {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.night-dust i {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #efc4d0;
+  opacity: 0;
+}
+.night-dust i:nth-child(1) { top: 24%; left: 55%; }
+.night-dust i:nth-child(2) { top: 43%; left: 74%; width: 3px; height: 3px; }
+.night-dust i:nth-child(3) { top: 67%; left: 48%; }
+.night-dust i:nth-child(4) { top: 78%; left: 84%; }
+.night-dust i:nth-child(5) { top: 38%; left: 90%; }
+.night-dust i:nth-child(6) { top: 62%; left: 63%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .night-dust { display: none; }
+  .statement-line { opacity: 1 !important; visibility: visible !important; }
+}

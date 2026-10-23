@@ -1,0 +1,94 @@
+.continuation-scene{position:relative;isolation:isolate}
+.wish-harbor{padding:125px 0 80px}
+.harbor-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr);gap:40px;align-items:center}
+.harbor-copy{padding-left:20px}
+.harbor-copy .eyebrow{font-size:8px;letter-spacing:.12em;color:#b68d9f}
+.harbor-copy h2{margin-top:24px}
+.continuation-intro{font-size:11px;line-height:1.9;color:#bd9faf;margin-top:27px}
+.continuation-intro em{display:block;margin-top:5px;font:italic 22px/1.35 var(--serif);color:#b08b9d}
+.wish-choices{display:flex;gap:25px;margin-top:37px}
+.wish-choices button{position:relative;display:flex;align-items:flex-start;flex-direction:column;gap:6px;border:0;border-bottom:1px solid #ac768c30;background:none;padding:0 0 10px;min-width:75px;text-align:left;font-size:12px;color:#aa8295;transition:color .3s,border-color .3s}
+.wish-choices button>span{font:8px var(--mono);color:#8f6d7f;letter-spacing:.1em;margin-bottom:3px}
+.wish-choices small{font:italic 17px var(--serif)}
+.wish-choices button[aria-pressed=true]{color:#efd3e0;border-color:#d99eb8}
+.wish-choices button[aria-pressed=true]>span{color:#d8a8be}
+.wish-choices button:disabled{cursor:default;opacity:.55}
+.harbor-message{min-height:106px;max-width:330px;margin-top:28px}
+.harbor-message p:first-child{font-size:11px;color:#ceb0bf;line-height:1.8}
+.harbor-message p[lang=en]{font:italic 24px/1.25 var(--serif);color:#d5b2c4;margin-top:8px}
+.harbor-send{display:inline-flex;flex-direction:column;align-items:flex-start;gap:5px;font-size:10px;min-height:44px}
+.harbor-send small{font:italic 22px var(--serif)}
+.harbor-send:disabled{cursor:default;opacity:.55}
+.harbor-status{display:block;max-width:325px;min-height:35px;font:8px/1.9 var(--mono);letter-spacing:.025em;color:#9e7b8e;margin-top:19px}
+.harbor-water{height:590px;position:relative;min-width:0;isolation:isolate}
+.harbor-water::before{content:'';position:absolute;inset:5% -4% 0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 66% 40%,#a65b7a1d,transparent 58%);mask-image:radial-gradient(ellipse,#000 15%,transparent 72%)}
+.harbor-water::after{content:'';position:absolute;bottom:9%;left:8%;right:4%;height:33%;border-radius:50%;background:radial-gradient(ellipse,#af7e9d12,transparent 65%);pointer-events:none}
+.harbor-moon{position:absolute;left:73%;top:16%;width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#e5c3ca,#a57492);box-shadow:0 0 45px #ca97b42b;opacity:.75}
+.moon-reflection{position:absolute;left:70%;top:44%;width:80px;height:100px;background:repeating-linear-gradient(0deg,transparent 0 11px,#b98da340 12px 13px,transparent 14px 20px);mask-image:radial-gradient(ellipse,#000,transparent 72%);transform:skewX(-13deg)}
+.water-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.water-lines path{stroke:#ab839c30;stroke-width:1;vector-effect:non-scaling-stroke}
+.water-lines g{animation:water-breathe 8s ease-in-out infinite alternate;animation-play-state:paused;transform-origin:center}
+.water-glint{position:absolute;color:#d7aabd63;font:19px var(--serif);pointer-events:none;animation:water-glint 5s ease-in-out infinite alternate;animation-play-state:paused}
+.glint-one{left:59%;top:45%}.glint-two{left:20%;top:56%;font-size:24px;animation-delay:-2s}.glint-three{left:82%;top:69%;font-size:12px;animation-delay:-3.5s}
+.harbor-water.is-water-live .water-lines g,.harbor-water.is-water-live .water-glint,.harbor-water.is-water-live[data-voyage=ready] .boat-bob{animation-play-state:running}
+.boat-flight{position:absolute;left:0;top:0;width:190px;height:140px;transform-origin:50% 65%}
+.paper-boat{display:block;position:relative;z-index:2;width:100%;height:100%;background:none;border:0;padding:0;touch-action:manipulation}
+.boat-bob{display:block;width:100%;height:100%;position:relative;animation:boat-bob 5s ease-in-out infinite alternate;animation-play-state:paused;transform-origin:center 70%}
+.paper-boat svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 5px 6px #08030925)}
+.boat-wish{position:absolute;left:43%;top:42%;font:9px var(--zh);color:#895d72;transform:rotate(7deg);pointer-events:none}
+.paper-boat:hover .boat-wish{color:#704057}
+.paper-boat:disabled{cursor:default}
+.paper-boat:focus-visible{outline:1px solid #deb1c7;outline-offset:2px;border-radius:50%}
+.boat-shadow{position:absolute;width:95%;height:19px;bottom:1%;left:3%;background:radial-gradient(ellipse,#b1819e2e,transparent 70%);transform:scaleY(.7);pointer-events:none}
+.harbor-ripple{position:absolute;left:24%;top:74%;width:95px;height:21px;border:1px solid #cf9cb34d;border-radius:50%;opacity:0;pointer-events:none;transform-origin:center}
+.harbor-coordinate{position:absolute;bottom:12%;right:5%;writing-mode:vertical-rl;font:7px var(--mono);letter-spacing:.13em;color:#9d788b77}
+.harbor-horizon{position:absolute;left:45%;right:10%;bottom:2%;font-size:10px;color:#a48195;transform:rotate(-5deg)}
+.harbor-horizon em{display:block;font:italic 26px/1.1 var(--serif);margin-top:8px;color:#bd91aa}
+.continuation-next{display:flex;width:max-content;max-width:calc(100% - 40px);flex-direction:column;margin:55px auto 0;font-size:10px;gap:7px}
+.continuation-next small{font:italic 22px var(--serif)}
+.tomorrow-postcard{padding-top:105px;padding-bottom:75px;text-align:center}
+.postcard-heading .eyebrow{font-size:8px;color:#af879b}
+.postcard-heading h2{margin-top:25px}
+.postcard-stage{position:relative;perspective:1600px;width:min(720px,100%);height:520px;margin:65px auto 0}
+.postcard-turn{position:absolute;inset:15px 10px;transform-style:preserve-3d;transform:rotate(-3deg);transform-origin:center}
+.postcard-face{position:absolute;inset:0;background:#deccbd;border:1px solid #e8d9ca8c;backface-visibility:hidden;box-shadow:0 22px 60px #03000459;color:#73495e;text-align:left;overflow:hidden}
+.postcard-front{padding:16px 16px 0}
+.postcard-illustration{height:76%;position:relative;overflow:hidden;background:#6a4259}
+.postcard-illustration svg{width:100%;height:100%;display:block}
+.postcard-illustration::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,#ebe0c805 0 1px,transparent 1px 3px);pointer-events:none}
+.postcard-view-label{position:absolute;bottom:12px;left:18px;right:18px;font:6px var(--mono);letter-spacing:.09em;color:#eed6ccab;text-shadow:0 1px 4px #23102c}
+.postcard-front-bottom{height:24%;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:10px 8px}
+.postcard-place{font-size:11px;color:#84596b;line-height:1.6}
+.postcard-place em{display:block;font:italic 26px/1.2 var(--serif);color:#82576d}
+.postcard-edition{font:6px/1.9 var(--mono);letter-spacing:.08em;color:#957383;text-align:right}
+.postcard-back{transform:rotateY(180deg);padding:40px 38px;display:grid;grid-template-columns:minmax(0,1fr) 140px;gap:30px;background-image:linear-gradient(115deg,#fff5de30,transparent 60%)}
+.postcard-small{font:7px var(--mono);letter-spacing:.08em;color:#9a7281}
+.postcard-message h3{font:400 17px var(--zh);line-height:1.65;margin:25px 0 20px;color:#74495e}
+.postcard-message h3 em{display:block;font:italic 34px/1.15 var(--serif);margin-top:7px;color:#80536a}
+.postcard-message>p{font:11px/1.9 var(--zh);color:#845f71;margin-top:15px}
+.postcard-message>p[lang=en]{font:italic 22px/1.3 var(--serif);color:#795165;margin-top:15px}
+.postcard-signature{display:block;font:italic 18px var(--serif);margin-top:22px;color:#8f5d75}
+.postcard-address{position:relative;padding-top:125px;border-left:1px solid #91677a36;padding-left:27px;color:#8b6478;font-size:9px}
+.postcard-address>span:not(.postcard-stamp) em{display:block;font:italic 25px/1.1 var(--serif);color:#84596e;margin-top:8px}
+.postcard-address>i{display:block;height:1px;background:#a2818e46;margin-top:22px}
+.postcard-address>small{display:block;font:6px/1.8 var(--mono);margin-top:18px;letter-spacing:.07em}
+.postcard-stamp{position:absolute;top:0;right:0;display:flex;align-items:center;justify-content:center;flex-direction:column;width:60px;height:76px;border:1px dashed #9c7186;background:#c5a8b749;font:32px var(--serif);color:#9c6582;outline:3px solid #b695a435;outline-offset:-6px}
+.postcard-stamp small{font:6px var(--mono);letter-spacing:.1em}
+.postcard-postmark{display:flex;position:absolute;right:22px;top:56px;width:145px;height:82px;border:2px solid #864d6e;align-items:center;justify-content:center;flex-direction:column;border-radius:50%;font:9px var(--zh);color:#864d6e;transform:rotate(-15deg) scale(1.3);opacity:0;pointer-events:none}
+.postcard-postmark strong{font:15px var(--mono);letter-spacing:.09em;margin-top:4px}
+.postcard-postmark small{font:5px var(--mono);margin-top:6px}
+.postcard-scribble{position:absolute;right:-110px;top:11%;width:170px;text-align:left;font-size:10px;color:#ad8198;transform:rotate(9deg);pointer-events:none}
+.postcard-scribble em{display:block;font:italic 26px/1.1 var(--serif);color:#b88aa3;margin-top:8px}
+.postcard-actions{display:flex;align-items:flex-start;justify-content:center;gap:45px;min-height:55px;margin-top:32px}
+.postcard-actions button{flex-direction:column;gap:5px;min-height:44px;font-size:10px}
+.postcard-actions small{font:italic 21px var(--serif)}
+.postcard-actions [hidden]{display:none}
+.postcard-feedback{min-height:58px;margin-top:24px;font-size:10px;color:#b58ca3}
+.postcard-feedback em{display:block;font:italic 24px/1.2 var(--serif);color:#c39ab0;margin-top:7px}
+@keyframes water-breathe{from{transform:translateX(-5px)}to{transform:translateX(5px)}}
+@keyframes water-glint{from{opacity:.3}to{opacity:.9}}
+@keyframes boat-bob{from{transform:translateY(-2px) rotate(-2deg)}to{transform:translateY(3px) rotate(2deg)}}
+@media(max-width:1100px){.postcard-scribble{right:-45px;top:-12px;z-index:1}.harbor-layout{gap:15px}.harbor-copy{padding-left:0}.harbor-water{height:570px}.harbor-horizon em{font-size:24px}.harbor-copy h2>em{font-size:70px}}
+@media(max-width:760px){.wish-harbor{padding:75px 0 45px}.harbor-layout{display:grid;grid-template-columns:1fr;gap:0}.harbor-copy{padding-inline:5px}.harbor-copy h2>em{font-size:clamp(56px,13vw,76px)}.harbor-copy .eyebrow{font-size:7px}.wish-choices{gap:23px;margin-top:30px}.wish-choices button{min-width:70px}.harbor-message{min-height:92px;max-width:290px}.harbor-water{height:420px;margin-top:10px}.boat-flight{width:150px;height:112px}.harbor-moon{width:39px;height:39px;left:77%;top:12%}.moon-reflection{left:70%;top:40%;width:65px}.harbor-horizon{left:44%;right:2%;bottom:0;font-size:9px}.harbor-horizon em{font-size:24px}.harbor-coordinate{font-size:5px;right:-5px;bottom:18%}.harbor-ripple{width:65px;height:16px}.continuation-next{margin-top:40px}.tomorrow-postcard{padding-top:75px;padding-bottom:40px}.postcard-heading .eyebrow{font-size:7px;letter-spacing:.1em}.postcard-heading h2>em{font-size:clamp(54px,13vw,76px)}.postcard-stage{height:550px;margin-top:70px}.postcard-turn{inset:10px 3px;transform:rotate(-2deg)}.postcard-front{padding:12px 12px 0}.postcard-illustration{height:75%}.postcard-illustration svg{width:154%;margin-left:-27%}.postcard-front-bottom{height:25%;padding:12px 2px}.postcard-place{font-size:10px}.postcard-place em{font-size:24px;max-width:210px}.postcard-edition{display:none}.postcard-view-label{font-size:5px;left:10px;bottom:10px;line-height:1.6}.postcard-back{padding:25px 23px;display:block}.postcard-small{display:block;max-width:165px;font-size:6px;line-height:1.8}.postcard-message h3{margin-top:31px;max-width:235px;font-size:15px}.postcard-message h3 em{font-size:29px;max-width:200px}.postcard-message>p{font-size:10px;line-height:1.85}.postcard-message>p[lang=en]{font-size:21px;line-height:1.25}.postcard-signature{font-size:18px;margin-top:21px;max-width:none}.postcard-address{position:absolute;inset:22px 21px auto auto;padding:0;border:0;width:50px}.postcard-stamp{width:43px;height:54px;font-size:24px}.postcard-stamp small{font-size:5px}.postcard-address>span:not(.postcard-stamp),.postcard-address>i,.postcard-address>small{display:none}.postcard-postmark{right:12px;top:19px;width:115px;height:67px;font-size:8px;background:#e2d0bd66}.postcard-postmark strong{font-size:12px}.postcard-scribble{right:4px;top:-29px;width:145px;font-size:9px}.postcard-scribble em{font-size:23px}.postcard-actions{gap:25px;margin-top:25px}.postcard-actions small{font-size:19px}.postcard-feedback{margin-top:20px}.postcard-feedback em{font-size:23px}}
+@media(max-width:380px){.wish-choices{gap:18px}.postcard-message>p[lang=en]{font-size:20px}.postcard-message h3 em{font-size:27px}.postcard-back{padding:24px 20px}.postcard-stage{height:550px}.postcard-message h3{margin-bottom:17px}.postcard-signature{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.water-lines g,.boat-bob,.water-glint{animation:none!important}}
