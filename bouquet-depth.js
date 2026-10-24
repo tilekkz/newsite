@@ -27,7 +27,7 @@
     flower.className = 'floating-rose';
     flower.style.cssText = `--rose-x:${x}%;--rose-y:${y}%;--rose-size:${w}px`;
     const img = document.createElement('img');
-    img.src = 'assets/rose-floating-v1.png'; img.alt = ''; img.draggable = false;
+    img.src = 'assets/rose-floating-v1.webp'; img.alt = ''; img.draggable = false;
     flower.append(img); atmosphere.append(flower);
     return { element:flower, r, i };
   });
@@ -103,7 +103,11 @@
   function measure(){
     sceneWidth=scene.clientWidth||800;sceneHeight=scene.clientHeight||800;
     // Allocate once to native asset resolution, never resize through the reveal scale.
-    if(gpu){canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;gl.viewport(0,0,canvas.width,canvas.height);}
+    if(gpu){
+      if(canvas.width!==image.naturalWidth)canvas.width=image.naturalWidth;
+      if(canvas.height!==image.naturalHeight)canvas.height=image.naturalHeight;
+      gl.viewport(0,0,canvas.width,canvas.height);
+    }
     if(active)render();
   }
   new ResizeObserver(measure).observe(scene);

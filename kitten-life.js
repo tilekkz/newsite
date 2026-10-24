@@ -11,7 +11,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(pointer: fine)');
   const closed = new Image();
-  closed.src = 'assets/kitten-blink-v1.png';
+  closed.src = 'assets/kitten-blink-v1.webp';
   const canvas = document.createElement('canvas');
   canvas.className = 'living-kitten';
   canvas.setAttribute('aria-hidden', 'true');
@@ -35,7 +35,7 @@
   [[26,77,62,-23],[77,68,72,24],[19,22,38,12],[82,30,42,-18]].forEach(([x,y,size,rotate],i) => {
     const rose = document.createElement('span'); rose.className = 'garden-rose';
     rose.style.cssText = '--rx:'+x+'%;--ry:'+y+'%;--rs:'+size+'px;--rr:'+rotate+'deg;--delay:'+(-i*2.7)+'s';
-    rose.innerHTML = '<img src="assets/rose-floating-v1.png" alt="" loading="lazy" draggable="false">';
+    rose.innerHTML = '<img src="assets/rose-floating-v1.webp" alt="" loading="lazy" draggable="false">';
     garden.append(rose);
   });
   const motes = garden.querySelector('.garden-motes');
@@ -58,6 +58,8 @@
   let blinkLength = .48, earSide = 1, doubleAt = Infinity, lastPet = -100;
   let frameWidth = 260, frameHeight = 390;
   const state = { blink:0, earLeft:0, earRight:0, x:0, y:0 };
+  const drawn = { blink:NaN, earLeft:NaN, earRight:NaN, x:NaN, y:NaN };
+  let gardenX = '', gardenY = '';
   const target = { x:0, y:0 };
   const dust = new Set();
   const random = (min,max) => min + Math.random()*(max-min);
@@ -159,7 +161,9 @@
     if(gpu){
       // Keep the texture sharp even at the final 1.6x approach scale.
       const density=Math.min((devicePixelRatio||1)*1.65,3.2);
-      canvas.width=Math.round(frameWidth*density);canvas.height=Math.round((frameHeight+16)*density);
+      const width=Math.round(frameWidth*density),height=Math.round((frameHeight+16)*density);
+      if(canvas.width!==width)canvas.width=width;
+      if(canvas.height!==height)canvas.height=height;
       gl.viewport(0,0,canvas.width,canvas.height);render();
     }
   }
@@ -170,6 +174,7 @@
     gl.uniform2f(uniforms.pointer,state.x,state.y);gl.uniform2f(uniforms.frame,frameWidth,frameHeight);
     gl.uniform1f(uniforms.blink,blinkReady?state.blink:0);
     gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.TRIANGLES,0,56*72*6);
+    Object.assign(drawn,state);
   }
   function blink(slow=false){
     if(!running||!blinkReady||clock-blinkAt<1.1)return;
@@ -208,9 +213,11 @@
     const eyeState=state.blink>.96?'closed':state.blink>.02?'blinking':'open';
     if(button.dataset.eyes!==eyeState)button.dataset.eyes=eyeState;
     if(button.dataset.ears!==(Math.abs(ear)>.002?'moving':'rest'))button.dataset.ears=Math.abs(ear)>.002?'moving':'rest';
-    if(time-lastDraw>1/50){render();lastDraw=time;}
-    garden.style.setProperty('--look-x',(state.x*8).toFixed(2)+'px');
-    garden.style.setProperty('--look-y',(state.y*5).toFixed(2)+'px');
+    const changed=Object.keys(drawn).some(key=>!Number.isFinite(drawn[key])||Math.abs(state[key]-drawn[key])>.00005);
+    if(changed&&time-lastDraw>1/50){render();lastDraw=time;}
+    const x=(state.x*8).toFixed(2)+'px',y=(state.y*5).toFixed(2)+'px';
+    if(x!==gardenX){garden.style.setProperty('--look-x',x);gardenX=x;}
+    if(y!==gardenY){garden.style.setProperty('--look-y',y);gardenY=y;}
   }
   function updateRunning(){
     const run=allowed();
@@ -221,7 +228,7 @@
       running=false;gsap.ticker.remove(tick);clearDust();doubleAt=Infinity;
       blinkAt=earAt=-100;state.blink=state.earLeft=state.earRight=state.x=state.y=target.x=target.y=0;
       button.dataset.eyes='open';button.dataset.ears='rest';
-      garden.style.setProperty('--look-x','0px');garden.style.setProperty('--look-y','0px');render();
+      garden.style.setProperty('--look-x','0px');garden.style.setProperty('--look-y','0px');gardenX=gardenY='0px';render();
     }
   }
   new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;updateRunning()},{threshold:.08}).observe(stage);

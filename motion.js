@@ -13,7 +13,7 @@
         entry.target.classList.add('visible');
         observer.unobserve(entry.target);
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -22% 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -15% 0px' });
     document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
     root.classList.add('js-ready');
   }
@@ -44,10 +44,10 @@
     if (desktop && Lenis) {
       lenis = new Lenis({
         autoRaf: false,
-        lerp: 0.085,
+        lerp: 0.12,
         smoothWheel: true,
         syncTouch: false,
-        wheelMultiplier: 0.9,
+        wheelMultiplier: 1,
         anchors: false,
         stopInertiaOnNavigate: false,
         prevent: node => Boolean(node.closest?.('dialog'))
@@ -67,7 +67,7 @@
       { yPercent: desktop ? 7 : 4, scale: desktop ? 1.18 : 1.1, ease: 'none',
         scrollTrigger: { id: 'hero-depth', trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.9, invalidateOnRefresh: true } });
     gsap.fromTo('.hero-copy', { y: 0 }, {
-      y: -64 * amount,
+      y: -44 * amount,
       ease: 'none',
       scrollTrigger: { id: 'hero-copy-depth', trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.7, invalidateOnRefresh: true }
     });
@@ -92,19 +92,19 @@
 
     document.querySelectorAll('.reveal').forEach(element => {
       // Rebuilding on resize must not hide content the visitor has already read.
-      if (element.dataset.motionSeen === 'true' || element.getBoundingClientRect().top < innerHeight * 0.78) {
+      if (element.dataset.motionSeen === 'true' || element.getBoundingClientRect().top < innerHeight * 0.85) {
         element.dataset.motionSeen = 'true';
         return;
       }
       gsap.from(element, {
-        y: element.matches('.envelope-item') ? 45 : 28,
+        y: element.matches('.envelope-item') ? 32 : 20,
         autoAlpha: 0,
-        duration: 1.3,
+        duration: 1.05,
         ease: 'power2.out',
         delay: element.matches('.envelope-item') && desktop ? Number(element.dataset.letter) * 0.12 : 0,
         clearProps: 'transform,opacity,visibility',
         scrollTrigger: {
-          trigger: element, start: 'clamp(top 78%)', once: true,
+          trigger: element, start: 'clamp(top 85%)', once: true,
           onEnter: () => { element.dataset.motionSeen = 'true'; }
         }
       });
@@ -211,7 +211,14 @@
     };
   });
 
-  const refresh = () => ScrollTrigger.refresh();
+  let refreshFrame = 0;
+  const refresh = () => {
+    if (refreshFrame) return;
+    refreshFrame = requestAnimationFrame(() => {
+      refreshFrame = 0;
+      ScrollTrigger.refresh();
+    });
+  };
   document.fonts?.ready.then(refresh);
   document.fonts?.addEventListener('loadingdone', refresh);
   if (document.readyState === 'complete') refresh();

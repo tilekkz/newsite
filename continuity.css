@@ -1,0 +1,68 @@
+/* One atmosphere, independent of chapter boundaries. */
+:root {
+  --scene-space:clamp(48px,7svh,76px);
+  --night-glow:111,44,75;
+  --night-warmth:128,75,50;
+  --sans:"Manrope",-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;
+  --zh:"Noto Serif SC","Songti SC","STSong",serif;
+}
+html[data-theme="ocean"] { --night-glow:34,91,196; --night-warmth:43,117,164; }
+body { background:var(--bg); }
+body:after { background-image:url('assets/film-grain.webp'); background-size:180px 180px; opacity:.033; }
+#main { position:relative; z-index:1; background:none; }
+.night-atmosphere { position:fixed; z-index:0; inset:0; overflow:hidden; pointer-events:none; contain:strict; }
+.night-air { position:absolute; inset:-8%; background:radial-gradient(ellipse 65% 54% at 20% 48%,rgba(var(--night-glow),.19),transparent 78%),radial-gradient(ellipse 50% 60% at 85% 64%,rgba(var(--night-warmth),.12),transparent 80%); }
+.night-air:nth-child(2) { opacity:.65; transform:rotate(180deg); animation:night-breathe 24s ease-in-out infinite alternate; }
+.night-speck { position:absolute; left:var(--x); top:var(--y); width:var(--size); height:var(--size); border-radius:50%; background:var(--pink); opacity:.18; animation:night-drift var(--duration) ease-in-out var(--delay) infinite alternate; }
+.night-speck:nth-of-type(5n) { box-shadow:0 0 9px 2px rgba(var(--night-glow),.4); }
+.atmosphere-resting .night-atmosphere * { animation-play-state:paused; }
+@keyframes night-drift { from { transform:translate3d(-5px,14px,0); opacity:.1; } to { transform:translate3d(9px,-23px,0); opacity:.38; } }
+@keyframes night-breathe { to { transform:translate3d(2%,-2%,0) rotate(175deg); opacity:.3; } }
+
+/* Let the photograph dissolve into the same air as the next scene. */
+#home { background:transparent; }
+.hero-art,.hero-shade { -webkit-mask-image:linear-gradient(#000 0%,#000 68%,transparent 100%); mask-image:linear-gradient(#000 0%,#000 68%,transparent 100%); }
+.hero-art img { -webkit-mask-image:linear-gradient(90deg,transparent,#000 24%); mask-image:linear-gradient(90deg,transparent,#000 24%); }
+[data-theme="ocean"] .hero-art { background:transparent; }
+.hero-shade { background:linear-gradient(90deg,#110b0ff5 0%,#110b0fe3 23%,#110b0f9c 39%,#110b0f16 64%),linear-gradient(0deg,transparent,transparent 80%,#110b0f66); }
+[data-theme="ocean"] .hero-shade { background:linear-gradient(90deg,#051539 3%,#051539cc 25%,#0515391a 65%,#05153912); }
+#surprise { --cat-bottom:var(--scene-space); padding-top:var(--scene-space); padding-bottom:var(--cat-bottom); background:none; border:0; }
+#surprise.is-blooming { padding-bottom:calc(var(--cat-bottom) + var(--bloom-tail,0px)); }
+#feeling { padding-top:24px; }
+.journey-intro { padding-top:42px; }
+.journey-thread { height:90px; top:-37px; }
+#starlight { padding-block:var(--scene-space); }
+#last-letter { padding-top:var(--scene-space); padding-bottom:calc(var(--scene-space)*.7); }
+#little-harbor { padding-top:var(--scene-space); padding-bottom:calc(var(--scene-space)*.7); }
+#tomorrow-postcard { padding-top:var(--scene-space); padding-bottom:calc(var(--scene-space)*.7); }
+#blue-hour { padding:var(--scene-space) 0; min-height:max(740px,94svh); }
+#blue-memories { padding-block:var(--scene-space); }
+.memory-player { margin-top:45px; border-top-color:transparent; border-bottom-color:transparent; }
+.closing { padding-block:var(--scene-space); }
+.site-footer { position:relative; z-index:1; }
+
+/* CSS pixels on a Retina MacBook, with room for Safari's toolbar. */
+@media(min-width:761px) {
+  #home { height:max(720px,100svh); min-height:720px; max-height:1000px; }
+  .hero-copy { padding-top:75px; padding-bottom:65px; }
+  .hero h1 { font-size:clamp(55px,5.3vw,82px); margin-block:23px; }
+  .hero-copy>.primary-button { margin-top:24px; }
+  .hero-track { margin-top:28px; padding-top:18px; }
+  .hero-bottom { bottom:23px; }
+  .cat-stage { height:clamp(560px,78svh,660px); }
+  .sky-board { height:clamp(500px,72svh,600px); }
+  .harbor-water { height:clamp(480px,70svh,590px); }
+  .postcard-stage { margin-top:46px; }
+}
+@media(max-width:760px) {
+  :root { --scene-space:52px; }
+  .hero-art { -webkit-mask-image:linear-gradient(transparent,#000 18%,#000 70%,transparent); mask-image:linear-gradient(transparent,#000 18%,#000 70%,transparent); }
+  .hero-art img { -webkit-mask-image:none; mask-image:none; }
+  #blue-hour { min-height:810px; }
+  .night-speck:nth-of-type(n+14) { display:none; }
+  .memory-player { margin-top:36px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .night-atmosphere * { animation:none; }
+  .night-speck { opacity:.16; }
+}

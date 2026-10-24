@@ -4,12 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11090e">
+  <script>try{if(sessionStorage.getItem('520am-theme')==='ocean')document.documentElement.dataset.theme='ocean'}catch(e){}</script>
   <meta name="description" content="一封只写给你的情书。A little midnight world, kept just for you.">
   <title>5:20 AM — 只为你 · Just for you</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&family=Noto+Serif+SC:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=1">
   <link rel="stylesheet" href="assets/vendor/lenis-1.3.26.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="motion.css">
@@ -19,17 +18,24 @@
   <link rel="stylesheet" href="journey.css">
   <link rel="stylesheet" href="afterglow.css?v=letter3">
   <link rel="stylesheet" href="continuation.css?v=1">
+  <link rel="stylesheet" href="blue-hour.css?v=fluid2">
+  <link rel="stylesheet" href="continuity.css?v=1">
+  <link rel="stylesheet" href="two-windows.css?v=shared-sky3">
   <script src="assets/vendor/gsap-3.15.0.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger-3.15.0.min.js" defer></script>
   <script src="assets/vendor/lenis-1.3.26.min.js" defer></script>
-  <script src="app.js" defer></script>
-  <script src="bouquet-depth.js?v=living-roses1" defer></script>
+  <script src="app.js?v=local-music1" defer></script>
+  <script src="music.js?v=smooth-audio3" defer></script>
+  <script src="bouquet-depth.js?v=continuous1" defer></script>
   <script src="experience.js?v=standing-kitten2" defer></script>
-  <script src="kitten-life.js?v=1" defer></script>
+  <script src="kitten-life.js?v=continuous1" defer></script>
   <script src="journey.js" defer></script>
   <script src="afterglow.js?v=letter3" defer></script>
   <script src="continuation.js?v=1" defer></script>
-  <script src="motion.js?v=continuation1" defer></script>
+  <script src="blue-hour.js?v=local-music1" defer></script>
+  <script src="continuity.js?v=1" defer></script>
+  <script src="two-windows.js?v=shared-sky3" defer></script>
+  <script src="motion.js?v=continuous1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到内容 / Skip to content</a>
@@ -39,14 +45,14 @@
       <a href="#surprise">小小惊喜 <small lang="en">A surprise</small></a>
       <a href="#feeling">沿途的回忆 <small lang="en">Our moments</small></a>
       <a href="#letters">慢慢靠近 <small lang="en">A little closer</small></a>
-      <a href="#mixtape">留在心里 <small lang="en">Kept close</small></a>
+      <a href="#blue-hour">蓝色时刻 <small lang="en">Blue hour</small></a>
     </nav>
     <button class="invitation-link" type="button" data-open-invitation>私人邀请 <span lang="en">Your invitation ↗</span></button>
   </header>
 
   <main id="main">
     <section class="hero" id="home" aria-labelledby="hero-title">
-      <div class="hero-art" aria-hidden="true"><img src="assets/clock-scene.png" alt="" fetchpriority="high" width="1536" height="1024"></div>
+      <div class="hero-art" aria-hidden="true"><img src="assets/clock-scene.webp" alt="" fetchpriority="high" width="1536" height="1024"></div>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="night-dust" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="hero-copy wrap">
@@ -55,9 +61,10 @@
         <p class="hero-description">城市睡了，心事还醒着。<br><span lang="en">The city sleeps. The feeling stays.</span></p>
         <a class="primary-button" href="#surprise">为你准备的小惊喜 <small lang="en">A little surprise</small><span aria-hidden="true">↘</span></a>
         <div class="hero-track">
-          <img src="assets/song-cover.png" alt="5:20AM — 刀酱 · Pink vintage clock artwork" width="54" height="54">
+          <img src="assets/song-cover.webp" alt="5:20AM — 刀酱 · Pink vintage clock artwork" width="54" height="54">
           <div><span class="tiny-label">今晚的旋律 / TONIGHT'S SOUNDTRACK</span><p>5:20AM <span>— 刀酱</span></p></div><span class="hero-track-heart" aria-hidden="true">♡</span>
         </div>
+        <button type="button" class="home-music" id="home-music-rose" aria-pressed="false" aria-label="播放 5:20AM / Play 5:20AM"><span class="home-music-symbol" aria-hidden="true">▷</span><span><span class="home-music-zh">听最初的歌</span><small lang="en">Play 5:20AM</small></span></button>
       </div>
       <div class="hero-bottom wrap"><a href="#surprise" class="scroll-cue"><span class="scroll-line" aria-hidden="true"></span> 慢慢往下 / SCROLL SLOWLY</a><span class="night-note" lang="en">a little place for a little love <span aria-hidden="true">♡</span></span></div>
       <div class="photo-caption" aria-hidden="true">05:20 / SOMEWHERE WITH YOU</div>
@@ -71,13 +78,13 @@
         <div class="cat-side-note note-left" aria-hidden="true"><span class="tiny-label">FROM ME TO YOU</span><span class="note-heart">♡</span><p>有些温柔，<br>想亲手交给你。</p><em lang="en">Some tenderness,<br>delivered by hand.</em><span class="note-serial">NO. 0520 / WITH LOVE</span></div>
         <div class="cat-side-note note-right" aria-hidden="true"><span class="little-orbit">✧</span><p>抱抱正在派送中</p><em lang="en">Hugs, on their way.</em><span class="delivery-line"></span><span class="tiny-label">HANDLE WITH FEELING</span></div>
         <div class="cat-floor" aria-hidden="true"></div>
-        <button class="cat-button" id="cat-button" type="button" aria-label="点击小猫，让它靠近 / Click the kitten to bring it closer" aria-describedby="cat-instruction"><span class="cat-size"><span class="cat-bob"><img id="kitten-image" src="assets/kitten-reference-v3.png" width="1203" height="1307" alt="一只圆圆眼睛、前爪自然垂下的小橘猫 / A wide-eyed ginger kitten standing with its little front paws by its sides" loading="lazy" draggable="false"></span></span></button>
+        <button class="cat-button" id="cat-button" type="button" aria-label="点击小猫，让它靠近 / Click the kitten to bring it closer" aria-describedby="cat-instruction"><span class="cat-size"><span class="cat-bob"><img id="kitten-image" src="assets/kitten-reference-v3.webp" width="1203" height="1307" alt="一只圆圆眼睛、前爪自然垂下的小橘猫 / A wide-eyed ginger kitten standing with its little front paws by its sides" loading="lazy" draggable="false"></span></span></button>
         <div class="click-particles" id="click-particles" aria-hidden="true"></div>
         <span class="cat-cursor-note" aria-hidden="true">给你的 ♡ <span lang="en">for you</span></span>
         </div>
         <div class="bloom-space" id="bloom-scene" aria-labelledby="bloom-title" hidden inert>
           <div class="bloom-light" aria-hidden="true"></div><div class="bloom-petals" aria-hidden="true"></div>
-          <div class="bouquet-flight"><button class="bouquet-touch" type="button" aria-label="轻触玫瑰，让花瓣轻轻飘落 / Touch the roses to release a few petals"><span class="bouquet-drift"><img class="bloom-bouquet" src="assets/bouquet-evening-roses-v1.png" width="1215" height="1295" decoding="async" alt="一束酒红与玫粉色的玫瑰 / A lush bouquet of wine-red and raspberry roses" draggable="false"></span></button></div>
+          <div class="bouquet-flight"><button class="bouquet-touch" type="button" aria-label="轻触玫瑰，让花瓣轻轻飘落 / Touch the roses to release a few petals"><span class="bouquet-drift"><img class="bloom-bouquet" src="assets/bouquet-evening-roses-v1.webp" width="1215" height="1295" decoding="async" alt="一束酒红与玫粉色的玫瑰 / A lush bouquet of wine-red and raspberry roses" draggable="false"></span></button></div>
           <div class="bloom-message">
             <div class="bloom-copy">
               <span class="eyebrow" id="bloom-recipient">专属于你 / JUST FOR YOU</span>
@@ -329,6 +336,102 @@
       <div class="postcard-actions"><button class="text-button" id="postcard-flip" type="button" aria-controls="postcard-back" aria-expanded="false">翻到另一面 <small lang="en">Turn it over ↻</small></button><button class="text-button" id="postcard-keep" type="button" aria-pressed="false" hidden>珍藏这一刻 <small lang="en">Keep this little moment ♡</small></button></div>
       <p class="postcard-feedback" id="postcard-feedback" role="status">有些风景，想和你一起看。<em lang="en">Some views are better with you.</em></p>
     </section>
+
+    <section class="blue-invitation" id="blue-hour" aria-labelledby="blue-hour-title">
+      <div class="blue-horizon" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="blue-invitation-inner wrap">
+        <div class="blue-chapter reveal"><span>第二面 / SIDE B</span><i></i><span>A DIFFERENT SHADE OF US</span></div>
+        <h2 class="blue-heading reveal" id="blue-hour-title"><span class="zh">换一种心情，好吗？</span><em lang="en">Shall we change<br>the scene?</em></h2>
+        <p class="blue-intro reveal">让下一首歌，把夜晚染成蓝色。<span lang="en">One touch. A new song. A whole new shade of night.</span></p>
+        <div class="blue-button-stage">
+          <span class="blue-orbit orbit-a" aria-hidden="true"></span><span class="blue-orbit orbit-b" aria-hidden="true"></span>
+          <span class="blue-orbit-star" aria-hidden="true">✧</span>
+          <button class="blue-play" id="blue-play" type="button" aria-label="播放特别的人，进入蓝色时刻 / Play Special Person and enter the blue hour" aria-pressed="false"><svg class="blue-play-symbol" viewBox="0 0 24 24" aria-hidden="true"><path class="symbol-play" d="m8 5 11 7-11 7Z"/><path class="symbol-pause" d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg></button>
+          <span class="blue-button-note" aria-hidden="true">轻轻一点<em lang="en">let the blue in.</em></span>
+        </div>
+        <div class="blue-track"><h3>特別的人</h3><p>方大同 <span>／</span> KHALIL FONG</p><a href="https://open.spotify.com/track/0VTzUEuHYD8s7CgQ15cDPo" target="_blank" rel="noopener noreferrer">专辑原曲 · Original recording ↗</a></div>
+        <p id="blue-status" class="blue-status" role="status">为特别的你，留一首特别的歌。<span lang="en">A special song, for someone special.</span></p>
+        <div class="blue-next"><a href="#blue-memories" class="text-button">让回忆转起来 <small lang="en">Let the memories turn ↓</small></a><button type="button" id="back-to-rose">回到 5:20AM <span lang="en">Back to the rosy night ↺</span></button></div>
+      </div>
+    </section>
+
+    <section class="memory-player-section" id="blue-memories" aria-labelledby="player-title">
+      <div class="player-header wrap reveal"><span class="eyebrow">慢慢播放，好好珍藏 / ON REPEAT, IN MY HEART</span><h2 class="blue-heading" id="player-title"><span class="zh">把这一刻，放在心上。</span><em lang="en">Some moments<br>deserve a replay.</em></h2></div>
+      <div class="memory-player wrap" role="region" aria-roledescription="carousel" aria-label="回忆播放器 / Our little memory player">
+        <div class="player-topline"><span><i class="player-lamp" aria-hidden="true"></i> MEMORY RADIO</span><span>STEREO / 0520</span></div>
+        <div class="player-deck" id="player-deck">
+          <div class="player-orbit" aria-hidden="true"></div>
+          <div class="memory-record" aria-hidden="true"><div class="record-grooves"></div><span class="memory-record-label">特別的人<i>♡</i><small>SIDE B · JUST FOR YOU</small></span></div>
+          <div class="photo-stack" id="photo-stack">
+            <button class="player-photo" type="button" data-slot="0" aria-label="下一张回忆 / Show the next memory"><span class="player-photo-placeholder" aria-hidden="true"><span class="placeholder-cross">＋</span><span class="placeholder-number">01</span><small>A LITTLE SPACE FOR US</small></span><span class="player-photo-caption"><span>初见的光</span><em lang="en">The light we found.</em><i>01 / 06</i></span></button>
+            <button class="player-photo" type="button" data-slot="1" aria-hidden="true" tabindex="-1" inert><span class="player-photo-placeholder" aria-hidden="true"><span class="placeholder-cross">＋</span><span class="placeholder-number">02</span><small>A LITTLE SPACE FOR US</small></span><span class="player-photo-caption"><span>一起走过</span><em lang="en">A little way together.</em><i>02 / 06</i></span></button>
+            <button class="player-photo" type="button" data-slot="2" aria-hidden="true" tabindex="-1" inert><span class="player-photo-placeholder" aria-hidden="true"><span class="placeholder-cross">＋</span><span class="placeholder-number">03</span><small>A LITTLE SPACE FOR US</small></span><span class="player-photo-caption"><span>平凡的美好</span><em lang="en">Nothing ordinary, with you.</em><i>03 / 06</i></span></button>
+          </div>
+          <span class="player-handwriting" aria-hidden="true">值得反复想起。<em lang="en">again, and again.</em></span>
+        </div>
+        <div class="player-controls">
+          <button class="player-arrow" id="photo-previous" type="button" aria-label="上一张回忆 / Previous memory">←</button>
+          <div class="player-caption" aria-live="polite" aria-atomic="true"><span id="memory-caption-zh">初见的光</span><em id="memory-caption-en" lang="en">The light we found.</em><small id="memory-position">01 / 06</small></div>
+          <button class="player-arrow" id="photo-next" type="button" aria-label="下一张回忆 / Next memory">→</button>
+        </div>
+        <div class="player-scrubber" role="group" aria-label="选择回忆 / Choose a memory">
+          <button type="button" data-memory="0" aria-label="回忆 1 / Memory 1" aria-pressed="true"><span></span></button><button type="button" data-memory="1" aria-label="回忆 2 / Memory 2" aria-pressed="false"><span></span></button><button type="button" data-memory="2" aria-label="回忆 3 / Memory 3" aria-pressed="false"><span></span></button><button type="button" data-memory="3" aria-label="回忆 4 / Memory 4" aria-pressed="false"><span></span></button><button type="button" data-memory="4" aria-label="回忆 5 / Memory 5" aria-pressed="false"><span></span></button><button type="button" data-memory="5" aria-label="回忆 6 / Memory 6" aria-pressed="false"><span></span></button>
+        </div>
+        <div class="player-bottomline"><span>点击照片，翻到下一刻。<small lang="en">Tap a photo. Turn a little moment.</small></span><button type="button" id="player-music" aria-label="播放背景音乐 / Play background music" aria-pressed="false"><span aria-hidden="true">♪</span><span id="player-music-label">播放音乐 / Play music</span></button></div>
+      </div>
+      <p class="player-afterword">换了风景，心意依然。<em lang="en">A different sky. The same little love.</em></p>
+      <a class="moon-chapter-link" href="#two-windows">一起看月亮 <small lang="en">Meet me under the moon ↓</small></a>
+    </section>
+
+    <section class="shared-sky" id="two-windows" aria-labelledby="twosky-windows-title">
+      <div class="twosky-heading wrap">
+        <div class="twosky-eyebrow">隔着距离，分享月光 <span lang="en">A LITTLE CLOSER, UNDER THE MOON</span></div>
+        <h2 id="twosky-windows-title"><span class="zh">不同的窗，同一轮月亮。</span><em lang="en">Different windows.<br>The same moon.</em></h2>
+        <p>你在那里，我在这里。今晚，我们一起抬头。<span lang="en">You, over there. Me, over here. Looking up, together.</span></p>
+      </div>
+      <div class="twosky-stage" id="shared-twosky-stage">
+        <div class="twosky-panorama" aria-hidden="true"><img src="assets/shared-storybook-sky.webp" alt="" loading="lazy" decoding="async" width="1536" height="1024"></div>
+        <div class="twosky-stars" aria-hidden="true"></div>
+        <div class="twosky-cloud twosky-cloud-far" aria-hidden="true"></div>
+        <div class="twosky-moon-position">
+          <button class="twosky-moon" id="shared-moon" type="button" aria-label="向同一轮月亮许愿 / Make a wish under our shared moon" aria-describedby="twosky-wish-hint">
+            <span class="twosky-moon-halo" aria-hidden="true"></span>
+            <span class="twosky-moon-face" aria-hidden="true"><i class="twosky-crater crater-one"></i><i class="twosky-crater crater-two"></i><i class="twosky-crater crater-three"></i><span class="twosky-moon-eyes"></span><span class="twosky-moon-smile"></span><i class="twosky-cheek cheek-left"></i><i class="twosky-cheek cheek-right"></i></span>
+          </button>
+          <span class="twosky-moon-caption" aria-hidden="true">我们的月亮<em lang="en">our little moon</em></span>
+        </div>
+        <div class="twosky-meteors" aria-hidden="true"><i></i><i></i><i></i></div>
+        <figure class="twosky-window twosky-window-west">
+          <div class="twosky-window-illustration" aria-hidden="true">
+            <span class="twosky-shutter shutter-left"></span><span class="twosky-shutter shutter-right"></span>
+            <div class="twosky-window-body">
+              <div class="twosky-window-opening"><span class="twosky-glass"></span><span class="twosky-curtain curtain-left"></span><span class="twosky-curtain curtain-right"></span><span class="twosky-crossbar"></span></div>
+              <span class="twosky-window-frame"></span><span class="twosky-sill"></span>
+            </div>
+            <div class="twosky-plant"><i></i><i></i><i></i><i></i><span></span></div>
+          </div>
+          <figcaption><span class="twosky-country">哈萨克斯坦 <i>·</i> KAZAKHSTAN</span><h3>我的城市 <em lang="en">My city</em></h3><span class="twosky-window-note" lang="en">my side of the night.</span></figcaption>
+        </figure>
+        <figure class="twosky-window twosky-window-east">
+          <div class="twosky-window-illustration" aria-hidden="true">
+            <span class="twosky-shutter shutter-left"></span><span class="twosky-shutter shutter-right"></span>
+            <div class="twosky-window-body">
+              <div class="twosky-window-opening"><span class="twosky-glass"></span><span class="twosky-curtain curtain-left"></span><span class="twosky-curtain curtain-right"></span><span class="twosky-crossbar"></span></div>
+              <span class="twosky-window-frame"></span><span class="twosky-sill"></span>
+            </div>
+            <div class="twosky-teacup"><span></span><i></i><i></i></div>
+          </div>
+          <figcaption><span class="twosky-country">中国 <i>·</i> CHINA</span><h3>你的城市 <em lang="en">Your city</em></h3><span class="twosky-window-note" lang="en">your side of the night.</span></figcaption>
+        </figure>
+        <div class="twosky-cloud twosky-cloud-near" aria-hidden="true"></div>
+        <span class="twosky-between" aria-hidden="true">同一片夜空<em lang="en">one sky.<br>two hearts.</em></span>
+      </div>
+      <div class="twosky-afterword wrap">
+        <p class="twosky-wish-hint" id="twosky-wish-hint">点点月亮，许个小愿望。<span lang="en">Touch the moon. Make a little wish.</span></p>
+        <p class="twosky-wish-message" role="status" aria-live="polite" aria-atomic="true"><span>月光落在两扇窗前，就像我们并肩看着夜空。</span><em lang="en">For a moment, it feels like we are side by side.</em></p>
+      </div>
+    </section>
+
 
     <section class="closing section-space wrap" aria-labelledby="closing-title"><span class="closing-heart reveal" aria-hidden="true">♡</span><div class="eyebrow reveal">世界可以等等 / THE WORLD CAN WAIT</div><h2 class="reveal" id="closing-title"><span class="zh">再听一首吧。</span><br><em lang="en">Just one more song.</em></h2><a href="#home" class="text-button reveal">回到我们的时刻 / Back to our moment <span aria-hidden="true">↑</span></a></section>
   </main>
