@@ -1,18 +1,17 @@
-/* Birthday: an opening with 24 candles, a live countdown and a finale of wishes. */
+/* Birthday: a short opening, a live countdown, and the cake as the final page. */
 (() => {
   'use strict';
   // Edit here. `name` is optional: when set, the invitation card is skipped
   // and every greeting uses it.
   const BIRTHDAY = { year:2002, month:11, day:3, name:'' };
   const { gsap } = window;
-  const root = document.documentElement;
   const reducedMedia = matchMedia('(prefers-reduced-motion: reduce)');
   const reduced = () => reducedMedia.matches;
-  const intro = document.querySelector('#birthday-intro');
   let resolveIntro;
   window.Birthday = { name:BIRTHDAY.name.trim().slice(0, 24), introDone:new Promise(resolve => { resolveIntro = resolve; }) };
+  const name = window.Birthday.name;
   // Later scripts (the letter, the bouquet) read the guest name from storage.
-  if (window.Birthday.name) try { sessionStorage.setItem('520am-name', window.Birthday.name); } catch { /* Optional. */ }
+  if (name) try { sessionStorage.setItem('520am-name', name); } catch { /* Optional. */ }
 
   // Dates: local midnight of the birthday, so "today" matches her own calendar.
   const birthdayIn = year => new Date(year, BIRTHDAY.month - 1, BIRTHDAY.day);
@@ -29,8 +28,9 @@
     return { phase:'before', age:thisYear.getFullYear() - BIRTHDAY.year, ms:thisYear - now };
   }
   const age = birthdayState().age;
+  document.querySelectorAll('[data-bday-age]').forEach(element => { element.textContent = String(age); });
 
-  /* Confetti: one small pooled 2D engine shared by the opening and the finale. */
+  /* Confetti: one small pooled 2D engine for the celebration. */
   function confetti(canvas) {
     const context = canvas.getContext('2d');
     const palette = ['#f4b6cb', '#e9a2bc', '#f8dfe8', '#c93a5b', '#d8344a', '#e8c483', '#fff1d6'];
@@ -135,6 +135,7 @@
       });
     } catch { /* The celebration is complete without sound. */ }
   }
+  const playSong = () => { if (window.SiteMusic && window.SiteMusic.snapshot().state === 'off') window.SiteMusic.play('rose'); };
 
   /* Hero: a quiet countdown that becomes a greeting on the day. */
   const chip = document.querySelector('#birthday-chip');
@@ -153,62 +154,89 @@
   paintChip();
   setInterval(paintChip, 6e4);
 
-  /* Opening. */
-  if (!intro) { resolveIntro(); return; }
-  const stage = intro.querySelector('.bday-stage');
-  const cake = intro.querySelector('.bday-cake');
-  const mic = intro.querySelector('.bday-mic');
-  const enter = intro.querySelector('.bday-enter');
-  const skip = intro.querySelector('.bday-skip');
-  const status = intro.querySelector('.bday-status');
-  const introSparks = confetti(intro.querySelector('.bday-confetti'));
-  const name = window.Birthday.name;
-  let prelude, celebration, listening, blown = false, opened = false;
-  intro.querySelectorAll('[data-bday-age]').forEach(element => { element.textContent = String(age); });
-  intro.querySelectorAll('[data-bday-digit]').forEach(digit => { digit.textContent = String(age).padStart(2, '0')[digit.dataset.bdayDigit]; });
-  if (name) intro.querySelector('.bday-name').textContent = `${name}，`;
+  /* Opening: the clock reaches 05:20, the date arrives, then the way in. */
+  const intro = document.querySelector('#birthday-intro');
+  if (intro) {
+    let prelude, opened = false;
+    const state = birthdayState();
+    const greeting = intro.querySelector('.bday-today');
+    greeting.textContent = state.phase === 'today' ? `${name ? name + '，' : ''}今天，是你的生日。`
+      : state.phase === 'after' ? `${name ? name + '，' : ''}生日快乐，晚一点也算数。`
+      : `还有 ${Math.ceil(state.ms / 864e5)} 天，就是你的生日。`;
+    const enter = intro.querySelector('.bday-enter');
+    function close() {
+      if (!intro.open) return;
+      prelude?.kill();
+      const done = () => intro.close();
+      if (gsap && !reduced()) gsap.to(intro, { autoAlpha:0, duration:.6, ease:'power2.inOut', onComplete:() => { done(); gsap.set(intro, { clearProps:'opacity,visibility' }); } });
+      else done();
+    }
+    function open() {
+      opened = true;
+      intro.showModal();
+      document.body.classList.add('dialog-open');
+      intro.dispatchEvent(new Event('site:modal-open'));
+      if (!gsap || reduced()) { enter.focus({ preventScroll:true }); return; }
+      const clock = intro.querySelector('.bday-clock span');
+      clock.textContent = '05:19';
+      // Opacity only on the button: a hidden button cannot take focus.
+      prelude = gsap.timeline({ onComplete:() => enter.focus({ preventScroll:true }) })
+        .from('.bday-clock', { autoAlpha:0, y:8, duration:.8, ease:'power2.out' }, .2)
+        .call(() => { clock.textContent = '05:20'; intro.classList.add('clock-turned'); }, [], 1.35)
+        .from('.bday-line', { autoAlpha:0, y:14, duration:1, stagger:.7, ease:'power2.out' }, 1.7)
+        .from('.bday-date', { autoAlpha:0, letterSpacing:'.6em', duration:1.4, ease:'power3.out' }, 3.1)
+        .from('.bday-today', { autoAlpha:0, y:16, duration:1.1, ease:'power3.out' }, 4.2)
+        .from('.bday-enter, .bday-note', { opacity:0, y:12, duration:.8, stagger:.15, ease:'power2.out', clearProps:'transform,opacity' }, 5);
+    }
+    enter.addEventListener('click', () => { playSong(); close(); });
+    intro.querySelector('.bday-skip').addEventListener('click', close);
+    intro.addEventListener('click', event => { if (event.target.closest('.bday-prelude') && !event.target.closest('button')) prelude?.progress(1); });
+    intro.addEventListener('cancel', event => { event.preventDefault(); close(); });
+    intro.addEventListener('close', () => {
+      if (!document.querySelector('dialog[open]')) document.body.classList.remove('dialog-open');
+      intro.dispatchEvent(new Event('site:modal-close'));
+      try { sessionStorage.setItem('520am-birthday-seen', 'yes'); } catch { /* Optional. */ }
+      if (opened) { opened = false; resolveIntro(); }
+    });
+    document.addEventListener('visibilitychange', () => { if (document.hidden) prelude?.progress(1); });
+    let seen = false;
+    try { seen = sessionStorage.getItem('520am-birthday-seen') === 'yes'; } catch { /* Optional. */ }
+    if (seen) resolveIntro(); else open();
+  } else resolveIntro();
+
+  /* Final page: the cake, its candles, and what follows. */
+  const finale = document.querySelector('#birthday-finale');
+  if (!finale) return;
+  const cake = finale.querySelector('#cake-button');
+  const mic = finale.querySelector('.bday-mic');
+  const celebrate = finale.querySelector('#cake-celebrate');
+  const status = finale.querySelector('.cake-status');
+  const blessing = finale.querySelector('.finale-blessing');
+  const sky = document.createElement('canvas');
+  sky.className = 'finale-confetti';
+  sky.setAttribute('aria-hidden', 'true');
+  document.body.append(sky);
+  const sparks = confetti(sky);
+  const blessings = [
+    '岁岁平安，万事胜意。',
+    '所求皆如愿，所行化坦途。',
+    `${age} 岁，也要一直闪闪发光。`,
+    '本命年，红色的好运都给你。',
+    '愿你被这个世界温柔以待。',
+    '平安喜乐，年年有今日。'
+  ];
+  let blown = false, listening, wish = 0, visible = false;
+  if (name) finale.querySelector('.finale-name').textContent = `${name}，`;
   if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) mic.hidden = true;
 
-  function step(next) {
-    stage.dataset.step = next;
-    intro.querySelectorAll('[data-step-view]').forEach(view => {
-      const active = view.dataset.stepView === next;
-      view.inert = !active;
-      view.setAttribute('aria-hidden', String(!active));
-    });
+  // `inset` is how far down the viewport the target's top should land.
+  function frame(target, inset = .04) {
+    const event = new CustomEvent('site:frame-scene', { cancelable:true, detail:{ target, inset, duration:1.4 } });
+    if (document.dispatchEvent(event)) scrollTo({ top:scrollY + target.getBoundingClientRect().top - innerHeight * inset, behavior:reduced() ? 'instant' : 'smooth' });
   }
-  function showCake() {
-    if (stage.dataset.step !== 'prelude') return;
-    prelude?.kill();
-    step('cake');
-    if (gsap && !reduced()) // Opacity only: a hidden button cannot take focus.
-    gsap.from('.bday-cake-scene > *', { y:18, opacity:0, duration:.9, stagger:.09, ease:'power3.out', clearProps:'transform,opacity' });
-    cake.focus({ preventScroll:true });
-  }
-  function open({ atCake = false } = {}) {
-    opened = true; blown = false;
-    celebration?.progress(1);
-    root.classList.add('birthday-intro-open');
-    intro.classList.remove('is-blown', 'clock-turned');
-    intro.style.removeProperty('--breath');
-    status.textContent = '';
-    mic.textContent = '或者，对着麦克风吹一口气';
-    mic.disabled = false;
-    if (!intro.open) intro.showModal();
-    document.body.classList.add('dialog-open');
-    intro.dispatchEvent(new Event('site:modal-open'));
-    step('prelude');
-    if (atCake || reduced() || !gsap) { showCake(); return; }
-    // The clock reaches 05:20, then the date arrives line by line.
-    const clock = intro.querySelector('.bday-clock span');
-    clock.textContent = '05:19';
-    gsap.set('.bday-prelude', { clearProps:'opacity,visibility,transform' });
-    prelude = gsap.timeline({ onComplete:showCake })
-      .from('.bday-clock', { autoAlpha:0, y:8, duration:.8, ease:'power2.out' }, .2)
-      .call(() => { clock.textContent = '05:20'; intro.classList.add('clock-turned'); }, [], 1.35)
-      .from('.bday-line', { autoAlpha:0, y:14, duration:1, stagger:.7, ease:'power2.out' }, 1.7)
-      .from('.bday-date', { autoAlpha:0, letterSpacing:'.6em', duration:1.4, ease:'power3.out' }, 3.1)
-      .to('.bday-prelude', { autoAlpha:0, y:-14, duration:.7, ease:'power2.in' }, 5.6);
+  function cheer(origin, count) {
+    const bounds = origin.getBoundingClientRect();
+    sparks.burst(bounds.left + bounds.width / 2, bounds.top + bounds.height * .3, count ?? (innerWidth < 760 ? 100 : 160));
   }
   function stopListening() {
     if (!listening) return;
@@ -216,30 +244,45 @@
     listening.stream.getTracks().forEach(track => track.stop());
     listening.context.close().catch(() => {});
     listening = null;
+    finale.style.setProperty('--breath', '0');
   }
   function blow() {
-    if (blown || stage.dataset.step !== 'cake') return;
+    if (blown) return;
     blown = true;
     stopListening();
-    intro.classList.add('is-blown');
+    finale.dataset.cake = 'out';
+    cake.setAttribute('aria-label', '蜡烛已经吹灭 / The candles are out');
     status.textContent = '蜡烛吹灭了。生日快乐！';
     chime([523.25, 659.25, 783.99, 1046.5, 1318.5]);
-    // A direct tap keeps the gesture for audio; the mic path retries on "enter".
-    if (window.SiteMusic && window.SiteMusic.snapshot().state !== 'playing') window.SiteMusic.play('rose');
+    playSong();
+    const first = celebrate.hidden;
     setTimeout(() => {
-      if (!intro.open) return;
-      step('celebrate');
-      const bounds = cake.getBoundingClientRect();
-      introSparks.burst(bounds.left + bounds.width / 2, bounds.top + bounds.height * .3, innerWidth < 760 ? 110 : 170);
-      introSparks.drizzle(5);
-      if (gsap && !reduced()) {
-        celebration = gsap.timeline()
+      celebrate.hidden = false;
+      cheer(cake);
+      if (first && gsap && !reduced()) {
+        gsap.timeline()
           .from('.bday-title > span', { autoAlpha:0, y:40, rotation:() => (Math.random() - .5) * 14, duration:1.1, stagger:.12, ease:'back.out(1.6)', clearProps:'transform,opacity,visibility' }, 0)
-          .from('.bday-seal', { autoAlpha:0, scale:1.9, rotation:-24, duration:.55, ease:'power4.in', clearProps:'transform,opacity,visibility' }, .75)
-          .from('.bday-after', { opacity:0, y:14, duration:.8, stagger:.12, ease:'power2.out', clearProps:'transform,opacity' }, 1.1);
+          .from('.cake-celebrate .bday-seal', { autoAlpha:0, scale:1.9, rotation:-24, duration:.55, ease:'power4.in', clearProps:'transform,opacity,visibility' }, .75)
+          .from('.cake-celebrate .bday-after', { opacity:0, y:14, duration:.8, stagger:.12, ease:'power2.out', clearProps:'transform,opacity' }, 1.1);
       }
-      enter.focus({ preventScroll:true });
-    }, reduced() ? 0 : 900);
+      // The greeting grows the last section only, so no trigger above it moves;
+      // a ScrollTrigger refresh here would also restore the old scroll position.
+      // Lenis re-measures the page limit after ~250ms; scroll once it knows the new height,
+      // keeping the blown-out cake in view above the greeting.
+      if (first) setTimeout(() => frame(celebrate, innerWidth < 760 ? .3 : .5), 360);
+      sparks.drizzle(visible ? 2.4 : 0);
+    }, reduced() ? 0 : 1100);
+  }
+  function relight() {
+    blown = false;
+    finale.dataset.cake = 'lit';
+    cake.setAttribute('aria-label', '吹灭蜡烛 / Blow out the candles');
+    status.textContent = '蜡烛又点亮了，再许一个愿吧。';
+    mic.disabled = false;
+    mic.textContent = '或者，对着麦克风吹一口气';
+    chime([392, 523.25], .1, .03);
+    frame(finale.querySelector('.cake-stage'));
+    cake.focus({ preventScroll:true });
   }
   async function listen() {
     if (listening || blown) return;
@@ -264,7 +307,7 @@
         for (const value of samples) sum += value * value;
         // A breath is a sustained, broadband rush: loud for several frames in a row.
         loud = Math.sqrt(sum / samples.length) > .085 ? loud + 1 : Math.max(0, loud - 1);
-        intro.style.setProperty('--breath', Math.min(1, loud / 7).toFixed(2));
+        finale.style.setProperty('--breath', Math.min(1, loud / 7).toFixed(2));
         if (loud >= 7) { blow(); return; }
         if (performance.now() - started > 20000) { stopListening(); mic.disabled = false; mic.textContent = '没听到，轻触烛火也可以'; return; }
         listening.frame = requestAnimationFrame(sample);
@@ -276,74 +319,19 @@
       mic.textContent = '麦克风不可用，轻触烛火就好';
     }
   }
-  function close() {
-    if (!intro.open) return;
-    prelude?.kill(); celebration?.progress(1);
-    stopListening();
-    const done = () => { introSparks.clear(); intro.close(); };
-    if (gsap && !reduced()) gsap.to(intro, { autoAlpha:0, duration:.6, ease:'power2.inOut', onComplete:() => { done(); gsap.set(intro, { clearProps:'opacity,visibility' }); } });
-    else done();
-  }
   cake.addEventListener('click', blow);
   mic.addEventListener('click', listen);
-  enter.addEventListener('click', () => {
-    if (window.SiteMusic && window.SiteMusic.snapshot().state === 'off') window.SiteMusic.play('rose');
-    close();
-  });
-  skip.addEventListener('click', close);
-  intro.addEventListener('click', event => { if (event.target.closest('.bday-prelude') || event.target === intro) showCake(); });
-  intro.addEventListener('cancel', event => { event.preventDefault(); close(); });
-  intro.addEventListener('close', () => {
-    stopListening();
-    root.classList.remove('birthday-intro-open');
-    if (!document.querySelector('dialog[open]')) document.body.classList.remove('dialog-open');
-    intro.dispatchEvent(new Event('site:modal-close'));
-    try { sessionStorage.setItem('520am-birthday-seen', 'yes'); } catch { /* Optional. */ }
-    if (opened) { opened = false; resolveIntro(); }
-  });
-  document.addEventListener('visibilitychange', () => { if (document.hidden) prelude?.progress(1); });
-
-  let seen = false;
-  try { seen = sessionStorage.getItem('520am-birthday-seen') === 'yes'; } catch { /* Optional. */ }
-  if (seen) resolveIntro();
-  else open();
-
-  /* Finale: blessings, petals and the candles once more. */
-  const finale = document.querySelector('#birthday-finale');
-  if (!finale) return;
-  const blessings = [
-    '岁岁平安，万事胜意。',
-    '所求皆如愿，所行化坦途。',
-    `${age} 岁，也要一直闪闪发光。`,
-    '本命年，红色的好运都给你。',
-    '愿你被这个世界温柔以待。',
-    '平安喜乐，年年有今日。'
-  ];
-  const blessing = finale.querySelector('.finale-blessing');
-  const wishButton = finale.querySelector('#finale-wish');
-  const sky = document.createElement('canvas');
-  sky.className = 'finale-confetti';
-  sky.setAttribute('aria-hidden', 'true');
-  document.body.append(sky);
-  const finaleSparks = confetti(sky);
-  let wish = 0, cheered = false;
-  finale.querySelectorAll('[data-bday-age]').forEach(element => { element.textContent = String(age); });
-  if (window.Birthday.name) finale.querySelector('.finale-name').textContent = `${window.Birthday.name}，`;
-  function cheer(origin) {
-    const bounds = origin.getBoundingClientRect();
-    finaleSparks.burst(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2, innerWidth < 760 ? 90 : 140);
-  }
-  wishButton.addEventListener('click', () => {
+  finale.querySelector('#finale-relight').addEventListener('click', relight);
+  finale.querySelector('#finale-wish').addEventListener('click', event => {
     blessing.textContent = blessings[wish++ % blessings.length];
     if (gsap && !reduced()) gsap.fromTo(blessing, { autoAlpha:0, y:10, scale:.96 }, { autoAlpha:1, y:0, scale:1, duration:.6, ease:'back.out(1.5)', clearProps:'transform,opacity,visibility' });
     chime([659.25, 783.99, 1046.5], .09, .035);
-    cheer(wishButton);
+    cheer(event.currentTarget, innerWidth < 760 ? 80 : 120);
   });
-  finale.querySelector('#finale-candles').addEventListener('click', () => open({ atCake:true }));
   new IntersectionObserver(entries => {
-    const visible = entries[0].isIntersecting;
-    if (visible && !cheered) { cheered = true; setTimeout(() => cheer(finale.querySelector('h2')), 450); }
-    finaleSparks.drizzle(visible && !document.hidden ? 2.2 : 0);
-  }, { threshold:.45 }).observe(finale);
-  document.addEventListener('visibilitychange', () => { if (document.hidden) finaleSparks.clear(); });
+    visible = entries[0].isIntersecting;
+    sparks.drizzle(visible && blown && !document.hidden ? 2.4 : 0);
+    if (!visible && listening) { stopListening(); mic.disabled = false; mic.textContent = '或者，对着麦克风吹一口气'; }
+  }, { threshold:.2 }).observe(finale);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { sparks.clear(); stopListening(); } });
 })();

@@ -8,7 +8,7 @@
   <meta name="description" content="一封只写给你的情书。A little midnight world, kept just for you.">
   <title>5:20 AM — 只为你 · Just for you</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="assets/fonts/fonts.css?v=2">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=3">
   <link rel="stylesheet" href="assets/vendor/lenis-1.3.26.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="motion.css">
@@ -24,14 +24,15 @@
   <link rel="stylesheet" href="quiet-garden.css?v=1">
   <link rel="stylesheet" href="moon-garden.css?v=repair2">
   <link rel="stylesheet" href="garden-panorama.css?v=2">
-  <link rel="stylesheet" href="birthday.css?v=2">
+  <link rel="stylesheet" href="birthday.css?v=8">
   <script src="assets/vendor/gsap-3.15.0.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger-3.15.0.min.js" defer></script>
   <script src="assets/vendor/lenis-1.3.26.min.js" defer></script>
   <script src="app.js?v=local-music1" defer></script>
   <script src="music.js?v=quiet-garden1" defer></script>
-  <script src="birthday.js?v=2" defer></script>
+  <script src="birthday.js?v=8" defer></script>
   <script src="photos.js?v=1" defer></script>
+  <script src="lanterns.js?v=2" defer></script>
   <script src="scene-runtime.js?v=1" defer></script>
   <script src="bouquet-depth.js?v=polish1" defer></script>
   <script src="experience.js?v=birthday1" defer></script>
@@ -44,7 +45,7 @@
   <script src="continuity.js?v=moon-garden1" defer></script>
   <script src="two-windows.js?v=polish1" defer></script>
   <script src="memory-ribbon.js?v=panorama2" defer></script>
-  <script src="motion.js?v=birthday1" defer></script>
+  <script src="motion.js?v=birthday3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到内容 / Skip to content</a>
@@ -414,16 +415,55 @@
     </section>
 
 
-    <section class="closing birthday-finale section-space wrap" id="birthday-finale" aria-labelledby="closing-title">
-      <span class="closing-heart reveal" aria-hidden="true">♡</span>
-      <div class="eyebrow reveal">11 · 03 · 本命年</div>
-      <h2 class="reveal" id="closing-title"><span class="zh"><span class="finale-name"></span>生日快乐。</span><em lang="en">Happy <span data-bday-age>24</span>th birthday.</em></h2>
-      <p class="finale-blessing reveal" role="status" aria-live="polite">世界可以等等，今天只属于你。</p>
-      <div class="finale-actions reveal">
-        <button class="primary-button" id="finale-wish" type="button">再许一个愿 <span aria-hidden="true">✧</span></button>
-        <button class="text-button" id="finale-candles" type="button">再吹一次蜡烛 ↺</button>
+    <section class="lantern-sky" id="lanterns" aria-labelledby="lantern-title">
+      <div class="lantern-heading wrap">
+        <span class="eyebrow reveal">二十四盏灯 / TWENTY-FOUR LITTLE LIGHTS</span>
+        <h2 class="reveal" id="lantern-title"><span class="zh">放一盏灯，许一个愿。</span><em lang="en">A light for every year.</em></h2>
+        <p class="lantern-intro reveal">每一盏灯，都替我说一句生日祝福。轻点夜空，让它们慢慢飞起来。</p>
       </div>
-      <a href="#home" class="text-button finale-home reveal">回到我们的时刻 <span aria-hidden="true">↑</span></a>
+      <div class="lantern-stage" id="lantern-stage">
+        <div class="lantern-stars" aria-hidden="true"></div>
+        <div class="lantern-field" aria-hidden="true"></div>
+        <svg class="lantern-hills" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true"><path class="hill-far" d="M0 150 Q160 92 320 132 T640 118 T960 96 T1260 128 T1440 110 V260 H0Z"/><path class="hill-near" d="M0 200 Q200 150 420 186 T860 170 T1240 192 T1440 176 V260 H0Z"/><g class="town-lights"><circle cx="212" cy="196" r="1.6"/><circle cx="236" cy="190" r="1.2"/><circle cx="530" cy="182" r="1.4"/><circle cx="548" cy="186" r="1"/><circle cx="790" cy="174" r="1.5"/><circle cx="1012" cy="184" r="1.2"/><circle cx="1030" cy="180" r="1.6"/><circle cx="1290" cy="190" r="1.3"/></g></svg>
+        <p class="lantern-wish" id="lantern-wish" role="status" aria-live="polite"></p>
+        <p class="lantern-tap" aria-hidden="true">轻点夜空</p>
+      </div>
+      <div class="lantern-controls wrap">
+        <button class="primary-button" id="lantern-release" type="button">放飞一盏 <span aria-hidden="true">✧</span></button>
+        <span class="lantern-count" id="lantern-count" aria-live="off">0 / 24</span>
+        <a class="text-button lantern-next" href="#birthday-finale">去吹蜡烛 <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <section class="cake-finale" id="birthday-finale" aria-labelledby="closing-title" data-cake="lit">
+      <div class="cake-heading wrap">
+        <span class="eyebrow reveal">11 · 03 · 本命年</span>
+        <h2 class="reveal" id="closing-title"><span class="zh"><span class="finale-name"></span>许个愿吧。</span><em lang="en">Make a wish.</em></h2>
+        <p class="cake-hint reveal">闭上眼睛，想好了，再轻轻吹灭蜡烛。</p>
+      </div>
+      <div class="cake-stage">
+        <div class="cake-glow" aria-hidden="true"></div>
+        <button class="cake-button" id="cake-button" type="button" aria-label="吹灭蜡烛 / Blow out the candles">
+          <img class="cake-img cake-dark" src="assets/cake-dark.webp" alt="" width="960" height="1030" loading="lazy" decoding="async" draggable="false">
+          <img class="cake-img cake-lit" src="assets/cake-lit.webp" alt="一个两层的生日蛋糕，覆盆子淋面、鲜莓和奶油花，插着数字蜡烛 24" width="960" height="1030" loading="lazy" decoding="async" draggable="false">
+          <span class="cake-flame flame-one" aria-hidden="true"><i></i><b></b></span>
+          <span class="cake-flame flame-two" aria-hidden="true"><i></i><b></b></span>
+        </button>
+      </div>
+      <p class="cake-tap"><span>轻触烛火</span><button class="bday-mic" type="button">或者，对着麦克风吹一口气</button></p>
+      <div class="cake-celebrate" id="cake-celebrate" hidden>
+        <span class="bday-seal" aria-hidden="true">本命<br>年</span>
+        <p class="bday-title" aria-label="生日快乐"><span>生</span><span>日</span><span>快</span><span>乐</span></p>
+        <em class="bday-after" lang="en">Happy <span data-bday-age>24</span>th birthday.</em>
+        <p class="bday-after bday-years"><span data-bday-age>24</span> 岁，是你的本命年。<br>愿红色的好运，陪你一整年。</p>
+        <p class="finale-blessing bday-after" role="status" aria-live="polite">世界可以等等，今天只属于你。</p>
+        <div class="finale-actions bday-after">
+          <button class="primary-button" id="finale-wish" type="button">再许一个愿 <span aria-hidden="true">✧</span></button>
+          <button class="text-button" id="finale-relight" type="button">再点一次蜡烛 ↺</button>
+        </div>
+        <a href="#home" class="text-button finale-home bday-after">回到我们的时刻 <span aria-hidden="true">↑</span></a>
+      </div>
+      <span class="sr-only cake-status" role="status" aria-live="polite"></span>
     </section>
   </main>
   <footer class="site-footer wrap"><a class="wordmark" href="#home">5:20<span>AM</span></a><span>小小天地，满满心意。</span><span aria-hidden="true">♡</span></footer>
@@ -433,60 +473,18 @@
 
   <dialog id="birthday-intro" class="birthday-intro" data-lenis-prevent aria-labelledby="bday-title">
     <div class="bday-glow" aria-hidden="true"></div>
-    <canvas class="bday-confetti" aria-hidden="true"></canvas>
     <button type="button" class="bday-skip">跳过 <span aria-hidden="true">→</span></button>
-    <div class="bday-stage" data-step="prelude">
-      <div class="bday-prelude" data-step-view="prelude">
+    <div class="bday-stage">
+      <div class="bday-prelude">
         <p class="bday-clock" aria-hidden="true"><span>05:20</span><small>AM</small></p>
         <p class="bday-line">有一天，</p>
         <p class="bday-line">世界悄悄地，多了一点温柔。</p>
         <p class="bday-date"><small>2002</small><strong>11 · 03</strong></p>
-        <p class="bday-touch" aria-hidden="true">轻触继续</p>
-      </div>
-      <div class="bday-cake-scene" data-step-view="cake">
-        <h2 id="bday-title"><span class="zh"><span class="bday-name"></span>许个愿吧。</span><em lang="en">Make a wish.</em></h2>
-        <p class="bday-hint">闭上眼睛，想好了，再轻轻吹灭蜡烛。</p>
-        <button class="bday-cake" type="button" aria-label="吹灭蜡烛 / Blow out the candles">
-          <span class="bday-candles" aria-hidden="true">
-            <span class="bday-candle candle-one"><i class="bday-flame"></i><i class="bday-smoke"></i></span>
-            <span class="bday-candle candle-two"><i class="bday-flame"></i><i class="bday-smoke"></i></span>
-          </span>
-          <svg class="bday-cake-art" viewBox="0 -40 320 250" aria-hidden="true">
-            <defs>
-              <pattern id="bday-wax" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(-36)"><rect width="11" height="11" fill="#fff3ee"/><rect width="11" height="4.5" fill="#efa9c0"/></pattern>
-              <linearGradient id="bday-cream" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#e6bcc4"/><stop offset=".45" stop-color="#f7e2e1"/><stop offset="1" stop-color="#c993a3"/></linearGradient>
-              <linearGradient id="bday-wine" x2="0" y2="1"><stop stop-color="#a8314f"/><stop offset="1" stop-color="#6e1a33"/></linearGradient>
-              <radialGradient id="bday-plate" cx=".5" cy=".4"><stop stop-color="#5a2d40"/><stop offset="1" stop-color="#1c0d15"/></radialGradient>
-            </defs>
-            <ellipse cx="160" cy="194" rx="152" ry="15" fill="url(#bday-plate)"/>
-            <ellipse cx="160" cy="191" rx="134" ry="9" fill="#f3b8cb" opacity=".16"/>
-            <path d="M38 112v68q0 12 122 12t122-12v-68z" fill="url(#bday-cream)"/>
-            <ellipse cx="160" cy="112" rx="122" ry="17" fill="#f9e8e6"/>
-            <path d="M38 112q0 10 18 14v16q0 6 5 6t5-6v-12q14 4 30 5v24q0 7 6 7t6-7v-23q22 2 52 2v12q0 6 5 6t5-6v-12q30-1 50-5v20q0 6 6 6t6-6v-23q16-5 16-12z" fill="url(#bday-wine)"/>
-            <path d="M82 62v48q0 9 78 9t78-9v-48z" fill="url(#bday-cream)"/>
-            <ellipse cx="160" cy="62" rx="78" ry="12" fill="#fbeeea"/>
-            <path d="M82 62q0 8 12 10v12q0 5 4 5t4-5v-10q12 2 24 2v16q0 5 5 5t5-5v-15q20 1 40-1v9q0 4 4 4t4-4v-10q24-3 26-8z" fill="url(#bday-wine)"/>
-            <g fill="#fbeeea">
-              <circle cx="48" cy="180" r="5"/><circle cx="66" cy="184" r="5"/><circle cx="86" cy="187" r="5"/><circle cx="108" cy="189" r="5"/><circle cx="131" cy="190" r="5"/><circle cx="154" cy="191" r="5"/><circle cx="177" cy="190" r="5"/><circle cx="200" cy="189" r="5"/><circle cx="222" cy="187" r="5"/><circle cx="243" cy="184" r="5"/><circle cx="262" cy="180" r="5"/>
-              <circle cx="92" cy="112" r="3.6"/><circle cx="108" cy="115" r="3.6"/><circle cx="126" cy="117" r="3.6"/><circle cx="145" cy="118" r="3.6"/><circle cx="165" cy="118" r="3.6"/><circle cx="184" cy="117" r="3.6"/><circle cx="202" cy="115" r="3.6"/><circle cx="218" cy="112" r="3.6"/>
-            </g>
-            <g class="bday-digits" fill="url(#bday-wax)" stroke="#8c3352" stroke-opacity=".55" stroke-width="1.4" text-anchor="middle"><path d="M137 12v-8M183 12v-8" stroke="#3a241d" stroke-opacity="1" stroke-width="1.8" stroke-linecap="round"/><text x="135" y="70" data-bday-digit="0">2</text><text x="185" y="70" data-bday-digit="1">4</text></g>
-            <g fill="#e8c483"><circle cx="70" cy="160" r="1.6"/><circle cx="118" cy="168" r="1.6"/><circle cx="205" cy="166" r="1.6"/><circle cx="252" cy="158" r="1.6"/><circle cx="122" cy="98" r="1.4"/><circle cx="198" cy="96" r="1.4"/></g>
-          </svg>
-          <img class="bday-rose rose-left" src="assets/rose-floating-v1.webp" alt="" width="256" height="256" decoding="async">
-          <img class="bday-rose rose-right" src="assets/rose-floating-v1.webp" alt="" width="256" height="256" decoding="async">
-        </button>
-        <p class="bday-tap"><span>轻触烛火</span><button class="bday-mic" type="button">或者，对着麦克风吹一口气</button></p>
-      </div>
-      <div class="bday-celebrate" data-step-view="celebrate">
-        <span class="bday-seal" aria-hidden="true">本命<br>年</span>
-        <h2 class="bday-title" aria-label="生日快乐"><span>生</span><span>日</span><span>快</span><span>乐</span></h2>
-        <em class="bday-after" lang="en">Happy <span data-bday-age>24</span>th birthday.</em>
-        <p class="bday-after"><span data-bday-age>24</span> 岁，是你的本命年。<br>愿红色的好运，陪你一整年。</p>
-        <button class="primary-button bday-enter bday-after" type="button">走进为你准备的小世界 <span aria-hidden="true">↗</span></button>
+        <h2 class="bday-today" id="bday-title"><span class="bday-name"></span>生日快乐。</h2>
+        <button class="primary-button bday-enter" type="button">走进为你准备的小世界 <span aria-hidden="true">↗</span></button>
+        <p class="bday-note">最后，有一个蛋糕在等你。</p>
       </div>
     </div>
-    <p class="sr-only bday-status" role="status" aria-live="polite"></p>
   </dialog>
 
   <dialog id="entry-gate" class="entry-gate" data-lenis-prevent aria-labelledby="entry-title">

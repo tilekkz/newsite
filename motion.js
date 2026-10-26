@@ -125,9 +125,9 @@
     const cleanupRibbon = window.MemoryRibbon?.animate({ gsap, ScrollTrigger });
     ScrollTrigger.sort();
 
-    gsap.fromTo('.closing-heart', { y: 20 * amount, scale: 0.92 }, {
-      y: -12 * amount, scale: 1.06, ease: 'none',
-      scrollTrigger: { trigger: '.closing', start: 'top bottom', end: 'bottom top', scrub: 0.35 }
+    gsap.fromTo('.lantern-hills', { yPercent: 6 * amount }, {
+      yPercent: -4 * amount, ease: 'none',
+      scrollTrigger: { trigger: '#lanterns', start: 'top bottom', end: 'bottom top', scrub: 0.4 }
     });
 
     function followAnchor(event) {
@@ -159,7 +159,7 @@
       if (!lenis) return;
       event.preventDefault();
       lenis.scrollTo(event.detail.target, {
-        offset: -innerHeight * .04, duration: .55, lerp: 0,
+        offset: -innerHeight * (event.detail.inset ?? .04), duration: event.detail.duration ?? .55, lerp: 0,
         easing: progress => 1 - Math.pow(1 - progress, 3)
       });
     }

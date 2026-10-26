@@ -1,117 +1,147 @@
-/* Birthday opening, hero countdown and finale. */
-.birthday-intro { --flame:1; --breath:0; position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none; margin:0; padding:0; border:0; border-radius:0; overflow:hidden; background:#0b0609; color:var(--ink); isolation:isolate; }
+/* Birthday: opening, hero countdown, sky lanterns and the cake finale. */
+
+/* ---------- Opening ---------- */
+.birthday-intro { position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none; margin:0; padding:0; border:0; border-radius:0; overflow:hidden; background:#0b0609; color:var(--ink); isolation:isolate; }
 .birthday-intro::backdrop { background:#0b0609; }
-.bday-glow { position:absolute; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(ellipse 46% 40% at 50% 62%, #ffb27a2e, transparent 70%), radial-gradient(ellipse 90% 70% at 50% 110%, #5a1a3359, transparent 70%); opacity:.35; transition:opacity 1.2s var(--motion), background 1.2s var(--motion); }
-.birthday-intro:has(.bday-stage[data-step="cake"]) .bday-glow { opacity:1; animation:bday-glow-flicker 3.4s ease-in-out infinite alternate; }
-.birthday-intro.is-blown .bday-glow { opacity:.15; animation:none; }
-.birthday-intro:has(.bday-stage[data-step="celebrate"]) .bday-glow { opacity:1; animation:none; background:radial-gradient(ellipse 60% 48% at 50% 46%, #e9a2bc33, transparent 72%), radial-gradient(ellipse 40% 30% at 50% 40%, #d8344a1f, transparent 70%); }
-.bday-confetti { position:absolute; inset:0; width:100%; height:100%; z-index:3; pointer-events:none; }
+.bday-glow { position:absolute; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(ellipse 50% 42% at 50% 46%, #e9a2bc1f, transparent 72%), radial-gradient(ellipse 90% 60% at 50% 115%, #5a1a3352, transparent 70%); }
 .bday-skip { position:absolute; z-index:4; top:max(22px, env(safe-area-inset-top)); right:max(24px, env(safe-area-inset-right)); padding:8px 14px; border:1px solid #f1bfd02e; border-radius:40px; background:#ffffff08; color:#c6a9b7; font:12px var(--zh); letter-spacing:.1em; transition:color .3s var(--motion), border-color .3s var(--motion); }
 .bday-skip:hover { color:var(--ink); border-color:#f1bfd066; }
-.bday-stage { position:relative; height:100%; display:grid; place-items:center; padding:max(70px, env(safe-area-inset-top)) 24px max(40px, env(safe-area-inset-bottom)); }
-[data-step-view] { grid-area:1/1; display:flex; flex-direction:column; align-items:center; text-align:center; max-width:min(720px, 100%); visibility:hidden; opacity:0; transition:opacity .8s var(--motion), visibility 0s .8s; }
-.bday-stage[data-step="prelude"] [data-step-view="prelude"], .bday-stage[data-step="cake"] [data-step-view="cake"], .bday-stage[data-step="celebrate"] [data-step-view="celebrate"] { visibility:visible; opacity:1; transition:opacity .8s var(--motion); }
-
-/* Prelude */
-.bday-prelude { cursor:pointer; gap:6px; }
-.bday-clock { display:flex; align-items:baseline; gap:8px; margin-bottom:38px; font:400 clamp(44px, 9vw, 76px)/1 var(--mono); letter-spacing:.06em; color:#f08bb3; text-shadow:0 0 18px #f0679f8c, 0 0 46px #e0487f40; }
+.bday-stage { height:100%; display:grid; place-items:center; padding:max(70px, env(safe-area-inset-top)) 24px max(40px, env(safe-area-inset-bottom)); overflow:auto; }
+.bday-prelude { display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; cursor:pointer; }
+.bday-clock { display:flex; align-items:baseline; gap:8px; margin-bottom:34px; font:400 clamp(44px, 9vw, 76px)/1 var(--mono); letter-spacing:.06em; color:#f08bb3; text-shadow:0 0 18px #f0679f8c, 0 0 46px #e0487f40; }
 .bday-clock small { font-size:.24em; letter-spacing:.12em; color:#d283a5; }
 .clock-turned .bday-clock span { animation:bday-clock-turn .6s steps(2) 1; }
-.bday-line { font:400 clamp(18px, 2.6vw, 24px)/1.9 var(--zh); letter-spacing:.12em; color:#e9d6dc; }
-.bday-date { display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:34px; letter-spacing:.3em; }
+.bday-line { font:400 clamp(17px, 2.4vw, 22px)/1.9 var(--zh); letter-spacing:.12em; color:#e9d6dc; }
+.bday-date { display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:30px; letter-spacing:.3em; }
 .bday-date small { font:12px var(--mono); color:#a98798; letter-spacing:.4em; }
-.bday-date strong { font:500 clamp(44px, 8vw, 74px)/1 var(--serif); color:var(--pink); letter-spacing:.14em; }
-.bday-touch { margin-top:46px; font:11px var(--zh); letter-spacing:.3em; color:#8f7080; animation:bday-breathe 2.6s ease-in-out infinite alternate; }
+.bday-date strong { font:500 clamp(44px, 8vw, 74px)/1 var(--serif); font-variant-numeric:lining-nums; color:var(--pink); letter-spacing:.14em; }
+.bday-today { margin:34px 0 0; font:400 clamp(24px, 3.6vw, 36px)/1.5 var(--serif); font-family:var(--serif), var(--zh); font-variant-numeric:lining-nums; letter-spacing:.12em; color:var(--ink); }
+.bday-enter { margin-top:34px; padding-left:26px; font:600 13px var(--zh); letter-spacing:.06em; cursor:pointer; }
+.bday-note { margin-top:18px; font:12px var(--zh); letter-spacing:.2em; color:#9b7c8b; }
 
-/* Cake */
-.bday-cake-scene h2 { display:flex; flex-direction:column; align-items:center; gap:6px; }
-.bday-cake-scene h2 .zh { font:400 clamp(26px, 4vw, 40px)/1.4 var(--zh); letter-spacing:.14em; color:var(--ink); }
-.bday-cake-scene h2 em { font:italic 400 clamp(22px, 3vw, 30px)/1.1 var(--serif); letter-spacing:-.01em; }
-.bday-hint { margin-top:14px; font:13px/1.8 var(--zh); letter-spacing:.08em; color:#c1a5b2; }
-.bday-cake { position:relative; width:min(360px, 78vw); margin-top:clamp(26px, 5vh, 54px); padding:0; border:0; background:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
-.bday-cake:focus-visible { outline:2px solid var(--pink); outline-offset:14px; border-radius:24px; }
-.bday-cake-art { display:block; width:100%; height:auto; overflow:visible; filter:drop-shadow(0 26px 40px #00000080); }
-/* Candle positions follow the SVG viewBox (0 -40 320 250): wicks at x 137 / 183. */
-.bday-candles { position:absolute; inset:0; z-index:1; pointer-events:none; }
-.bday-candle { position:absolute; top:6.2%; width:4.6%; height:13%; margin-left:-2.3%; }
-.candle-one { left:42.8%; }
-.candle-two { left:57.2%; }
-.bday-digits text { font:600 94px var(--serif); font-variant-numeric:lining-nums; paint-order:stroke; }
-.bday-flame { position:absolute; inset:0; border-radius:50% 50% 46% 46% / 62% 62% 38% 38%; background:radial-gradient(ellipse 50% 62% at 50% 72%, #fffdf2 0 22%, #ffe39a 40%, #ffab5ccc 66%, #ff8a5c00 100%); filter:drop-shadow(0 0 8px #ffb86caa) drop-shadow(0 0 22px #ff9c5c55); transform-origin:50% 92%; transform:skewX(calc(var(--breath) * -24deg)) scaleY(calc(1 - var(--breath) * .35)); animation:bday-flicker 1.3s ease-in-out infinite alternate; transition:opacity .35s ease, transform .35s ease; }
-.bday-candle + .bday-candle .bday-flame { animation-duration:1.05s; animation-delay:-.4s; }
-.bday-cake:hover .bday-flame { filter:brightness(1.12) drop-shadow(0 0 10px #ffc27acc) drop-shadow(0 0 26px #ff9c5c66); }
-.is-blown .bday-flame { opacity:0; transform:scale(.2) translateY(10px); animation:none; }
-.bday-smoke { position:absolute; left:50%; top:80%; width:2px; height:2px; pointer-events:none; }
-.bday-smoke::before, .bday-smoke::after { content:""; position:absolute; left:-6px; top:-6px; width:12px; height:12px; border-radius:50%; background:#d9cfd4; filter:blur(5px); opacity:0; }
-.is-blown .bday-smoke::before { animation:bday-smoke 2.6s ease-out forwards; }
-.is-blown .bday-smoke::after { animation:bday-smoke 2.9s .18s ease-out forwards; --drift:-16px; }
-.bday-rose { position:absolute; bottom:4%; width:23%; height:auto; pointer-events:none; filter:drop-shadow(0 10px 14px #00000070); }
-.rose-left { left:-7%; transform:rotate(-22deg); }
-.rose-right { right:-6%; width:19%; bottom:1%; transform:rotate(18deg) scaleX(-1); }
-.bday-tap { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:36px; font:12px var(--zh); letter-spacing:.2em; color:#d7b7c6; }
-.bday-tap > span { animation:bday-breathe 2.4s ease-in-out infinite alternate; }
-.bday-mic { min-height:40px; padding:8px 18px; border:1px solid #f1bfd033; border-radius:40px; background:#ffffff07; color:#bfa2b0; font:12px var(--zh); letter-spacing:.08em; transition:border-color .3s var(--motion), color .3s var(--motion); }
-.bday-mic:hover:not(:disabled) { border-color:#f1bfd080; color:var(--ink); }
-.bday-mic:disabled { cursor:progress; color:var(--pink); }
-
-/* Celebration */
-.bday-celebrate { position:relative; }
-.bday-title { display:flex; gap:.06em; margin:0; font:500 clamp(68px, 15vw, 156px)/1.1 var(--zh); letter-spacing:.04em; color:#fff1ec; text-shadow:0 0 24px #f08bb366, 0 0 80px #d8344a33; }
-.bday-title > span { display:inline-block; }
-.bday-seal { position:absolute; top:-8px; right:-58px; display:grid; place-items:center; width:62px; height:62px; padding:4px; border:2px solid #f6d7cf55; border-radius:6px; background:#b51f3a; color:#fff3ea; font:500 15px/1.15 var(--zh); letter-spacing:.06em; text-align:center; transform:rotate(9deg); box-shadow:0 8px 24px #b51f3a55, inset 0 0 0 3px #b51f3a, inset 0 0 0 4px #f6d7cf66; }
-.bday-celebrate > em { margin-top:10px; font:italic 400 clamp(24px, 3.4vw, 36px)/1.2 var(--serif); }
-.bday-celebrate > p { margin-top:22px; font:14px/2 var(--zh); letter-spacing:.1em; color:#d8bcc8; }
-.bday-enter { margin-top:34px; padding-left:26px; font:600 13px var(--zh); letter-spacing:.06em; }
-
-/* Hero countdown */
-.birthday-chip { display:inline-flex; align-items:center; gap:10px; margin:0 0 26px; padding:7px 15px 7px 12px; border:1px solid #f1b5cc38; border-radius:40px; background:#2a121d66; color:#e8c4d4; font:12px/1.4 var(--zh); letter-spacing:.1em; backdrop-filter:blur(6px); }
+/* ---------- Hero countdown ---------- */
+.birthday-chip { display:inline-flex; align-items:center; gap:10px; margin:0 0 26px; padding:7px 15px 7px 12px; border:1px solid #f1b5cc38; border-radius:40px; background:#2a121d66; color:#e8c4d4; font:13px/1.4 var(--serif); font-family:var(--serif), var(--zh); font-variant-numeric:lining-nums; letter-spacing:.1em; backdrop-filter:blur(6px); }
 .birthday-chip > i { width:6px; height:6px; border-radius:50%; background:var(--pink); box-shadow:0 0 10px #f07aa8; animation:bday-breathe 1.8s ease-in-out infinite alternate; }
 .birthday-chip[data-phase="today"] { border-color:#ef7b9a80; background:#5a142a80; color:#fff0f3; }
 .birthday-chip[data-phase="today"] > i { background:#ff5a6e; box-shadow:0 0 12px #ff5a6e; }
 [data-theme="ocean"] .birthday-chip { border-color:#9cc7ff40; background:#0b26525c; color:#d2e7ff; }
 [data-theme="ocean"] .birthday-chip > i { background:#9fd0ff; box-shadow:0 0 10px #6fb6ff; }
 
-/* Finale */
-.birthday-finale h2 { display:flex; flex-direction:column; align-items:center; gap:12px; }
-.birthday-finale h2 .zh { font:400 clamp(40px, 5vw, 66px)/1.3 var(--zh); letter-spacing:.1em; }
-.birthday-finale h2 em { font:italic 400 clamp(24px, 2.6vw, 34px)/1.2 var(--serif); letter-spacing:-.01em; }
-.finale-blessing { min-height:2em; margin-top:26px; font:17px/1.9 var(--zh); letter-spacing:.12em; color:#e2c6d2; }
-.finale-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:22px 30px; margin-top:30px; }
+/* ---------- Sky lanterns ---------- */
+.lantern-sky { position:relative; padding-top:var(--scene-space, 120px); background:linear-gradient(180deg, transparent, #120a1f 18%, #1a0e22 62%, #150a12); overflow:hidden; }
+.lantern-heading { position:relative; z-index:2; text-align:center; }
+.lantern-heading h2 { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:20px; }
+.lantern-heading h2 .zh { font:400 clamp(30px, 3.6vw, 48px)/1.4 var(--zh); letter-spacing:.12em; }
+.lantern-heading h2 em { font:italic 400 clamp(22px, 2.4vw, 30px)/1.2 var(--serif); }
+.lantern-intro { margin:18px auto 0; max-width:30em; font:14px/2 var(--zh); letter-spacing:.08em; color:#c9b1bf; }
+.lantern-stage { position:relative; height:clamp(460px, 78svh, 760px); margin-top:20px; cursor:crosshair; touch-action:manipulation; }
+.lantern-stars, .lantern-field { position:absolute; inset:0; pointer-events:none; }
+.lantern-stars > i { position:absolute; left:var(--x); top:var(--y); width:var(--size); height:var(--size); border-radius:50%; background:#f7e7f0; opacity:.5; animation:lantern-twinkle 4s var(--delay) ease-in-out infinite alternate; }
+.lantern-hills { position:absolute; inset:auto 0 0; width:100%; height:30%; pointer-events:none; }
+.hill-far { fill:#1c0f21; }
+.hill-near { fill:#100810; }
+.lantern-intro { max-width:34em; }
+.town-lights circle { fill:#ffc77d; opacity:.75; }
+.lantern { position:absolute; left:0; top:0; width:38px; height:50px; margin:-25px 0 0 -19px; will-change:transform; }
+.lantern-bob { display:block; width:100%; height:100%; animation:lantern-bob 5.5s ease-in-out infinite alternate; }
+.lantern:nth-child(3n) .lantern-bob { animation-duration:6.8s; animation-delay:-2s; }
+.lantern:nth-child(3n+1) .lantern-bob { animation-duration:4.6s; animation-delay:-1s; }
+.lantern-body { position:relative; display:block; width:100%; height:100%; border-radius:44% 44% 30% 30% / 48% 48% 26% 26%;
+  background:repeating-linear-gradient(90deg, #0000 0 7px, #7a1d1814 7px 8px), radial-gradient(ellipse 52% 46% at 50% 74%, #fff6d2 0, #ffd27f 22%, #f59448 48%, #d24f2e 74%, #9d2a24 100%);
+  box-shadow:0 0 18px 4px #ff9a4a66, 0 0 64px 18px #ff7a3a2e; animation:lantern-glow 2.4s ease-in-out infinite alternate; }
+.lantern-body::before { content:""; position:absolute; inset:-2px 18% auto; height:5px; border-radius:50%; background:#6d1d1c; opacity:.7; }
+.lantern-body::after { content:""; position:absolute; left:50%; bottom:3px; width:9px; height:5px; margin-left:-4.5px; border-radius:50%; background:#fff3c2; box-shadow:0 0 8px 3px #ffc77a; }
+.lantern-wish { position:absolute; left:50%; bottom:34%; z-index:2; width:min(92%, 30em); margin:0; transform:translate(-50%, 10px); text-align:center; font:400 clamp(17px, 2vw, 23px)/1.8 var(--zh); letter-spacing:.12em; color:#ffe9d6; text-shadow:0 0 18px #ff9a4a66, 0 2px 12px #000c; opacity:0; transition:opacity .8s var(--motion), transform .8s var(--motion); pointer-events:none; }
+.lantern-wish.is-shown { opacity:1; transform:translate(-50%, 0); }
+.lantern-tap { position:absolute; left:50%; bottom:12%; z-index:2; transform:translateX(-50%); margin:0; font:12px var(--zh); letter-spacing:.3em; color:#d9b9a8; animation:bday-breathe 2.4s ease-in-out infinite alternate; pointer-events:none; transition:opacity .6s; }
+.lantern-sky[data-lanterns] .lantern-tap { opacity:0; animation:none; }
+.lantern-controls { position:relative; z-index:2; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:18px 28px; padding:28px 0 var(--scene-space, 110px); }
+.lantern-controls .primary-button { padding-left:24px; font:600 13px var(--zh); letter-spacing:.06em; }
+.lantern-controls .primary-button:disabled { cursor:default; opacity:.75; }
+.lantern-count { font:16px var(--serif); font-variant-numeric:lining-nums; letter-spacing:.2em; color:#e8c9a8; }
+.lantern-sky.is-complete .lantern-body { animation-duration:1.2s; }
+.lantern-sky.is-complete .lantern-next { color:#ffe2c7; border-color:#ffc8957a; }
+.lanterns-resting .lantern-bob, .lanterns-resting .lantern-body, .lanterns-resting .lantern-stars > i { animation-play-state:paused; }
+
+/* ---------- Cake finale ---------- */
+.cake-finale { --breath:0; position:relative; padding:var(--scene-space, 120px) 0 calc(var(--scene-space, 120px) * .8); text-align:center; background:radial-gradient(ellipse 60% 50% at 50% 58%, #3a1220a6, transparent 72%), linear-gradient(180deg, #150a12, #150a12 80%, transparent); overflow:hidden; }
+.cake-heading h2 { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:20px; }
+.cake-heading h2 .zh { font:400 clamp(32px, 4vw, 54px)/1.4 var(--zh); letter-spacing:.14em; }
+.cake-heading h2 em { font:italic 400 clamp(22px, 2.6vw, 32px)/1.2 var(--serif); }
+.cake-hint { margin-top:16px; font:14px/1.9 var(--zh); letter-spacing:.08em; color:#c1a5b2; }
+.cake-stage { position:relative; width:min(560px, 94vw, calc(68svh * 960 / 1030)); margin:18px auto 0; }
+.cake-glow { position:absolute; inset:-14% -24% 6%; z-index:0; pointer-events:none; background:radial-gradient(ellipse 34% 30% at 50% 26%, #ffb27a40, transparent 70%), radial-gradient(ellipse 50% 40% at 50% 62%, #ff9c6a14, transparent 72%); transition:opacity 1.4s var(--motion); animation:bday-glow-flicker 3.2s ease-in-out infinite alternate; }
+.cake-button { position:relative; z-index:1; display:block; width:100%; aspect-ratio:960 / 1030; padding:0; border:0; background:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.cake-button:focus-visible { outline:2px solid var(--pink); outline-offset:6px; border-radius:24px; }
+.cake-img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none; user-select:none;
+  /* Feather the rendered contact shadow so the image edge never shows. */
+  -webkit-mask-image:linear-gradient(#000 76%, #0000 99%), linear-gradient(90deg, #0000 1%, #000 9%, #000 91%, #0000 99%);
+  -webkit-mask-composite:source-in; mask-image:linear-gradient(#000 76%, #0000 99%), linear-gradient(90deg, #0000 1%, #000 9%, #000 91%, #0000 99%); mask-composite:intersect; }
+.cake-lit { transition:opacity 1.6s var(--motion); }
+/* Flames sit on the rendered wick tips (cake.json from the Blender scene). */
+.cake-flame { position:absolute; left:calc(var(--wx) * 100%); top:calc(var(--wy) * 100%); width:3.1%; height:7.2%; pointer-events:none; transform:translate(-50%, -94%); }
+.flame-one { --wx:.4405; --wy:.1652; }
+.flame-two { --wx:.5651; --wy:.1652; }
+.cake-flame > i { position:absolute; inset:0; border-radius:50% 50% 46% 46% / 62% 62% 38% 38%; background:radial-gradient(ellipse 50% 60% at 50% 74%, #fffef4 0 18%, #ffe8a6 34%, #ffb25c 58%, #ff7a4a99 76%, #ff6a4a00 100%); filter:drop-shadow(0 0 6px #ffc27acc) drop-shadow(0 0 18px #ff9c5c77); transform-origin:50% 94%; animation:bday-flicker 1.3s ease-in-out infinite alternate; transition:opacity .35s ease, transform .35s ease; }
+.flame-two > i { animation-duration:1.05s; animation-delay:-.4s; }
+.cake-flame > b { position:absolute; left:50%; top:62%; width:520%; aspect-ratio:1; border-radius:50%; transform:translate(-50%, -50%); background:radial-gradient(circle, #ffcf8a33, #ff9c5c12 45%, transparent 70%); transition:opacity .5s; }
+.cake-flame::before, .cake-flame::after { content:""; position:absolute; left:50%; bottom:6%; width:70%; aspect-ratio:1; margin-left:-35%; border-radius:50%; background:#ddd2d8; filter:blur(4px); opacity:0; }
+.cake-button:hover .cake-flame > i { filter:brightness(1.1) drop-shadow(0 0 8px #ffc27add) drop-shadow(0 0 22px #ff9c5c88); }
+[data-cake="out"] .cake-lit { opacity:0; }
+.cake-dark { transition:filter 1.8s var(--motion); }
+[data-cake="out"] .cake-dark { filter:brightness(.86) saturate(.94); }
+[data-cake="out"] .cake-glow { opacity:0; }
+[data-cake="out"] .cake-flame > i { opacity:0; transform:scale(.2) translateY(14px); animation:none; }
+[data-cake="out"] .cake-flame > b { opacity:0; }
+[data-cake="out"] .cake-flame::before { animation:bday-smoke 2.6s ease-out forwards; }
+[data-cake="out"] .cake-flame::after { animation:bday-smoke 3s .2s ease-out forwards; --drift:-14px; }
+[data-cake="out"] .cake-button { cursor:default; }
+.cake-tap { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:10px; font:12px var(--zh); letter-spacing:.2em; color:#d7b7c6; max-height:140px; transition:opacity .6s var(--motion), max-height .8s var(--motion), margin .8s var(--motion); }
+.cake-tap > span { animation:bday-breathe 2.4s ease-in-out infinite alternate; }
+[data-cake="out"] .cake-tap { opacity:0; max-height:0; margin:0; overflow:hidden; pointer-events:none; }
+.bday-mic { min-height:40px; padding:8px 18px; border:1px solid #f1bfd033; border-radius:40px; background:#ffffff07; color:#bfa2b0; font:12px var(--zh); letter-spacing:.08em; transition:border-color .3s var(--motion), color .3s var(--motion); }
+.bday-mic:hover:not(:disabled) { border-color:#f1bfd080; color:var(--ink); }
+.bday-mic:disabled { cursor:progress; color:var(--pink); }
+
+.cake-celebrate { position:relative; display:flex; flex-direction:column; align-items:center; width:fit-content; max-width:calc(100% - 40px); margin:-6px auto 0; }
+.cake-celebrate[hidden] { display:none; }
+.bday-title { display:flex; gap:.06em; margin:0; font:500 clamp(64px, 12vw, 140px)/1.15 var(--zh); letter-spacing:.04em; color:#fff1ec; text-shadow:0 0 24px #f08bb366, 0 0 80px #d8344a33; }
+.bday-title > span { display:inline-block; }
+.bday-seal { position:absolute; top:-6px; right:-62px; display:grid; place-items:center; width:62px; height:62px; padding:4px; border:2px solid #f6d7cf55; border-radius:6px; background:#b51f3a; color:#fff3ea; font:500 15px/1.15 var(--zh); letter-spacing:.06em; text-align:center; transform:rotate(9deg); box-shadow:0 8px 24px #b51f3a55, inset 0 0 0 3px #b51f3a, inset 0 0 0 4px #f6d7cf66; }
+.cake-celebrate > em { margin-top:8px; font:italic 400 clamp(24px, 3.2vw, 34px)/1.2 var(--serif); }
+.bday-years { margin-top:20px; font:15px/2 var(--serif); font-family:var(--serif), var(--zh); font-variant-numeric:lining-nums; letter-spacing:.1em; color:#d8bcc8; }
+.finale-blessing { min-height:2em; margin-top:22px; font:18px/1.9 var(--serif); font-family:var(--serif), var(--zh); font-variant-numeric:lining-nums; letter-spacing:.12em; color:#f0d2dc; }
+.finale-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:20px 30px; margin-top:26px; }
 .finale-actions .primary-button { padding-left:24px; font:600 13px var(--zh); letter-spacing:.06em; }
-.finale-home { margin-top:48px; }
+.finale-home { margin-top:44px; }
 .finale-confetti { position:fixed; inset:0; width:100%; height:100%; z-index:60; pointer-events:none; }
-[data-theme="ocean"] .finale-blessing { color:#cfe3fb; }
-
-@keyframes bday-flicker { 0% { transform:skewX(calc(var(--breath) * -24deg)) scale(1, 1); } 35% { transform:skewX(calc(var(--breath) * -24deg + 2deg)) scale(.96, 1.06); } 70% { transform:skewX(calc(var(--breath) * -24deg - 2deg)) scale(1.03, .95); } 100% { transform:skewX(calc(var(--breath) * -24deg + 1deg)) scale(.98, 1.04); } }
-@keyframes bday-glow-flicker { 0% { opacity:1; } 40% { opacity:.86; } 70% { opacity:.97; } 100% { opacity:.9; } }
-@keyframes bday-smoke { 0% { opacity:0; transform:translate(0, 0) scale(.6); } 15% { opacity:.55; } 100% { opacity:0; transform:translate(var(--drift, 14px), -120px) scale(3.2); } }
-@keyframes bday-breathe { from { opacity:.45; } to { opacity:1; } }
-@keyframes bday-clock-turn { 0% { opacity:.2; } 100% { opacity:1; } }
-
-@media (max-width:760px) {
-  .bday-skip { top:max(16px, env(safe-area-inset-top)); right:16px; }
-  .bday-stage { padding-inline:20px; }
-  .bday-cake { margin-top:clamp(64px, 11vh, 96px); }
-  .bday-hint { font-size:12px; }
-  .bday-seal { width:50px; height:50px; right:-14px; top:-46px; font-size:12px; }
-  .bday-celebrate > p { font-size:13px; }
-  .birthday-chip { margin-bottom:20px; font-size:11px; }
-  .finale-blessing { font-size:15px; }
-}
-@media (max-height:640px) {
-  .bday-cake { width:min(270px, 70vw); margin-top:56px; }
-  .bday-hint { display:none; }
-}
-@media (prefers-reduced-motion:reduce) {
-  .bday-flame, .bday-touch, .bday-tap > span, .birthday-chip > i, .bday-glow { animation:none !important; }
-  .is-blown .bday-smoke::before, .is-blown .bday-smoke::after { animation:none; }
-  [data-step-view] { transition:none; }
-}
-/* Latin digits come from Cormorant; Chinese falls through to the CJK face. */
-.bday-celebrate > p, .birthday-chip, .finale-blessing, .bday-hint { font-family:var(--serif), var(--zh); font-variant-numeric:lining-nums; }
-.birthday-chip { font-size:13px; }
 
 /* Real photos replace the placeholder frames (see photos.js). */
 .memory-photo { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .8s var(--motion); pointer-events:none; user-select:none; }
 .has-photo > .memory-photo { opacity:1; }
 .has-photo > i, .has-photo > span { visibility:hidden; }
+
+@keyframes bday-flicker { 0% { transform:skewX(calc(var(--breath) * -24deg)) scale(1, 1); } 35% { transform:skewX(calc(var(--breath) * -24deg + 2deg)) scale(.95, 1.07); } 70% { transform:skewX(calc(var(--breath) * -24deg - 2deg)) scale(1.04, .95); } 100% { transform:skewX(calc(var(--breath) * -24deg + 1deg)) scale(.98, 1.04); } }
+@keyframes bday-glow-flicker { 0% { opacity:1; } 40% { opacity:.84; } 70% { opacity:.97; } 100% { opacity:.9; } }
+@keyframes bday-smoke { 0% { opacity:0; transform:translate(0, 0) scale(.6); } 15% { opacity:.55; } 100% { opacity:0; transform:translate(var(--drift, 14px), -110px) scale(3.4); } }
+@keyframes bday-breathe { from { opacity:.45; } to { opacity:1; } }
+@keyframes bday-clock-turn { 0% { opacity:.2; } 100% { opacity:1; } }
+@keyframes lantern-bob { from { transform:translate(-3px, 2px) rotate(-2.5deg); } to { transform:translate(3px, -6px) rotate(2.5deg); } }
+@keyframes lantern-glow { from { filter:brightness(.92); } to { filter:brightness(1.12); } }
+@keyframes lantern-twinkle { from { opacity:.15; } to { opacity:.7; } }
+
+@media (max-width:760px) {
+  .bday-skip { top:max(16px, env(safe-area-inset-top)); right:16px; }
+  .bday-stage { padding-inline:20px; }
+  .birthday-chip { margin-bottom:20px; }
+  .lantern-intro, .cake-hint { font-size:13px; }
+  .lantern-stage { height:min(70svh, 600px); }
+  .lantern { width:25px; height:33px; margin:-17px 0 0 -12px; }
+  .bday-seal { width:50px; height:50px; right:-14px; top:-44px; font-size:12px; }
+  .finale-blessing { font-size:16px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .cake-flame > i, .cake-tap > span, .birthday-chip > i, .cake-glow, .lantern-bob, .lantern-body, .lantern-stars > i, .lantern-tap { animation:none !important; }
+  [data-cake="out"] .cake-flame::before, [data-cake="out"] .cake-flame::after { animation:none; }
+  .cake-lit, .lantern-wish { transition:none; }
+}
