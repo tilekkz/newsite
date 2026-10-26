@@ -88,7 +88,7 @@
       });
     }
     document.addEventListener('site:entered', playIntro);
-    if (!document.querySelector('#entry-gate')?.open) playIntro();
+    if (!document.querySelector('dialog[open]')) playIntro();
 
     document.querySelectorAll('.reveal').forEach(element => {
       // Rebuilding on resize must not hide content the visitor has already read.

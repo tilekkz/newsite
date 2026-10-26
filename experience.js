@@ -403,5 +403,12 @@
   });
   resetCat();
   bouquet.decode?.().catch(() => {});
-  if (!entered) openInvitation();
+  // The birthday candles come first; a preset name makes the invitation unnecessary.
+  const presetName = window.Birthday?.name;
+  if (presetName) nickname = presetName;
+  if (!entered) (window.Birthday?.introDone ?? Promise.resolve()).then(() => {
+    if (!presetName) { openInvitation(); return; }
+    try { sessionStorage.setItem('520am-entered', 'yes'); } catch { /* Optional. */ }
+    document.dispatchEvent(new Event('site:entered'));
+  });
 })();

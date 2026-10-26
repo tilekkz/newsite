@@ -88,3 +88,19 @@ body:after { background-image:url('assets/film-grain.webp'); background-size:180
 }
 
 .cat-section:not(.kitten-awake) .cat-ambience > i { animation-play-state:paused; }
+
+/* Phone legibility: lift the smallest labels; decorative micro-labels step aside. */
+@media(max-width:760px) {
+  html .scroll-cue { font-size:10px; letter-spacing:.2em; }
+  html .hero-bottom { bottom:78px; }
+  html .journey-chapter .eyebrow { font-size:9px; letter-spacing:.1em; }
+  html .journey-whisper { font-size:10px; }
+  html .memory-number { font-size:8px; }
+  html .cat-cursor-note, html .note-right p { font-size:10px; }
+  html .note-left .tiny-label, html .note-serial { display:none; }
+  html .site-header nav a { font-size:12px; }
+  /* The floating music control becomes a single round button on phones. */
+  html .music-toggle { gap:0; padding:7px; min-height:0; }
+  html .music-toggle-label { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; min-width:0; }
+  html .music-toggle-dot { position:absolute; top:7px; right:7px; }
+}
