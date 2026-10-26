@@ -96,7 +96,7 @@
 [data-cake="out"] .cake-flame::before { animation:bday-smoke 2.6s ease-out forwards; }
 [data-cake="out"] .cake-flame::after { animation:bday-smoke 3s .2s ease-out forwards; --drift:-14px; }
 [data-cake="out"] .cake-button { cursor:default; }
-.cake-tap { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:10px; font:12px var(--zh); letter-spacing:.2em; color:#d7b7c6; max-height:140px; transition:opacity .6s var(--motion), max-height .8s var(--motion), margin .8s var(--motion); }
+.cake-tap { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:10px; font:12px var(--zh); letter-spacing:.2em; color:#d7b7c6; max-height:140px; transition:opacity .6s var(--motion), max-height 0s .6s, margin 0s .6s; }
 .cake-tap > span { animation:bday-breathe 2.4s ease-in-out infinite alternate; }
 [data-cake="out"] .cake-tap { opacity:0; max-height:0; margin:0; overflow:hidden; pointer-events:none; }
 .bday-mic { min-height:40px; padding:8px 18px; border:1px solid #f1bfd033; border-radius:40px; background:#ffffff07; color:#bfa2b0; font:12px var(--zh); letter-spacing:.08em; transition:border-color .3s var(--motion), color .3s var(--motion); }
