@@ -10,7 +10,7 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const motions = new Set();
   let visible = false, frame = 0, busy = false, wish = 0;
-  let x = 0, y = 0, targetX = 0, targetY = 0;
+  let x = 0, y = 0, targetX = 0, targetY = 0, lastTick = 0;
   const wishes = [
     ['星光替我说：今晚也想你。', 'The stars say: I’m thinking of you tonight.'],
     ['愿下一次看月亮，我们就在彼此身旁。', 'Next time, may we watch the moon side by side.'],
@@ -29,20 +29,23 @@
     section.style.setProperty('--twosky-x', x.toFixed(2) + 'px');
     section.style.setProperty('--twosky-y', y.toFixed(2) + 'px');
   }
-  function tick() {
+  function tick(now) {
     frame = 0;
     if (!visible || document.hidden || reduced.matches) return;
-    x += (targetX - x) * .085;
-    y += (targetY - y) * .085;
+    const dt = Math.min(lastTick ? (now-lastTick)/1000 : 1/60, .05);
+    lastTick = now;
+    const follow = 1-Math.exp(-dt*9);
+    x += (targetX - x) * follow;
+    y += (targetY - y) * follow;
     paint();
     if (Math.abs(targetX - x) + Math.abs(targetY - y) > .035) frame = requestAnimationFrame(tick);
   }
   function moveTo(nextX, nextY) {
     targetX = nextX; targetY = nextY;
-    if (!frame && visible && !document.hidden && !reduced.matches) frame = requestAnimationFrame(tick);
+    if (!frame && visible && !document.hidden && !reduced.matches) { lastTick=0; frame=requestAnimationFrame(tick); }
   }
   function stopMotion() {
-    cancelAnimationFrame(frame); frame = 0;
+    cancelAnimationFrame(frame); frame = 0; lastTick = 0;
     x = y = targetX = targetY = 0;
     paint();
     motions.forEach(animation => animation.cancel());

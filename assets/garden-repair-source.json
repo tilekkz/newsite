@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-26",
+  "tool": "Built-in image_gen",
+  "reason": "Connected single stem at the music button; complete silhouettes and native-resolution rendering.",
+  "assets": [
+    {
+      "path": "assets/garden-canopy-v2.webp",
+      "prompt": "Create ONE high-resolution 3072 x 1536 landscape botanical cutout with a genuinely transparent background. This is a real coherent living flowering branch, NOT a bouquet, not a collage, not a repeating border. Its ONLY attachment point is a slender clean stem starting at the exact horizontal centre, near 12% from the TOP of the image, pointing vertically downward. From that point the stem descends a short distance then ORGANICALLY FORKS into two gracefully arching branches that spread down and outward, with a little asymmetric natural difference. The entire foliage sits BELOW the attachment point. The two branches form a low broad gently drooping canopy, with blue clematis, small cornflower blue climbing roses, forget-me-nots, delicate buds and lush fresh green foliage. Clearly connected slender woody green stems between clusters, convincing plant anatomy, no exposed roots. Crisp finely resolved botanical photography, natural translucent petals, clean dew, elegant romantic moonlit blue palette, bright local detail, not grainy, not hazy, not painterly, not plastic. ENTIRE PLANT fully inside the canvas with at least 8% empty transparent margin on left, right and bottom, no clipped leaf tips or flowers. Natural tapered leafy ends, no abrupt cut edges. Keep the central upper 12% empty except for the attachment stem. No pot, no ribbon, no text, no ground, no background or cast backdrop shadow.",
+      "source": "exec-9874f054-44db-4918-8cdd-dc58a57ff42f.png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "path": "assets/garden-vine-v2.webp",
+      "prompt": "Create ONE high-resolution 3072 x 1280 landscape transparent botanical cutout for a romantic blue flower garden. A botanically coherent horizontal climbing vine which undulates gently from lower left to upper middle to lower right. A clearly continuous slender green-brown stem with soft natural bends, many small intricate BLUE clematis flowers and blue climbing roses, tiny forget-me-not buds, lush detailed deep green leaves and curling fine tendrils. The flower heads are relatively SMALL compared with the whole branch, no giant central bouquet. Real botanical photography, crisp detailed thin petals, coherent lighting, clean fresh foliage, slight dewdrops, nuanced cornflower/periwinkle/blue-violet colours in soft moonlight. No film grain, no haze, no blur, no plastic, no collage joins. Composition uses only the central 80% of the frame; 10% completely transparent margin on ALL four sides. Every leaf, stem and flower is fully visible; natural tapered leafy tips on both ends, absolutely NO cropped or cut-off edges. No ribbon, vase, text, background, scenery or border. Actual alpha transparency.",
+      "source": "exec-9d31110f-84d5-4489-9938-9fd65fbc8e11.png",
+      "width": 1942,
+      "height": 809
+    },
+    {
+      "path": "assets/garden-spray-hd.webp",
+      "source": "exec-cb0ef699-40db-4624-9984-752d2dd705f7.png",
+      "width": 1312,
+      "height": 1199,
+      "promptReference": "moon-garden-source.json"
+    }
+  ],
+  "processing": "Full-resolution WebP encoding, quality 95, alphaQuality 100. No resizing. Original PNGs retained."
+}

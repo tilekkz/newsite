@@ -11,7 +11,6 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(pointer: fine)');
   const closed = new Image();
-  closed.src = 'assets/kitten-blink-v1.webp';
   const canvas = document.createElement('canvas');
   canvas.className = 'living-kitten';
   canvas.setAttribute('aria-hidden', 'true');
@@ -53,7 +52,7 @@
   }
 
   let gl, program, buffer, textures = [], uniforms, gpu = false, blinkReady = false;
-  let visible = false, running = false, clock = 0, lastDraw = 0;
+  let visible = false, running = false, clock = 0;
   let nextBlink = 2.5, nextEar = 5, blinkAt = -100, earAt = -100;
   let blinkLength = .48, earSide = 1, doubleAt = Infinity, lastPet = -100;
   let frameWidth = 260, frameHeight = 390;
@@ -154,8 +153,19 @@
       gpu=false;sprite.classList.remove('has-kitten-mesh');button.dataset.renderer='image';
     }
   }
-  const ready=Promise.all([image.decode(),closed.decode().then(()=>{blinkReady=true}).catch(()=>{})])
-    .then(()=>{initMesh();updateRunning()}).catch(()=>{button.dataset.renderer='image'});
+  let preparation;
+  function prepare() {
+    if (!preparation) {
+      image.loading = 'eager';
+      closed.src = 'assets/kitten-blink-v1.webp';
+      preparation = Promise.all([image.decode(),closed.decode().then(()=>{blinkReady=true}).catch(()=>{})]);
+    }
+    return preparation.then(() => {
+      if (!gpu && !reduced.matches) initMesh();
+      updateRunning();
+    }).catch(() => { button.dataset.renderer='image'; });
+  }
+  window.NightMotion.whenNear(stage, prepare);
   function measure(){
     frameWidth=sprite.clientWidth||260;frameHeight=sprite.clientHeight||390;
     if(gpu){
@@ -209,12 +219,12 @@
     const earAge=clock-earAt;
     const ear=earAge<1.2?Math.sin(Math.min(1,earAge/1.2)*Math.PI*2)*Math.exp(-earAge*2.8)*.085:0;
     state.earLeft=earSide<0?ear:ear*.18;state.earRight=earSide>0?-ear:-ear*.18;
-    state.x+=(target.x-state.x)*Math.min(1,dt*3);state.y+=(target.y-state.y)*Math.min(1,dt*3);
+    state.x+=(target.x-state.x)*(1-Math.exp(-dt*7));state.y+=(target.y-state.y)*(1-Math.exp(-dt*7));
     const eyeState=state.blink>.96?'closed':state.blink>.02?'blinking':'open';
     if(button.dataset.eyes!==eyeState)button.dataset.eyes=eyeState;
     if(button.dataset.ears!==(Math.abs(ear)>.002?'moving':'rest'))button.dataset.ears=Math.abs(ear)>.002?'moving':'rest';
     const changed=Object.keys(drawn).some(key=>!Number.isFinite(drawn[key])||Math.abs(state[key]-drawn[key])>.00005);
-    if(changed&&time-lastDraw>1/50){render();lastDraw=time;}
+    if(changed)render();
     const x=(state.x*8).toFixed(2)+'px',y=(state.y*5).toFixed(2)+'px';
     if(x!==gardenX){garden.style.setProperty('--look-x',x);gardenX=x;}
     if(y!==gardenY){garden.style.setProperty('--look-y',y);gardenY=y;}
@@ -231,11 +241,11 @@
       garden.style.setProperty('--look-x','0px');garden.style.setProperty('--look-y','0px');gardenX=gardenY='0px';render();
     }
   }
-  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;updateRunning()},{threshold:.08}).observe(stage);
+  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(visible&&!reduced.matches)prepare();updateRunning()},{threshold:.08}).observe(stage);
   new MutationObserver(updateRunning).observe(stage,{attributes:true,attributeFilter:['data-phase']});
   document.addEventListener('visibilitychange',updateRunning);
   for(const type of ['site:modal-open','site:modal-close']) document.addEventListener(type,updateRunning,true);
-  reduced.addEventListener('change',updateRunning);
+  reduced.addEventListener('change',()=>{if(visible&&!reduced.matches)prepare();updateRunning();});
   section.addEventListener('pointermove',event=>{
     if(!running||!fine.matches||event.pointerType==='touch')return;
     const bounds=stage.getBoundingClientRect();
@@ -256,7 +266,7 @@
     event.preventDefault();gpu=false;sprite.classList.remove('has-kitten-mesh');button.dataset.renderer='image';
   });
   canvas.addEventListener('webglcontextrestored',initMesh);
-  window.KittenLife={ready,blink,twitch};
+  window.KittenLife={get ready(){return prepare()},blink,twitch};
   updateRunning();
 })();
 

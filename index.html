@@ -15,39 +15,42 @@
   <link rel="stylesheet" href="experience.css?v=bloom3">
   <link rel="stylesheet" href="bouquet-depth.css?v=reference-kitten3">
   <link rel="stylesheet" href="kitten-life.css?v=1">
-  <link rel="stylesheet" href="journey.css">
+  <link rel="stylesheet" href="journey.css?v=polish1">
   <link rel="stylesheet" href="afterglow.css?v=letter3">
   <link rel="stylesheet" href="continuation.css?v=1">
   <link rel="stylesheet" href="blue-hour.css?v=fluid2">
-  <link rel="stylesheet" href="continuity.css?v=1">
+  <link rel="stylesheet" href="continuity.css?v=polish1">
   <link rel="stylesheet" href="two-windows.css?v=shared-sky3">
+  <link rel="stylesheet" href="quiet-garden.css?v=1">
+  <link rel="stylesheet" href="moon-garden.css?v=repair2">
+  <link rel="stylesheet" href="garden-panorama.css?v=2">
   <script src="assets/vendor/gsap-3.15.0.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger-3.15.0.min.js" defer></script>
   <script src="assets/vendor/lenis-1.3.26.min.js" defer></script>
   <script src="app.js?v=local-music1" defer></script>
-  <script src="music.js?v=smooth-audio3" defer></script>
-  <script src="bouquet-depth.js?v=continuous1" defer></script>
-  <script src="experience.js?v=standing-kitten2" defer></script>
-  <script src="kitten-life.js?v=continuous1" defer></script>
-  <script src="journey.js" defer></script>
-  <script src="afterglow.js?v=letter3" defer></script>
-  <script src="continuation.js?v=1" defer></script>
-  <script src="blue-hour.js?v=local-music1" defer></script>
-  <script src="continuity.js?v=1" defer></script>
-  <script src="two-windows.js?v=shared-sky3" defer></script>
-  <script src="motion.js?v=continuous1" defer></script>
+  <script src="music.js?v=quiet-garden1" defer></script>
+  <script src="scene-runtime.js?v=1" defer></script>
+  <script src="bouquet-depth.js?v=polish1" defer></script>
+  <script src="experience.js?v=quiet-garden1" defer></script>
+  <script src="kitten-life.js?v=polish1" defer></script>
+  <script src="journey.js?v=polish1" defer></script>
+  <script src="afterglow.js?v=quiet-garden1" defer></script>
+  <script src="continuation.js?v=quiet-garden1" defer></script>
+  <script src="moon-garden.js?v=panorama2" defer></script>
+  <script src="blue-hour.js?v=moon-garden1" defer></script>
+  <script src="continuity.js?v=moon-garden1" defer></script>
+  <script src="two-windows.js?v=polish1" defer></script>
+  <script src="memory-ribbon.js?v=panorama2" defer></script>
+  <script src="motion.js?v=panorama2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">跳到内容 / Skip to content</a>
   <header class="site-header wrap">
     <a class="wordmark" href="#home" aria-label="5:20 AM · Home">5:20<span>AM</span><i class="brand-star" aria-hidden="true">✧</i></a>
-    <nav aria-label="导航 / Navigation">
-      <a href="#surprise">小小惊喜 <small lang="en">A surprise</small></a>
-      <a href="#feeling">沿途的回忆 <small lang="en">Our moments</small></a>
-      <a href="#letters">慢慢靠近 <small lang="en">A little closer</small></a>
-      <a href="#blue-hour">蓝色时刻 <small lang="en">Blue hour</small></a>
+    <nav aria-label="导航">
+      <a href="#surprise">惊喜</a><a href="#feeling">回忆</a><a href="#blue-hour">蓝色时刻</a>
     </nav>
-    <button class="invitation-link" type="button" data-open-invitation>私人邀请 <span lang="en">Your invitation ↗</span></button>
+    <button class="invitation-link" type="button" data-open-invitation>只为你 ↗</button>
   </header>
 
   <main id="main">
@@ -56,18 +59,15 @@
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="night-dust" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="hero-copy wrap">
-        <div class="eyebrow hero-eyebrow"><span class="status-light"></span> 深夜，属于我们的频率 / OUR MIDNIGHT FREQUENCY</div>
         <h1 id="hero-title"><span class="zh">再陪我一会儿。</span><em lang="en">Just a little longer.</em></h1>
-        <p class="hero-description">城市睡了，心事还醒着。<br><span lang="en">The city sleeps. The feeling stays.</span></p>
-        <a class="primary-button" href="#surprise">为你准备的小惊喜 <small lang="en">A little surprise</small><span aria-hidden="true">↘</span></a>
-        <div class="hero-track">
-          <img src="assets/song-cover.webp" alt="5:20AM — 刀酱 · Pink vintage clock artwork" width="54" height="54">
-          <div><span class="tiny-label">今晚的旋律 / TONIGHT'S SOUNDTRACK</span><p>5:20AM <span>— 刀酱</span></p></div><span class="hero-track-heart" aria-hidden="true">♡</span>
-        </div>
-        <button type="button" class="home-music" id="home-music-rose" aria-pressed="false" aria-label="播放 5:20AM / Play 5:20AM"><span class="home-music-symbol" aria-hidden="true">▷</span><span><span class="home-music-zh">听最初的歌</span><small lang="en">Play 5:20AM</small></span></button>
+        <button type="button" class="home-music" id="home-music-rose" aria-pressed="false" aria-label="播放音乐">
+          <span class="home-music-symbol" aria-hidden="true">▷</span>
+          <span><span class="home-music-zh">听听这首歌</span><small>5:20AM · 刀酱</small></span>
+        </button>
+        <p class="home-music-feedback" id="home-music-feedback" role="status"></p>
+        <a class="home-surprise-link" href="#surprise">还有一份小惊喜 <span aria-hidden="true">↘</span></a>
       </div>
-      <div class="hero-bottom wrap"><a href="#surprise" class="scroll-cue"><span class="scroll-line" aria-hidden="true"></span> 慢慢往下 / SCROLL SLOWLY</a><span class="night-note" lang="en">a little place for a little love <span aria-hidden="true">♡</span></span></div>
-      <div class="photo-caption" aria-hidden="true">05:20 / SOMEWHERE WITH YOU</div>
+      <div class="hero-bottom wrap"><a href="#surprise" class="scroll-cue"><span class="scroll-line" aria-hidden="true"></span> 慢慢往下</a></div>
     </section>
 
     <section class="cat-section" id="surprise" aria-labelledby="cat-title">
@@ -84,7 +84,7 @@
         </div>
         <div class="bloom-space" id="bloom-scene" aria-labelledby="bloom-title" hidden inert>
           <div class="bloom-light" aria-hidden="true"></div><div class="bloom-petals" aria-hidden="true"></div>
-          <div class="bouquet-flight"><button class="bouquet-touch" type="button" aria-label="轻触玫瑰，让花瓣轻轻飘落 / Touch the roses to release a few petals"><span class="bouquet-drift"><img class="bloom-bouquet" src="assets/bouquet-evening-roses-v1.webp" width="1215" height="1295" decoding="async" alt="一束酒红与玫粉色的玫瑰 / A lush bouquet of wine-red and raspberry roses" draggable="false"></span></button></div>
+          <div class="bouquet-flight"><button class="bouquet-touch" type="button" aria-label="轻触玫瑰，让花瓣轻轻飘落 / Touch the roses to release a few petals"><span class="bouquet-drift"><img class="bloom-bouquet" loading="lazy" data-src="assets/bouquet-evening-roses-v1.webp" width="1215" height="1295" decoding="async" alt="一束酒红与玫粉色的玫瑰 / A lush bouquet of wine-red and raspberry roses" draggable="false"></span></button></div>
           <div class="bloom-message">
             <div class="bloom-copy">
               <span class="eyebrow" id="bloom-recipient">专属于你 / JUST FOR YOU</span>
@@ -227,15 +227,15 @@
       <div class="sky-ambient" aria-hidden="true"></div>
       <div class="sky-layout wrap">
         <div class="sky-copy">
-          <h2 class="afterglow-heading reveal" id="starlight-title"><span class="zh">把星光，留给你。</span><em lang="en">A little sky,<br>all for you.</em></h2>
-          <p class="sky-invitation reveal">点亮一颗星，听一句悄悄话。<span lang="en">Touch a star. There is a little thought inside.</span></p>
+          <h2 class="afterglow-heading reveal" id="starlight-title"><span class="zh">把星光，留给你。</span></h2>
+          <p class="sky-invitation reveal">点亮一颗星，听一句悄悄话。</p>
           <div class="sky-note" aria-live="polite" aria-atomic="true">
             <span class="sky-note-index" id="sky-note-index">♡</span>
-            <h3 id="sky-note-title">小小的瞬间。<em lang="en">Little things. Big feelings.</em></h3>
+            <h3 id="sky-note-title">小小的瞬间。</h3>
             <p id="sky-note-zh">有些心意，藏在微小的光里。</p>
-            <p id="sky-note-en" lang="en">Some feelings live in the smallest lights.</p>
+            <p id="sky-note-en" lang="en" hidden>Some feelings live in the smallest lights.</p>
           </div>
-          <a class="sky-next-link text-button" href="#last-letter">还有一封信，留给你。<span lang="en">One last little letter ↗</span></a>
+          <a class="sky-next-link text-button" href="#last-letter">还有一封信，留给你。</a>
         </div>
         <div class="sky-map-wrap">
           <div class="sky-board reveal" aria-label="八颗星，八句心意 / Eight stars, eight little thoughts">
@@ -244,17 +244,17 @@
             <div class="sky-orbit" aria-hidden="true"></div>
             <div class="sky-dust" aria-hidden="true"></div>
             <svg class="sky-thread" aria-hidden="true" preserveAspectRatio="none"><g class="sky-guides"></g><g class="sky-connections"></g></svg>
-            <button class="sky-star" style="--sx:13%;--sy:57%;--mx:16%;--my:20%;--star-size:36px;--shimmer:5s;--phase:-0.0s" type="button" data-star="0" data-depth="12" aria-pressed="false" aria-label="你的笑 / your laugh"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">你的笑<small lang="en">your laugh</small></span></button>
-            <button class="sky-star" style="--sx:27%;--sy:23%;--mx:48%;--my:8%;--star-size:33px;--shimmer:6s;--phase:-0.83s" type="button" data-star="1" data-depth="7" aria-pressed="false" aria-label="平凡的一天 / ordinary days"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">平凡的一天<small lang="en">ordinary days</small></span></button>
-            <button class="sky-star" style="--sx:43%;--sy:46%;--mx:82%;--my:24%;--star-size:38px;--shimmer:7s;--phase:-1.66s" type="button" data-star="2" data-depth="17" aria-pressed="false" aria-label="同一首歌 / our little song"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">同一首歌<small lang="en">our little song</small></span></button>
-            <button class="sky-star" style="--sx:60%;--sy:12%;--mx:49%;--my:42%;--star-size:34px;--shimmer:8s;--phase:-2.4899999999999998s" type="button" data-star="3" data-depth="9" aria-pressed="false" aria-label="一点勇气 / a little courage"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">一点勇气<small lang="en">a little courage</small></span></button>
-            <button class="sky-star" style="--sx:80%;--sy:34%;--mx:16%;--my:53%;--star-size:37px;--shimmer:5s;--phase:-3.32s" type="button" data-star="4" data-depth="14" aria-pressed="false" aria-label="温柔的光 / a softer light"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">温柔的光<small lang="en">a softer light</small></span></button>
-            <button class="sky-star" style="--sx:85%;--sy:70%;--mx:82%;--my:59%;--star-size:34px;--shimmer:6s;--phase:-4.1499999999999995s" type="button" data-star="5" data-depth="8" aria-pressed="false" aria-label="留一会儿 / stay a little"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">留一会儿<small lang="en">stay a little</small></span></button>
-            <button class="sky-star" style="--sx:59%;--sy:80%;--mx:52%;--my:77%;--star-size:38px;--shimmer:7s;--phase:-4.9799999999999995s" type="button" data-star="6" data-depth="16" aria-pressed="false" aria-label="小小的愿望 / a little wish"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">小小的愿望<small lang="en">a little wish</small></span></button>
-            <button class="sky-star" style="--sx:32%;--sy:83%;--mx:18%;--my:85%;--star-size:35px;--shimmer:8s;--phase:-5.81s" type="button" data-star="7" data-depth="10" aria-pressed="false" aria-label="明天见 / see you tomorrow"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">明天见<small lang="en">see you tomorrow</small></span></button>
+            <button class="sky-star" style="--sx:13%;--sy:57%;--mx:16%;--my:20%;--star-size:36px;--shimmer:5s;--phase:-0.0s" type="button" data-star="0" data-depth="12" aria-pressed="false" aria-label="你的笑 / your laugh"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">你的笑</span></button>
+            <button class="sky-star" style="--sx:27%;--sy:23%;--mx:48%;--my:8%;--star-size:33px;--shimmer:6s;--phase:-0.83s" type="button" data-star="1" data-depth="7" aria-pressed="false" aria-label="平凡的一天 / ordinary days"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">平凡的一天</span></button>
+            <button class="sky-star" style="--sx:43%;--sy:46%;--mx:82%;--my:24%;--star-size:38px;--shimmer:7s;--phase:-1.66s" type="button" data-star="2" data-depth="17" aria-pressed="false" aria-label="同一首歌 / our little song"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">同一首歌</span></button>
+            <button class="sky-star" style="--sx:60%;--sy:12%;--mx:49%;--my:42%;--star-size:34px;--shimmer:8s;--phase:-2.4899999999999998s" type="button" data-star="3" data-depth="9" aria-pressed="false" aria-label="一点勇气 / a little courage"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">一点勇气</span></button>
+            <button class="sky-star" style="--sx:80%;--sy:34%;--mx:16%;--my:53%;--star-size:37px;--shimmer:5s;--phase:-3.32s" type="button" data-star="4" data-depth="14" aria-pressed="false" aria-label="温柔的光 / a softer light"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">温柔的光</span></button>
+            <button class="sky-star" style="--sx:85%;--sy:70%;--mx:82%;--my:59%;--star-size:34px;--shimmer:6s;--phase:-4.1499999999999995s" type="button" data-star="5" data-depth="8" aria-pressed="false" aria-label="留一会儿 / stay a little"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">留一会儿</span></button>
+            <button class="sky-star" style="--sx:59%;--sy:80%;--mx:52%;--my:77%;--star-size:38px;--shimmer:7s;--phase:-4.9799999999999995s" type="button" data-star="6" data-depth="16" aria-pressed="false" aria-label="小小的愿望 / a little wish"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">小小的愿望</span></button>
+            <button class="sky-star" style="--sx:32%;--sy:83%;--mx:18%;--my:85%;--star-size:35px;--shimmer:8s;--phase:-5.81s" type="button" data-star="7" data-depth="10" aria-pressed="false" aria-label="明天见 / see you tomorrow"><span class="sky-star-mark" aria-hidden="true">✧</span><span class="sky-click-ring" aria-hidden="true"></span><span class="sky-star-label">明天见</span></button>
           </div>
-          <div class="sky-footnote"><span id="sky-progress" aria-label="已点亮 0 颗星 / 0 of 8 stars lit">0 <i>/</i> 8</span><span>慢慢来，夜还很长。<small lang="en">Take your time. The night is ours.</small></span><button id="sky-reset" type="button" hidden>重新点亮 <small lang="en">Start again ↺</small></button></div>
-          <p class="sky-complete" role="status" hidden>无论多远，都在同一片星空下。<em lang="en">Different places. The same sky.</em></p>
+          <div class="sky-footnote"><span id="sky-progress" aria-label="已点亮 0 颗星 / 0 of 8 stars lit">0 <i>/</i> 8</span><span>慢慢来，夜还很长。</span><button id="sky-reset" type="button" hidden>重新点亮 </button></div>
+          <p class="sky-complete" role="status" hidden>无论多远，都在同一片星空下。</p>
         </div>
       </div>
     </section>
@@ -286,38 +286,10 @@
       </div>
       <div class="keepsake-controls"><p id="keepsake-hint">轻轻打开。<em lang="en">Open gently. It is yours.</em></p><button id="keepsake-close" class="text-button" type="button" hidden>把心意收好 <small lang="en">Fold it back ↺</small></button></div>
       <span class="sr-only" id="keepsake-status" role="status"></span>
-      <a class="continuation-next text-button" href="#little-harbor">还有一点温柔，想送给你。 <small lang="en">A little wish is waiting below ↓</small></a>
+      <a class="continuation-next text-button" href="#tomorrow-postcard">有些风景，想和你一起看。 ↓</a>
     </section>
 
-    <section class="wish-harbor continuation-scene" id="little-harbor" aria-labelledby="harbor-title">
-      <div class="harbor-layout wrap">
-        <div class="harbor-copy">
-          <span class="eyebrow reveal">把温柔，送往远方 / A LITTLE WISH, SET ADRIFT</span>
-          <h2 class="afterglow-heading reveal" id="harbor-title"><span class="zh">让心愿，慢慢漂流。</span><em lang="en">Let a little<br>wish find you.</em></h2>
-          <p class="continuation-intro reveal">选一句心愿，放进小纸船里。<em lang="en">Choose something gentle. Let the water carry it.</em></p>
-          <div class="wish-choices" role="group" aria-label="选一句心愿 / Choose a wish">
-            <button type="button" data-wish="0" aria-pressed="true"><span>01</span>平静<small lang="en">a little peace</small></button>
-            <button type="button" data-wish="1" aria-pressed="false"><span>02</span>勇气<small lang="en">a little courage</small></button>
-            <button type="button" data-wish="2" aria-pressed="false"><span>03</span>快乐<small lang="en">a little joy</small></button>
-          </div>
-          <div class="harbor-message" aria-live="polite" aria-atomic="true"><p id="harbor-wish-zh">愿你的心，偶尔也能像水面一样安静。</p><p id="harbor-wish-en" lang="en">May your heart find a quiet place to rest.</p></div>
-          <button class="text-button harbor-send" id="harbor-send" type="button">让它出发 <small lang="en">Send it softly ↗</small></button>
-          <span class="harbor-status" id="harbor-status" role="status">一只小船，满满心意。 / One little boat. A heartful of things.</span>
-        </div>
-        <div class="harbor-water reveal" id="harbor-water" data-voyage="ready">
-          <span class="harbor-moon" aria-hidden="true"></span><span class="moon-reflection" aria-hidden="true"></span>
-          <svg class="water-lines" viewBox="0 0 700 560" preserveAspectRatio="none" aria-hidden="true"><g fill="none"><path d="M10 230 Q170 220 350 232 T690 225"/><path d="M70 259 Q260 269 430 257 T660 264"/><path d="M0 303 Q190 291 350 304 T700 300"/><path d="M20 345 Q170 358 330 346 T680 354"/><path d="M0 402 Q200 387 400 405 T700 399"/><path d="M90 445 Q260 458 420 446 T660 455"/><path d="M0 505 Q180 491 340 504 T700 500"/></g></svg>
-          <span class="water-glint glint-one" aria-hidden="true">✧</span><span class="water-glint glint-two" aria-hidden="true">·</span><span class="water-glint glint-three" aria-hidden="true">✧</span>
-          <span class="harbor-ripple" aria-hidden="true"></span><span class="harbor-ripple ripple-two" aria-hidden="true"></span>
-          <div class="boat-flight" id="boat-flight"><button class="paper-boat" id="paper-boat" type="button" aria-label="放出纸船 / Send your paper boat"><span class="boat-bob"><svg viewBox="0 0 240 170" aria-hidden="true"><defs><linearGradient id="boat-paper" x2=".8" y2="1"><stop stop-color="#f0ded4"/><stop offset="1" stop-color="#c49eae"/></linearGradient></defs><path d="M37 104 L119 18 L119 109Z" fill="#e5ccc7"/><path d="M119 18 L205 104 L119 109Z" fill="#b48c9e"/><path d="M11 91 L119 126 L231 91 L183 145 L58 145Z" fill="url(#boat-paper)"/><path d="M11 91 L58 145 L119 126Z" fill="#ebd5cb"/><path d="M119 126 L231 91 L183 145Z" fill="#caa6b5"/><path d="M119 18 L119 109 M58 145 L119 126 L183 145" fill="none" stroke="#fff0e56e"/></svg><span class="boat-wish" id="boat-wish" aria-hidden="true">平静</span></span></button><span class="boat-shadow" aria-hidden="true"></span></div>
-          <span class="harbor-coordinate" aria-hidden="true">05:20 N / SOMEWHERE CLOSE TO YOU</span>
-          <p class="harbor-horizon" aria-hidden="true">慢慢地，也会到达。<em lang="en">Softly is still a way forward.</em></p>
-        </div>
-      </div>
-      <a href="#tomorrow-postcard" class="continuation-next text-button">下一站，明天。 <small lang="en">A little note from tomorrow ↓</small></a>
-    </section>
-
-    <section class="tomorrow-postcard continuation-scene wrap" id="tomorrow-postcard" aria-labelledby="postcard-title">
+<section class="tomorrow-postcard continuation-scene wrap" id="tomorrow-postcard" aria-labelledby="postcard-title">
       <header class="postcard-heading reveal"><span class="eyebrow">寄往下一次微笑 / POSTMARKED: A SOFTER TOMORROW</span><h2 class="afterglow-heading" id="postcard-title"><span class="zh">把明天，写得温柔一点。</span><em lang="en">See you on<br>the softer side.</em></h2><p class="continuation-intro">给还没到来的日子，留一点期待。<em lang="en">A little something to look forward to.</em></p></header>
       <div class="postcard-stage" id="postcard-stage" data-side="front">
         <span class="postcard-scribble" aria-hidden="true">明天，也想见到你。<em lang="en">same heart. another day.</em></span>
@@ -337,57 +309,62 @@
       <p class="postcard-feedback" id="postcard-feedback" role="status">有些风景，想和你一起看。<em lang="en">Some views are better with you.</em></p>
     </section>
 
+    <div class="garden-journey" id="moon-garden">
+      <div class="garden-camera" tabindex="0" role="region" aria-label="蓝色花园与回忆" aria-describedby="ribbon-hint">
+        <div class="garden-world">
     <section class="blue-invitation" id="blue-hour" aria-labelledby="blue-hour-title">
       <div class="blue-horizon" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="blue-invitation-inner wrap">
-        <div class="blue-chapter reveal"><span>第二面 / SIDE B</span><i></i><span>A DIFFERENT SHADE OF US</span></div>
-        <h2 class="blue-heading reveal" id="blue-hour-title"><span class="zh">换一种心情，好吗？</span><em lang="en">Shall we change<br>the scene?</em></h2>
-        <p class="blue-intro reveal">让下一首歌，把夜晚染成蓝色。<span lang="en">One touch. A new song. A whole new shade of night.</span></p>
+
+        <h2 class="blue-heading reveal" id="blue-hour-title"><span class="zh">换一种心情，好吗？</span></h2>
+        <p class="blue-intro reveal">让下一首歌，把夜晚染成蓝色。</p>
         <div class="blue-button-stage">
           <span class="blue-orbit orbit-a" aria-hidden="true"></span><span class="blue-orbit orbit-b" aria-hidden="true"></span>
           <span class="blue-orbit-star" aria-hidden="true">✧</span>
           <button class="blue-play" id="blue-play" type="button" aria-label="播放特别的人，进入蓝色时刻 / Play Special Person and enter the blue hour" aria-pressed="false"><svg class="blue-play-symbol" viewBox="0 0 24 24" aria-hidden="true"><path class="symbol-play" d="m8 5 11 7-11 7Z"/><path class="symbol-pause" d="M7 5h3v14H7zm7 0h3v14h-3z"/></svg></button>
-          <span class="blue-button-note" aria-hidden="true">轻轻一点<em lang="en">let the blue in.</em></span>
+          <span class="blue-button-note" aria-hidden="true">轻轻一点</span>
         </div>
-        <div class="blue-track"><h3>特別的人</h3><p>方大同 <span>／</span> KHALIL FONG</p><a href="https://open.spotify.com/track/0VTzUEuHYD8s7CgQ15cDPo" target="_blank" rel="noopener noreferrer">专辑原曲 · Original recording ↗</a></div>
-        <p id="blue-status" class="blue-status" role="status">为特别的你，留一首特别的歌。<span lang="en">A special song, for someone special.</span></p>
-        <div class="blue-next"><a href="#blue-memories" class="text-button">让回忆转起来 <small lang="en">Let the memories turn ↓</small></a><button type="button" id="back-to-rose">回到 5:20AM <span lang="en">Back to the rosy night ↺</span></button></div>
+        <div class="blue-track"><h3>特別的人</h3><p>方大同 <span>／</span> KHALIL FONG</p><a href="https://open.spotify.com/track/0VTzUEuHYD8s7CgQ15cDPo" target="_blank" rel="noopener noreferrer">专辑原曲 ↗</a></div>
+        <p id="blue-status" class="blue-status" role="status">为特别的你，留一首特别的歌。</p>
+        <div class="blue-next"><a href="#blue-memories" class="text-button">沿着回忆走走 </a><button type="button" id="back-to-rose">回到 5:20AM </button></div>
       </div>
     </section>
 
-    <section class="memory-player-section" id="blue-memories" aria-labelledby="player-title">
-      <div class="player-header wrap reveal"><span class="eyebrow">慢慢播放，好好珍藏 / ON REPEAT, IN MY HEART</span><h2 class="blue-heading" id="player-title"><span class="zh">把这一刻，放在心上。</span><em lang="en">Some moments<br>deserve a replay.</em></h2></div>
-      <div class="memory-player wrap" role="region" aria-roledescription="carousel" aria-label="回忆播放器 / Our little memory player">
-        <div class="player-topline"><span><i class="player-lamp" aria-hidden="true"></i> MEMORY RADIO</span><span>STEREO / 0520</span></div>
-        <div class="player-deck" id="player-deck">
-          <div class="player-orbit" aria-hidden="true"></div>
-          <div class="memory-record" aria-hidden="true"><div class="record-grooves"></div><span class="memory-record-label">特別的人<i>♡</i><small>SIDE B · JUST FOR YOU</small></span></div>
-          <div class="photo-stack" id="photo-stack">
-            <button class="player-photo" type="button" data-slot="0" aria-label="下一张回忆 / Show the next memory"><span class="player-photo-placeholder" aria-hidden="true"><span class="placeholder-cross">＋</span><span class="placeholder-number">01</span><small>A LITTLE SPACE FOR US</small></span><span class="player-photo-caption"><span>初见的光</span><em lang="en">The light we found.</em><i>01 / 06</i></span></button>
-            <button class="player-photo" type="button" data-slot="1" aria-hidden="true" tabindex="-1" inert><span class="player-photo-placeholder" aria-hidden="true"><span class="placeholder-cross">＋</span><span class="placeholder-number">02</span><small>A LITTLE SPACE FOR US</small></span><span class="player-photo-caption"><span>一起走过</span><em lang="en">A little way together.</em><i>02 / 06</i></span></button>
-            <button class="player-photo" type="button" data-slot="2" aria-hidden="true" tabindex="-1" inert><span class="player-photo-placeholder" aria-hidden="true"><span class="placeholder-cross">＋</span><span class="placeholder-number">03</span><small>A LITTLE SPACE FOR US</small></span><span class="player-photo-caption"><span>平凡的美好</span><em lang="en">Nothing ordinary, with you.</em><i>03 / 06</i></span></button>
+    <section class="memory-ribbon" id="blue-memories" aria-labelledby="ribbon-title">
+      <div class="ribbon-stage">
+        <header class="ribbon-heading wrap"><div><span class="ribbon-kicker">沿途 · 回忆</span><h2 id="ribbon-title">把时光，慢慢串起来。</h2></div><em lang="en">Along the way.</em></header>
+        <div class="ribbon-viewport">
+          <div class="ribbon-track">
+            <svg class="ribbon-botany ribbon-botany-back" aria-hidden="true"></svg>
+            <div class="ribbon-overgrowth ribbon-overgrowth-back" aria-hidden="true"></div>
+            <figure class="ribbon-photo" style="--turn:-3deg;--rise:18px"><div class="ribbon-print" role="img" aria-label="照片占位 1"><span>01</span></div><figcaption><span>初次心动</span><small>01</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:2deg;--rise:-26px"><div class="ribbon-print" role="img" aria-label="照片占位 2"><span>02</span></div><figcaption><span>一起走过</span><small>02</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:-2deg;--rise:26px"><div class="ribbon-print" role="img" aria-label="照片占位 3"><span>03</span></div><figcaption><span>平凡的美好</span><small>03</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:3deg;--rise:-18px"><div class="ribbon-print" role="img" aria-label="照片占位 4"><span>04</span></div><figcaption><span>海风与笑声</span><small>04</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:-2deg;--rise:22px"><div class="ribbon-print" role="img" aria-label="照片占位 5"><span>05</span></div><figcaption><span>想念的形状</span><small>05</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:2deg;--rise:-24px"><div class="ribbon-print" role="img" aria-label="照片占位 6"><span>06</span></div><figcaption><span>等下一次见面</span><small>06</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:-3deg;--rise:25px"><div class="ribbon-print" role="img" aria-label="照片占位 7"><span>07</span></div><figcaption><span>路过你的日常</span><small>07</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:1deg;--rise:-20px"><div class="ribbon-print" role="img" aria-label="照片占位 8"><span>08</span></div><figcaption><span>把快乐藏好</span><small>08</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:3deg;--rise:16px"><div class="ribbon-print" role="img" aria-label="照片占位 9"><span>09</span></div><figcaption><span>月光也温柔</span><small>09</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:-2deg;--rise:-28px"><div class="ribbon-print" role="img" aria-label="照片占位 10"><span>10</span></div><figcaption><span>慢慢靠近你</span><small>10</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:2deg;--rise:24px"><div class="ribbon-print" role="img" aria-label="照片占位 11"><span>11</span></div><figcaption><span>还有好多明天</span><small>11</small></figcaption></figure>
+            <figure class="ribbon-photo" style="--turn:-1deg;--rise:-18px"><div class="ribbon-print" role="img" aria-label="照片占位 12"><span>12</span></div><figcaption><span>下一站，是我们</span><small>12</small></figcaption></figure>
+            <div class="ribbon-overgrowth ribbon-overgrowth-front" aria-hidden="true"></div>
           </div>
-          <span class="player-handwriting" aria-hidden="true">值得反复想起。<em lang="en">again, and again.</em></span>
         </div>
-        <div class="player-controls">
-          <button class="player-arrow" id="photo-previous" type="button" aria-label="上一张回忆 / Previous memory">←</button>
-          <div class="player-caption" aria-live="polite" aria-atomic="true"><span id="memory-caption-zh">初见的光</span><em id="memory-caption-en" lang="en">The light we found.</em><small id="memory-position">01 / 06</small></div>
-          <button class="player-arrow" id="photo-next" type="button" aria-label="下一张回忆 / Next memory">→</button>
-        </div>
-        <div class="player-scrubber" role="group" aria-label="选择回忆 / Choose a memory">
-          <button type="button" data-memory="0" aria-label="回忆 1 / Memory 1" aria-pressed="true"><span></span></button><button type="button" data-memory="1" aria-label="回忆 2 / Memory 2" aria-pressed="false"><span></span></button><button type="button" data-memory="2" aria-label="回忆 3 / Memory 3" aria-pressed="false"><span></span></button><button type="button" data-memory="3" aria-label="回忆 4 / Memory 4" aria-pressed="false"><span></span></button><button type="button" data-memory="4" aria-label="回忆 5 / Memory 5" aria-pressed="false"><span></span></button><button type="button" data-memory="5" aria-label="回忆 6 / Memory 6" aria-pressed="false"><span></span></button>
-        </div>
-        <div class="player-bottomline"><span>点击照片，翻到下一刻。<small lang="en">Tap a photo. Turn a little moment.</small></span><button type="button" id="player-music" aria-label="播放背景音乐 / Play background music" aria-pressed="false"><span aria-hidden="true">♪</span><span id="player-music-label">播放音乐 / Play music</span></button></div>
+        <footer class="ribbon-footer wrap"><span id="ribbon-hint">慢慢滚动，让回忆沿着花开。</span><span class="ribbon-progress" aria-hidden="true"><i></i></span></footer>
       </div>
-      <p class="player-afterword">换了风景，心意依然。<em lang="en">A different sky. The same little love.</em></p>
-      <a class="moon-chapter-link" href="#two-windows">一起看月亮 <small lang="en">Meet me under the moon ↓</small></a>
     </section>
+
+        </div>
+      </div>
+    </div>
 
     <section class="shared-sky" id="two-windows" aria-labelledby="twosky-windows-title">
       <div class="twosky-heading wrap">
-        <div class="twosky-eyebrow">隔着距离，分享月光 <span lang="en">A LITTLE CLOSER, UNDER THE MOON</span></div>
+        <div class="twosky-eyebrow">隔着距离，分享月光 </div>
         <h2 id="twosky-windows-title"><span class="zh">不同的窗，同一轮月亮。</span><em lang="en">Different windows.<br>The same moon.</em></h2>
-        <p>你在那里，我在这里。今晚，我们一起抬头。<span lang="en">You, over there. Me, over here. Looking up, together.</span></p>
+        <p>你在那里，我在这里。今晚，我们一起抬头。</p>
       </div>
       <div class="twosky-stage" id="shared-twosky-stage">
         <div class="twosky-panorama" aria-hidden="true"><img src="assets/shared-storybook-sky.webp" alt="" loading="lazy" decoding="async" width="1536" height="1024"></div>
@@ -398,7 +375,7 @@
             <span class="twosky-moon-halo" aria-hidden="true"></span>
             <span class="twosky-moon-face" aria-hidden="true"><i class="twosky-crater crater-one"></i><i class="twosky-crater crater-two"></i><i class="twosky-crater crater-three"></i><span class="twosky-moon-eyes"></span><span class="twosky-moon-smile"></span><i class="twosky-cheek cheek-left"></i><i class="twosky-cheek cheek-right"></i></span>
           </button>
-          <span class="twosky-moon-caption" aria-hidden="true">我们的月亮<em lang="en">our little moon</em></span>
+          <span class="twosky-moon-caption" aria-hidden="true">我们的月亮</span>
         </div>
         <div class="twosky-meteors" aria-hidden="true"><i></i><i></i><i></i></div>
         <figure class="twosky-window twosky-window-west">
@@ -410,7 +387,7 @@
             </div>
             <div class="twosky-plant"><i></i><i></i><i></i><i></i><span></span></div>
           </div>
-          <figcaption><span class="twosky-country">哈萨克斯坦 <i>·</i> KAZAKHSTAN</span><h3>我的城市 <em lang="en">My city</em></h3><span class="twosky-window-note" lang="en">my side of the night.</span></figcaption>
+          <figcaption><span class="twosky-country">哈萨克斯坦</span><h3>我的城市 </h3></figcaption>
         </figure>
         <figure class="twosky-window twosky-window-east">
           <div class="twosky-window-illustration" aria-hidden="true">
@@ -421,30 +398,35 @@
             </div>
             <div class="twosky-teacup"><span></span><i></i><i></i></div>
           </div>
-          <figcaption><span class="twosky-country">中国 <i>·</i> CHINA</span><h3>你的城市 <em lang="en">Your city</em></h3><span class="twosky-window-note" lang="en">your side of the night.</span></figcaption>
+          <figcaption><span class="twosky-country">中国</span><h3>你的城市 </h3></figcaption>
         </figure>
         <div class="twosky-cloud twosky-cloud-near" aria-hidden="true"></div>
-        <span class="twosky-between" aria-hidden="true">同一片夜空<em lang="en">one sky.<br>two hearts.</em></span>
+        <span class="twosky-between" aria-hidden="true">同一片夜空</span>
       </div>
       <div class="twosky-afterword wrap">
-        <p class="twosky-wish-hint" id="twosky-wish-hint">点点月亮，许个小愿望。<span lang="en">Touch the moon. Make a little wish.</span></p>
-        <p class="twosky-wish-message" role="status" aria-live="polite" aria-atomic="true"><span>月光落在两扇窗前，就像我们并肩看着夜空。</span><em lang="en">For a moment, it feels like we are side by side.</em></p>
+        <p class="twosky-wish-hint" id="twosky-wish-hint">点点月亮，许个小愿望。</p>
+        <p class="twosky-wish-message" role="status" aria-live="polite" aria-atomic="true"><span>月光落在两扇窗前，就像我们并肩看着夜空。</span><em lang="en" hidden></em></p>
       </div>
     </section>
 
 
-    <section class="closing section-space wrap" aria-labelledby="closing-title"><span class="closing-heart reveal" aria-hidden="true">♡</span><div class="eyebrow reveal">世界可以等等 / THE WORLD CAN WAIT</div><h2 class="reveal" id="closing-title"><span class="zh">再听一首吧。</span><br><em lang="en">Just one more song.</em></h2><a href="#home" class="text-button reveal">回到我们的时刻 / Back to our moment <span aria-hidden="true">↑</span></a></section>
+    <section class="closing section-space wrap" aria-labelledby="closing-title"><span class="closing-heart reveal" aria-hidden="true">♡</span><div class="eyebrow reveal">世界可以等等</div><h2 class="reveal" id="closing-title"><span class="zh">再听一首吧。</span></h2><a href="#home" class="text-button reveal">回到我们的时刻 <span aria-hidden="true">↑</span></a></section>
   </main>
-  <footer class="site-footer wrap"><a class="wordmark" href="#home">5:20<span>AM</span></a><span>小小天地，满满心意。 / A LITTLE PLACE FOR A LITTLE LOVE.</span><span>MADE WITH <i aria-hidden="true">♡</i> & A LITTLE NOSTALGIA</span></footer>
+  <footer class="site-footer wrap"><a class="wordmark" href="#home">5:20<span>AM</span></a><span>小小天地，满满心意。</span><span aria-hidden="true">♡</span></footer>
 
   <audio id="background-music" src="assets/520am.mp3" preload="none" loop></audio>
-  <button class="music-toggle" type="button" data-music-toggle data-state="off" aria-label="播放音乐 / Play music" aria-pressed="false" title="5:20AM — 刀酱"><span class="music-toggle-icon" aria-hidden="true"><span class="equalizer"><i></i><i></i><i></i><i></i></span></span><span class="music-toggle-label">播放音乐 / Music on</span><span class="music-toggle-dot" aria-hidden="true"></span></button><span class="sr-only" id="music-status" role="status" aria-live="polite"></span>
+  <button class="music-toggle" type="button" data-music-toggle data-state="off" aria-label="播放音乐 / Play music" aria-pressed="false" title="5:20AM — 刀酱"><span class="music-toggle-icon" aria-hidden="true"><span class="equalizer"><i></i><i></i><i></i><i></i></span></span><span class="music-toggle-label">播放音乐</span><span class="music-toggle-dot" aria-hidden="true"></span></button><span class="sr-only" id="music-status" role="status" aria-live="polite"></span>
 
   <dialog id="entry-gate" class="entry-gate" data-lenis-prevent aria-labelledby="entry-title">
-    <div class="entry-atmosphere" aria-hidden="true"><span></span><span></span><i>✧</i><i>♡</i></div>
-    <button type="button" class="entry-close" aria-label="暂时跳过 / Skip invitation">×</button>
-    <div class="entry-layout"><div class="entry-copy"><div class="eyebrow">PRIVATE FREQUENCY / 只为你开放</div><div class="entry-clock" aria-hidden="true">05:20<span>AM</span></div><h2 id="entry-title"><span class="zh">有一封信，<br>在等你。</span><em lang="en">A little world.<br>Kept just for you.</em></h2><p class="entry-description">今晚，不用着急。先把名字留给我。<br><span lang="en">No rush tonight. What shall I call you?</span></p><form id="entry-form"><label for="guest-name">你的名字 <span lang="en">Your name · optional</span></label><div class="entry-name-line"><input id="guest-name" name="nickname" type="text" maxlength="24" placeholder="留个昵称吧 / A little nickname" autocomplete="nickname"><span aria-hidden="true">♡</span></div><button type="submit" class="primary-button">开启这一刻 <small lang="en">Let me in</small><span aria-hidden="true">↗</span></button></form><div class="entry-bottom-note"><span>无需密码，只需一点心动。<small lang="en">No password. Just a little feeling.</small></span><button class="sfx-toggle" type="button" data-sfx-toggle aria-pressed="true">♪ <span>轻柔音效<small lang="en">Gentle sounds on</small></span></button></div></div>
-    <div class="entry-record" aria-hidden="true"><div class="record-orbit"></div><div class="record-disc"><div class="record-label"><span>5:20AM</span><strong>♡</strong><span>FOR YOUR EARS ONLY</span></div></div><div class="entry-ticket"><span>一张为你留下的入场券</span><em lang="en">admit one, stay forever.</em><span class="ticket-line"></span><span>NO. 0520 / AFTER MIDNIGHT</span></div><span class="entry-handwriting" lang="en">you had me at hello.</span></div></div>
+    <button type="button" class="entry-close" aria-label="暂时跳过">×</button>
+    <div class="entry-layout"><div class="entry-copy">
+      <div class="entry-clock" aria-hidden="true">5:20<span>AM</span></div>
+      <h2 id="entry-title"><span class="zh">只为你。</span></h2>
+      <form id="entry-form"><label for="guest-name">你的名字 <small>可选</small></label>
+        <div class="entry-name-line"><input id="guest-name" name="nickname" type="text" maxlength="24" placeholder="留个昵称吧" autocomplete="nickname"><span aria-hidden="true">♡</span></div>
+        <button type="submit" class="primary-button">开启这一刻 <span aria-hidden="true">↗</span></button>
+      </form>
+    </div></div>
   </dialog>
 
   <dialog id="letter-dialog" data-lenis-prevent aria-labelledby="letter-title"><button class="letter-close icon-button" type="button" aria-label="关闭信件 / Close letter">×</button><div class="letter-paper"><span class="tiny-label" id="letter-number"></span><span class="paper-heart" aria-hidden="true">♡</span><h2 id="letter-title"></h2><div id="letter-body"></div><p class="letter-signature">一直温柔地，<span lang="en">with tenderness, always.</span></p><button class="letter-done" type="button">藏在心里 / Keep it close <span aria-hidden="true">♡</span></button></div></dialog><div class="sr-only" id="announcement" aria-live="polite"></div>

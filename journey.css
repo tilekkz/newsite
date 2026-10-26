@@ -8,7 +8,7 @@ main { background: radial-gradient(ellipse 75% 16% at 22% 45%, #4d28342c, transp
 .journey-thread { position: absolute; height: 100px; width: 1px; top: -45px; left: 50%; background: linear-gradient(transparent, #b67c9345, transparent); }
 .journey-intro h2 { margin: 28px auto 0; max-width: 700px; }
 .journey-intro h2 .zh { display: block; font-family: 'Noto Serif SC', serif; font-size: clamp(20px, 2.2vw, 30px); letter-spacing: .12em; color: #d7bec7; line-height: 1.65; }
-.journey-intro h2 em { display: block; margin-top: 15px; font-size: clamp(64px, 7.9vw, 112px); line-height: .91; letter-spacing: -.05em; color: #eee0d8; }
+.journey-intro h2 em { display: block; margin-top: 15px; font-size: clamp(64px, 7.9vw, 112px); line-height: 1.08; letter-spacing: -.05em; color: #eee0d8; }
 .journey-intro h2 em span { color: #d997b1; }
 .journey-description { margin-top: 30px; color: #b194a2; font-size: 11px; line-height: 1.9; }
 .journey-description > span { display: block; font-family: var(--serif); font-style: italic; font-size: 21px; color: #a48795; margin-top: 3px; }
@@ -22,8 +22,8 @@ main { background: radial-gradient(ellipse 75% 16% at 22% 45%, #4d28342c, transp
 .memory-trail { list-style: none; padding: 0; margin: 0; }
 .memory-node { position: absolute; left: calc(50% + var(--wave) * var(--journey-spread)); top: calc(160px + var(--i) * var(--journey-step)); width: var(--card-size); margin-left: calc(var(--card-size) / -2); z-index: var(--layer); }
 .memory-flight { width: 100%; transform-origin: center; }
-.memory-card { display: block; position: relative; width: 100%; padding: 0; border: 0; background: none; text-align: left; transform: rotate(var(--turn)); transform-origin: var(--origin); transition: transform .65s cubic-bezier(.2,.8,.2,1); touch-action: pan-y; }
-.memory-square { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; overflow: hidden; background: linear-gradient(135deg, #555154, #413e41 66%, #494548); border: 7px solid #c6bbb3; box-shadow: 0 18px 34px #03000465, 0 3px 7px #0005, inset 0 0 30px #00000016; transition: box-shadow .65s var(--motion), border-color .5s var(--motion); }
+.memory-card { display: block; position: relative; width: 100%; padding: 0; border: 0; background: none; text-align: left; transform: rotate(var(--turn)); transform-origin: var(--origin); transition: transform .34s cubic-bezier(.22,.78,.24,1); touch-action: pan-y; }
+.memory-square { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1; overflow: hidden; background: linear-gradient(135deg, #555154, #413e41 66%, #494548); border: 7px solid #c6bbb3; box-shadow: 0 18px 34px #03000465, 0 3px 7px #0005, inset 0 0 30px #00000016; transition: border-color .24s var(--motion); }
 .memory-square::after { content: ''; position: absolute; inset: 0; background: linear-gradient(125deg, #fff0 40%, #ffffff06 53%, #fff0 65%); pointer-events: none; }
 .memory-square > i { width: 22px; height: 22px; position: absolute; opacity: .15; border: 1px solid #c8bec3; transform: rotate(45deg); }
 .memory-square > span { color: #c9bec2; opacity: .28; font: 17px var(--serif); }
@@ -34,7 +34,7 @@ main { background: radial-gradient(ellipse 75% 16% at 22% 45%, #4d28342c, transp
 .memory-node.is-keyboard-preview { z-index: 1100; }
 .memory-node.is-previewing { z-index: 1200; }
 .memory-node:is(.is-expanded, .is-keyboard-preview, .is-previewing) .memory-card { transform: rotate(0) scale(1.85); }
-.memory-node:is(.is-expanded, .is-keyboard-preview, .is-previewing) .memory-square { border-color: #e1d3ca; box-shadow: 0 30px 65px #0009, 0 0 40px #d79ab212; }
+.memory-node:is(.is-expanded, .is-keyboard-preview, .is-previewing) .memory-square { border-color: #e1d3ca; }
 .memory-card:focus-visible { outline: 1px solid #e1a0ba; outline-offset: 8px; }
 .journey-canvas.has-path-motion .memory-node:not(.is-settled) .memory-card { pointer-events: none; }
 .journey-whisper, .journey-chapter { position: absolute; z-index: 0; pointer-events: none; }
@@ -102,3 +102,5 @@ main { background: radial-gradient(ellipse 75% 16% at 22% 45%, #4d28342c, transp
   .memory-card, .memory-square { transition: none; }
   .journey-line-drawn { stroke-dashoffset: 0 !important; }
 }
+
+.memory-node:is(.is-previewing,.is-expanded,.is-returning,.is-keyboard-preview) .memory-card { will-change:transform; }

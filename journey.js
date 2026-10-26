@@ -15,6 +15,7 @@
   const returning = new Map();
   let hovered;
   let edgeHandoff;
+  let hoverFrame = 0, pointerSample;
 
   function finishReturn(node) {
     clearTimeout(returning.get(node));
@@ -26,7 +27,7 @@
     finishReturn(node);
     node.classList.add('is-returning');
     // Keep the frame above the pile until its shrinking transform has finished.
-    returning.set(node, setTimeout(() => completeReturn(node), 1000));
+    returning.set(node, setTimeout(() => completeReturn(node), 450));
   }
   function completeReturn(node) {
     const moving = node.querySelector('.memory-card').getAnimations().some(animation =>
@@ -46,6 +47,7 @@
     node.classList.add('is-previewing');
   }
   function clearPreview() {
+    cancelAnimationFrame(hoverFrame); hoverFrame = 0; pointerSample = null;
     edgeHandoff = null;
     if (!hovered) return;
     const previous = hovered;
@@ -53,9 +55,11 @@
     previous.classList.remove('is-previewing');
     keepAboveWhileReturning(previous);
   }
-  canvas.addEventListener('pointermove', event => {
-    if (!hoverMedia.matches || event.pointerType === 'touch') return;
-    const { clientX: x, clientY: y } = event;
+  function updatePreview() {
+    hoverFrame = 0;
+    if (!pointerSample) return;
+    const { x, y } = pointerSample;
+    pointerSample = null;
     // Layer changes also generate pointer enter/leave events. Only intentional
     // cursor movement can turn another page, with a small dead zone for jitter.
     if (edgeHandoff && Math.hypot(x - edgeHandoff.x, y - edgeHandoff.y) < 30) return;
@@ -74,7 +78,12 @@
       preview(underneath);
       edgeHandoff = { x, y };
     }
-  });
+  }
+  canvas.addEventListener('pointermove', event => {
+    if (!hoverMedia.matches || event.pointerType === 'touch') return;
+    pointerSample = { x:event.clientX, y:event.clientY };
+    if (!hoverFrame) hoverFrame = requestAnimationFrame(updatePreview);
+  }, { passive:true });
   canvas.addEventListener('pointerleave', clearPreview);
   window.addEventListener('scroll', clearPreview, { passive: true });
   function settle(node) {
@@ -179,7 +188,7 @@
       drawn.style.strokeDasharray = '1';
       gsap.fromTo(drawn, { strokeDashoffset: 1 }, {
         strokeDashoffset: 0, ease: 'none',
-        scrollTrigger: { id: 'memory-thread', trigger: canvas, start: 'top 78%', end: 'bottom 54%', scrub: .8 }
+        scrollTrigger: { id: 'memory-thread', trigger: canvas, start: 'top 78%', end: 'bottom 54%', scrub: .3 }
       });
       nodes.forEach((node, index) => {
         const target = node.querySelector('.memory-flight');
@@ -198,7 +207,7 @@
           onUpdate() { if (this.progress() > .98 && node.dataset.journeySeen !== 'true') settle(node); },
           scrollTrigger: {
             id: `memory-${index + 1}`, trigger: node, start: 'clamp(top 84%)', end: 'clamp(top 46%)',
-            scrub: desktop ? .45 : .25, invalidateOnRefresh: true
+            scrub: desktop ? .22 : .15, invalidateOnRefresh: true
           }
         });
         landings.set(node, tween);
@@ -206,7 +215,7 @@
       });
       gsap.fromTo('.journey-whisper, .journey-chapter', { y: desktop ? 20 : 9 }, {
         y: desktop ? -28 : -12, ease: 'none',
-        scrollTrigger: { trigger: canvas, start: 'top bottom', end: 'bottom top', scrub: 1.2 }
+        scrollTrigger: { trigger: canvas, start: 'top bottom', end: 'bottom top', scrub: .4 }
       });
       return () => {
         clearPreview();

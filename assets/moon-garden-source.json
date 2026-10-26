@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-26",
+  "tool": "Built-in image_gen",
+  "assets": [
+    {
+      "path": "assets/moon-garden-vine.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: transparent botanical cutout for a romantic midnight-blue interactive website, NOT a website mockup. A long lush organically undulating climbing garden branch, horizontal landscape composition, roughly 2.2:1 silhouette. Dense tangled trailing sage and deep teal ivy leaves with many exquisitely detailed TRUE BLUE flowers: cornflower-blue clematis, periwinkle climbing roses, a few airy delphinium blossoms and tiny forget-me-not buds. Flowers vary naturally in size, angle and maturity; complex curled petals, subtle veins and tiny dew drops. Winding woody stems remain visible between leafy masses; branch climbs then falls in a gentle broad S curve. Natural asymmetric clusters with delicate reaching tendrils and open negative-space holes. Dreamy botanical still-life photography with a restrained vintage photographic softness, sharp local petal detail, soft cool moonlight and gentle warm cream highlights. Quiet muted cobalt/periwinkle palette, no neon, no plastic, no vector shapes. Entire plant contained in frame with generous transparent margin all around, no cut-off leaves, no background, no vase, no pot, no ribbon, no lettering. Real alpha transparency.",
+      "generatedSource": "exec-42a2a742-6852-4c92-ab90-ccda00eb2b32.png"
+    },
+    {
+      "path": "assets/moon-garden-spray.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: a separate transparent garden spray cutout for a romantic midnight-blue interactive website. A dense irregular diagonal spray of living TRUE BLUE flowers and long trailing greenery, with an elegant tapering stem at bottom left growing up toward upper right. One luscious blue-violet climbing rose, two open cobalt/periwinkle clematis flowers with fine cream stamens, a cloud of tiny blue forget-me-nots, several half-open buds, serrated leaves, airy fern fronds and curling ivy tendrils. Rich natural petal structure, dew, velvety folds and soft moonlit shading; floral fine-art photography, slightly vintage and painterly but convincingly three-dimensional. Teal/sage/dark olive leaves, muted medium blue and cornflower petals, subtle ivory highlights. Asymmetrical with little gaps and uneven edges. Whole spray fully visible with transparent space around it. No white background, no scenery, no pot, no vase, no bow, no text, no artificial vector flowers. Real alpha transparency.",
+      "generatedSource": "exec-cb0ef699-40db-4624-9984-752d2dd705f7.png"
+    }
+  ],
+  "processing": "WebP delivery encoding with retained alpha; original generated images preserved."
+}

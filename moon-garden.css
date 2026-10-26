@@ -1,0 +1,87 @@
+/* Plant sizes stay below their native resolution at DPR 2. */
+#blue-memories { --stem:#75937b; }
+.ribbon-overgrowth { position:absolute; inset:0; pointer-events:none; overflow:clip; }
+.ribbon-overgrowth-back { z-index:1; }
+.ribbon-overgrowth-front { z-index:3; }
+.ribbon-botany-back { z-index:0; opacity:.55; }
+.garden-plant { position:absolute; aspect-ratio:1312/1199; pointer-events:none; transform:translate(-50%,-50%) rotate(var(--plant-turn,0deg)) scaleX(var(--plant-mirror,1)); }
+.garden-vine { aspect-ratio:1942/809; opacity:1; }
+.garden-reveal,.garden-sway { width:100%; height:100%; transform-origin:50% 50%; }
+.garden-plant img,.button-canopy img { display:block; width:100%; height:100%; object-fit:contain; pointer-events:none; user-select:none; }
+.garden-image-unavailable { visibility:hidden; }
+/* The visible end of each cutout stem (4%,94%) is attached to the SVG branch. */
+.garden-spray { transform:translate(-4%,-94%) rotate(var(--plant-turn,0deg)) scaleX(var(--plant-mirror,1)); transform-origin:4% 94%; }
+.garden-spray .garden-sway { transform-origin:4% 94%; }
+.ribbon-viewport { isolation:isolate; -webkit-mask-image:linear-gradient(90deg,transparent,#000 22px,#000 calc(100% - 22px),transparent); mask-image:linear-gradient(90deg,transparent,#000 22px,#000 calc(100% - 22px),transparent); }
+.ribbon-photo { z-index:2; }
+.ribbon-print { box-shadow:0 20px 42px #0005,0 0 0 1px #dae6ff18; }
+.ribbon-photo figcaption { position:relative; text-shadow:0 1px 8px var(--bg); }
+.ribbon-heading,.ribbon-footer { position:relative; z-index:4; }
+.ribbon-stage:before { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 65% 50% at 50% 65%,#5098df20,transparent 80%); }
+
+/* One coherent plant, anchored under the button; the song sits below its natural end. */
+#blue-hour { overflow:visible; }
+.blue-button-stage { --canopy-width:min(820px,calc(100vw - 64px)); width:var(--canopy-width); height:calc(92px + var(--canopy-width) * .5); margin:30px auto 0; display:block; }
+.blue-play { width:92px; height:92px; position:absolute; top:22px; left:calc(50% - 46px); }
+.blue-button-stage .blue-orbit { left:50%; top:68px; transform:translate(-50%,-50%); }
+.blue-button-stage .blue-orbit-star { left:calc(50% - 74px); top:19px; }
+.blue-button-stage .blue-button-note { top:40px; }
+.button-garden { position:absolute; width:100%; aspect-ratio:1774/887; height:auto; left:50%; top:68px; transform:translateX(-50.3%); pointer-events:none; opacity:0; view-transition-name:button-garden; z-index:0; }
+.garden-awake .button-garden { opacity:1; }
+.button-canopy { position:absolute; inset:0; -webkit-mask-image:radial-gradient(circle at 50.3% 0%,transparent calc(var(--button-clearance,46px) - .5px),#000 var(--button-clearance,46px)); mask-image:radial-gradient(circle at 50.3% 0%,transparent calc(var(--button-clearance,46px) - .5px),#000 var(--button-clearance,46px)); }
+.button-canopy .garden-sway { transform-origin:50.3% 0%; }
+.garden-attachment { position:absolute; top:0; left:50.3%; width:0; height:0; }
+.garden-button-glow { position:absolute; width:300px; aspect-ratio:1; left:50%; top:68px; transform:translate(-50%,-50%); pointer-events:none; background:radial-gradient(circle,#6aaffb20,transparent 65%); opacity:.3; transition:opacity 1.2s; }
+.garden-awake .garden-button-glow { opacity:1; }
+.blue-invitation-inner>h2,.blue-intro,.blue-track,.blue-status,.blue-next { position:relative; z-index:2; }
+.garden-awake .blue-orbit { opacity:.2; }
+.garden-awake .blue-button-note { opacity:0; transition:opacity .25s; }
+.garden-mote,.scene-firefly { position:absolute; left:var(--x); top:var(--y); width:3px; height:3px; border-radius:50%; background:#d4e9ff; box-shadow:0 0 8px 1px #72aaff55; opacity:.3; }
+/* Extra depth across the whole night, adapting to the existing pink / blue palette. */
+.has-night-garden { position:relative; isolation:isolate; }
+.scene-garden-air { position:absolute; inset:0; pointer-events:none; z-index:-1; overflow:hidden; background:radial-gradient(ellipse 35% 38% at 14% 65%,rgba(var(--night-glow),.1),transparent 74%),radial-gradient(ellipse 28% 40% at 85% 22%,rgba(var(--night-warmth),.09),transparent 76%); }
+.scene-firefly { width:2px; height:2px; background:var(--pink); box-shadow:0 0 12px 3px rgba(var(--night-glow),.45); opacity:.26; }
+.night-lens { position:absolute; width:clamp(160px,25vw,390px); aspect-ratio:1; border-radius:50%; background:radial-gradient(circle,rgba(var(--night-warmth),.07),rgba(var(--night-glow),.035) 40%,transparent 68%); }
+.night-lens-one { left:-8%; top:12%; }
+.night-lens-two { right:-9%; bottom:6%; width:40vw; opacity:.75; }
+.night-filament { position:absolute; inset:4% -20%; background:radial-gradient(ellipse 100% 18% at 20% 44%,transparent 60%,rgba(var(--night-glow),.045) 68%,transparent 76%); transform:rotate(-25deg); }
+.night-speck:nth-of-type(7n) { background:#efe2cd; width:3px; height:3px; box-shadow:0 0 13px 3px rgba(var(--night-warmth),.5); }
+.atmosphere-toggle { position:fixed; bottom:26px; left:25px; z-index:80; width:36px; height:36px; border:1px solid var(--line); border-radius:50%; background:color-mix(in srgb,var(--bg) 65%,transparent); color:var(--muted); font:24px/1 var(--serif); cursor:pointer; }
+.atmosphere-toggle:hover { color:var(--ink); border-color:var(--pink); }
+.atmosphere-toggle[aria-pressed="true"] { opacity:.55; }
+.atmosphere-toggle:focus-visible { outline:2px solid var(--pink); outline-offset:4px; }
+
+
+@media(prefers-reduced-motion:no-preference) {
+ .blue-button-stage:has(.blue-play:hover) { --button-clearance:48.76px; }
+ .blue-button-stage:has(.blue-play:active) { --button-clearance:43.7px; }
+ .blue-play:hover { transform:scale(1.06); }
+ .blue-play:active { transform:scale(.95); }
+ .plant-in-view .garden-sway { animation:garden-breeze 11s ease-in-out var(--breeze-delay,0s) infinite alternate; }
+ .plant-seen .garden-reveal { animation:garden-arrive .7s ease-out both; }
+ .garden-awake .blue-invitation:not(.scene-resting) .button-canopy .garden-sway { animation:canopy-breeze 12s ease-in-out infinite alternate; }
+ .garden-mote,.scene-firefly { animation:garden-firefly var(--duration,8s) ease-in-out var(--delay,0s) infinite alternate; }
+ .night-lens { animation:lens-breathe 18s ease-in-out infinite alternate; }
+ .night-lens-two { animation-delay:-9s; }
+ .garden-awake::view-transition-new(button-garden) { animation:garden-unfurl 1.7s cubic-bezier(.4,0,.3,1) both; mix-blend-mode:normal; mask-image:radial-gradient(ellipse at 50.3% 0%,#000 57%,transparent 76%); mask-repeat:no-repeat; mask-position:50.3% 0%; }
+ ::view-transition-old(button-garden) { animation:none; opacity:0; }
+ ::view-transition-group(button-garden) { z-index:5; animation-duration:1.45s; }
+}
+@keyframes garden-unfurl { from { mask-size:0% 0%; opacity:.2; } to { mask-size:250% 250%; opacity:1; } }
+@keyframes garden-arrive { from { opacity:.25; } to { opacity:1; } }
+@keyframes garden-breeze { from { transform:rotate(-.45deg); } to { transform:rotate(.45deg); } }
+@keyframes canopy-breeze { from { transform:rotate(-.25deg); } to { transform:rotate(.25deg); } }
+@keyframes garden-firefly { from { transform:translate3d(-7px,9px,0); opacity:.12; } to { transform:translate3d(12px,-17px,0); opacity:.55; } }
+@keyframes lens-breathe { to { transform:translate3d(3%,7%,0) scale(1.08); opacity:.5; } }
+@media(max-width:760px) {
+ .scene-firefly:nth-child(n+5) { display:none; }
+ .atmosphere-toggle { bottom:24px; left:16px; width:30px; height:30px; font-size:21px; }
+ .ribbon-footer { padding-bottom:22px; align-items:flex-start; padding-top:7px; }
+ .ribbon-viewport { -webkit-mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent); mask-image:linear-gradient(90deg,transparent,#000 12px,#000 calc(100% - 12px),transparent); }
+}
+@media(prefers-reduced-motion:reduce) {
+ .garden-reveal,.garden-sway,.garden-mote,.scene-firefly,.night-lens { animation:none !important; }
+ .garden-button-glow { transition:none; }
+ .garden-mote,.scene-firefly { opacity:.25; }
+ .garden-reveal { opacity:1; transform:none; }
+}

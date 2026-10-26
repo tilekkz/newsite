@@ -33,10 +33,10 @@
     button.dataset.track = selected;
     button.setAttribute('aria-pressed', String(playing));
     button.setAttribute('aria-busy', String(loading));
-    label.textContent = playing ? '关闭音乐 / Music off' : loading ? '加载中 / Loading…'
-      : missing ? '歌曲准备中 / Song coming soon' : state === 'error' ? '再试一次 / Try again' : '播放音乐 / Music on';
+    label.textContent = playing ? '暂停音乐' : loading ? '加载中…'
+      : missing ? '歌曲准备中' : state === 'error' ? '再试一次' : '播放音乐';
     button.setAttribute('aria-label', loading ? '取消 / Cancel music' : playing ? '关闭音乐 / Pause music'
-      : missing ? '歌曲准备中 / Song coming soon' : '播放音乐 / Play music');
+      : missing ? '歌曲准备中' : '播放音乐 / Play music');
     button.title = tracks[selected].title;
     status.textContent = missing ? '这首歌还没有准备好。 / This song is not available yet.'
       : state === 'error' ? '暂时无法播放，轻点再试。 / Music could not play. Tap to retry.'

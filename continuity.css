@@ -66,3 +66,25 @@ body:after { background-image:url('assets/film-grain.webp'); background-size:180
   .night-atmosphere * { animation:none; }
   .night-speck { opacity:.16; }
 }
+
+/* Slow light, quick gestures. These layers only animate transform and opacity. */
+.night-veil {
+  position:absolute; inset:-14%;
+  background:radial-gradient(ellipse 30% 70% at 13% 44%,rgba(var(--night-glow),.13),transparent 74%),
+    radial-gradient(ellipse 34% 60% at 90% 68%,rgba(var(--night-warmth),.12),transparent 76%);
+  transform:rotate(-12deg);
+  animation:night-veil-drift 30s ease-in-out infinite alternate;
+}
+@keyframes night-veil-drift {
+  to { transform:translate3d(3%,-2%,0) rotate(-6deg); opacity:.5; }
+}
+.scene-resting *, .scene-resting::before, .scene-resting::after,
+.scene-resting *::before, .scene-resting *::after,
+.atmosphere-resting #main *, .atmosphere-resting #main *::before, .atmosphere-resting #main *::after {
+  animation-play-state:paused !important;
+}
+@media(prefers-reduced-motion:reduce) {
+  .night-veil { animation:none; opacity:.65; }
+}
+
+.cat-section:not(.kitten-awake) .cat-ambience > i { animation-play-state:paused; }

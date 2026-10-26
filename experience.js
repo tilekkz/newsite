@@ -101,13 +101,13 @@
     entryClosing = false;
     document.querySelector('#guest-name').value = nickname;
     entryTimeline?.kill();
-    if (gsap) gsap.set([gate, '.entry-copy', '.entry-record'], { clearProps: 'opacity,visibility,transform' });
+    if (gsap) gsap.set([gate, '.entry-copy'], { clearProps: 'opacity,visibility,transform' });
     openModal(gate);
     // Keep mobile keyboards closed until the optional name field is chosen.
     gate.querySelector('.entry-close').focus({ preventScroll: true });
-    if (gsap && !reduced()) entryTimeline = gsap.timeline()
-      .from('.entry-copy > *', { y: 18, autoAlpha: 0, duration: 0.9, stagger: 0.08, ease: 'power3.out', clearProps: 'transform,opacity,visibility' })
-      .from('.entry-record', { rotation: 9, scale: 0.93, autoAlpha: 0, duration: 1.3, ease: 'power3.out', clearProps: 'transform,opacity,visibility' }, 0.15);
+    if (gsap && !reduced()) entryTimeline = gsap.from('.entry-copy > *', {
+      y:10, autoAlpha:0, duration:.5, stagger:.06, ease:'power2.out', clearProps:'transform,opacity,visibility'
+    });
   }
   function enterWorld(saveName) {
     if (entryClosing) return;
@@ -296,7 +296,8 @@
       .to(stage, { height: bloomHeight(), duration: .85, onComplete: () => { if (framing) frameBouquet(); } }, 0)
       .to(flight, { ...bloomPose(), duration:1.1, ease:'power3.out' },.46)
       .to(message, { y: 0, autoAlpha: 1, duration: .6, ease: 'power2.out', onStart: () => { stage.dataset.phase = 'message'; } }, 1.7)
-      .to(next, { y: 0, autoAlpha: 1, duration: .45, ease: 'power2.out' }, 2.35);
+      .to(next, { y: 0, autoAlpha: 1, duration: .45, ease: 'power2.out' }, 2.35)
+      .timeScale(1.25);
   }
   cat.addEventListener('click', () => {
     if (busy) return;

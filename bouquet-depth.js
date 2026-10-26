@@ -27,17 +27,17 @@
     flower.className = 'floating-rose';
     flower.style.cssText = `--rose-x:${x}%;--rose-y:${y}%;--rose-size:${w}px`;
     const img = document.createElement('img');
-    img.src = 'assets/rose-floating-v1.webp'; img.alt = ''; img.draggable = false;
+    img.loading = 'lazy'; img.decoding = 'async'; img.src = 'assets/rose-floating-v1.webp'; img.alt = ''; img.draggable = false;
     flower.append(img); atmosphere.append(flower);
     return { element:flower, r, i };
   });
   let gl, program, uniforms, gpu = false;
   let active = false, visible = false, ticking = false, reveal, pulse;
-  let clock = 0, lastDrop = 0, lastFrame = 0, sceneWidth = 800, sceneHeight = 800;
+  let clock = 0, lastDrop = 0, sceneWidth = 800, sceneHeight = 800;
   const state = { x:0, y:0, pulse:0, arrival:0 };
   const follow = {
-    x:gsap.quickTo(state,'x',{duration:.85,ease:'power3.out'}),
-    y:gsap.quickTo(state,'y',{duration:.85,ease:'power3.out'})
+    x:gsap.quickTo(state,'x',{duration:.45,ease:'power3.out'}),
+    y:gsap.quickTo(state,'y',{duration:.45,ease:'power3.out'})
   };
   const particles = [];
   function shader(type, source) {
@@ -95,7 +95,19 @@
     } catch { gpu=false; scene.dataset.renderer='image'; }
   }
   // A detailed textured mesh bends the original roses. No duplicate bloom layers or blur.
-  const ready=image.decode().then(initMesh).catch(()=>{ scene.dataset.renderer='image'; });
+  let preparation;
+  function prepare() {
+    if (!preparation) {
+      image.loading = 'eager';
+      if (image.dataset.src) image.src = image.dataset.src;
+      atmosphere.querySelectorAll('img').forEach(flower => { flower.loading = 'eager'; });
+      preparation = image.decode();
+    }
+    return preparation.then(() => {
+      if (!gpu && !reduced.matches) initMesh();
+    }).catch(() => { scene.dataset.renderer='image'; });
+  }
+  window.NightMotion.whenNear(document.querySelector('#cat-stage'), prepare);
   canvas.addEventListener('webglcontextlost',event=>{
     event.preventDefault();gpu=false;camera.classList.remove('has-living-mesh');scene.dataset.renderer='image';
   });
@@ -141,7 +153,7 @@
   }
   function tick(time,delta){
     const dt=Math.min(delta/1000,.05);clock+=dt;
-    if(time-lastFrame>1/45){render();lastFrame=time;}
+    render();
     if(clock-lastDrop>.48){drop();lastDrop=clock;}
     for(let i=particles.length-1;i>=0;i--){
       const p=particles[i];p.life+=dt;p.x+=p.vx*dt;p.y+=p.speed*dt;p.rotation+=dt*27;
@@ -158,7 +170,7 @@
     if(!run&&ticking){gsap.ticker.remove(tick);ticking=false;clearParticles();}
     if(!run&&active){center(true);}
   }
-  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;updateRunning();},{rootMargin:'0px'}).observe(scene);
+  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;if(active&&visible&&!reduced.matches)prepare();updateRunning();},{rootMargin:'0px'}).observe(scene);
   document.addEventListener('visibilitychange',()=>{if(document.hidden){reveal?.progress(1);pulse?.progress(1);}updateRunning();});
   function settle(){state.arrival=1;scene.dataset.bouquetPhase='opened';render();updateRunning();}
   function open({instant=false}={}){
@@ -166,7 +178,7 @@
     scene.dataset.bouquetPhase='presenting';scene.classList.add('bouquet-open');
     gsap.set(atmosphere,{opacity:0});measure();
     if(instant||reduced.matches){gsap.set(atmosphere,{opacity:1});settle();return;}
-    reveal=gsap.timeline({onComplete:settle})
+    reveal=gsap.timeline({onComplete:settle}).timeScale(1.2)
       .to(atmosphere,{opacity:1,duration:1.3,ease:'sine.out'},.55)
       .to(state,{arrival:1,duration:1.4,ease:'power2.out'},.6)
       .call(()=>burst(),[],1.15);
@@ -190,9 +202,10 @@
     scene.classList.remove('bouquet-open','bouquet-awake');scene.dataset.bouquetPhase='waiting';
   }
   reduced.addEventListener('change',()=>{
+    if(active&&!reduced.matches)prepare();
     if(reduced.matches){reveal?.progress(1);pulse?.kill();state.pulse=0;clearParticles();center(true);if(active)settle();}
     updateRunning();
   });
-  window.BouquetDepth={ready,open,touch,burst,center,pointer,reset};
+  window.BouquetDepth={get ready(){return prepare()},open,touch,burst,center,pointer,reset};
   reset();
 })();

@@ -1,0 +1,117 @@
+/* A quieter invitation and a single, clear musical beginning. */
+.entry-gate { width:min(440px,calc(100% - 36px)); height:fit-content; max-height:calc(100svh - 40px); margin:auto; padding:0; border:1px solid #b3839c3b; border-radius:22px; background:radial-gradient(ellipse at 20% 0%,#402034,transparent 70%),#160e15; box-shadow:0 30px 100px #0008; }
+.entry-gate::backdrop { background:#100a10c9; backdrop-filter:blur(8px); }
+.entry-layout { display:block; width:100%; min-height:0; padding:52px 42px 44px; }
+.entry-clock { margin:0 0 28px; font-size:18px; opacity:.75; }
+#entry-title .zh { font-size:42px; line-height:1.4; }
+.entry-close { width:32px; height:32px; top:16px; right:16px; border:0; font-size:23px; }
+#entry-form { margin-top:35px; }
+#entry-form label { font-size:12px; }
+#entry-form label small { margin-left:8px; color:#9a7a8a; font-size:10px; }
+#entry-form>.primary-button { width:100%; min-width:0; margin-top:30px; justify-content:space-between; }
+.entry-name-line input { font-size:16px; }
+.site-header nav { gap:32px; }
+.site-header nav a { font-size:11px; }
+.hero-copy { padding-top:110px; }
+.hero h1 { margin:0 0 40px; }
+.hero h1 .zh { font-size:clamp(36px,4vw,60px); }
+.hero h1 em { font-size:clamp(27px,3vw,43px); margin-top:8px; color:var(--muted); letter-spacing:-.025em; }
+.home-music { gap:20px; min-width:304px; padding:16px 30px 16px 16px; margin:0; border:1px solid #f8d9e478; border-radius:60px; color:#37212c; background:#e8acc4; box-shadow:0 8px 40px #e18db526,inset 0 1px 0 #fff6; }
+.home-music:hover { background:#f1c3d7; transform:translateY(-3px); }
+.home-music:active { transform:scale(.98); }
+.home-music-symbol { width:62px; height:62px; font-size:32px; background:#fff3; border:1px solid #fff5; }
+.home-music-zh { font:18px var(--zh); letter-spacing:.06em; }
+.home-music small { margin-top:7px; font-size:10px; letter-spacing:.09em; color:#725162; }
+.home-music[aria-pressed="true"] { background:#dba0b9; }
+.home-music[aria-busy="true"] .home-music-symbol { opacity:.55; }
+.home-music:focus-visible { outline:2px solid var(--ink); outline-offset:7px; }
+.home-music-feedback { min-height:16px; margin-top:12px; font-size:11px; color:var(--pink); }
+.home-surprise-link { display:inline-flex; gap:24px; padding:16px 0; margin-top:4px; font:12px var(--zh); color:var(--muted); border-bottom:1px solid var(--line); }
+.home-surprise-link:hover { color:var(--ink); }
+.music-toggle-label { min-width:48px; font-size:11px; }
+#starlight [lang="en"] { display:none; }
+#starlight .afterglow-heading .zh { font-size:clamp(30px,3vw,42px); line-height:1.65; }
+#blue-hour { min-height:780px; padding-block:100px 70px; }
+#blue-hour .blue-heading { margin-top:0; }
+#blue-hour .blue-heading>.zh { font-size:clamp(28px,3.4vw,44px); line-height:1.5; }
+#blue-hour .blue-intro { margin-top:22px; }
+#blue-hour .blue-button-stage { margin-top:38px; }
+#blue-hour .blue-track>a { font-size:9px; opacity:.65; }
+#blue-hour .blue-status { min-height:20px; }
+.twosky-heading h2>em { font-size:clamp(30px,4vw,54px); line-height:1.2; margin-top:12px; }
+.twosky-heading>p { margin-top:24px; }
+.twosky-heading { padding-bottom:26px; }
+.twosky-wish-message [hidden] { display:none; }
+
+/* The vertical page opens into one long flowering branch. */
+#blue-memories { padding:0; position:relative; --stem:#819eae; --leaf:#31586b; --leaf-light:#7099a3; }
+.ribbon-stage { position:relative; height:max(660px,100svh); overflow:hidden; background:transparent; }
+.ribbon-heading { height:134px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.ribbon-kicker { font:10px var(--zh); letter-spacing:.26em; color:var(--muted); }
+.ribbon-heading h2 { font:clamp(24px,2.4vw,36px)/1.6 var(--zh); margin-top:10px; color:var(--ink); }
+.ribbon-heading>em { font:italic 32px var(--serif); color:var(--muted); }
+.ribbon-viewport { position:relative; height:calc(100% - 210px); overflow-x:auto; overflow-y:hidden; scrollbar-width:thin; scrollbar-color:#7790b866 transparent; outline-offset:-5px; }
+.ribbon-viewport:focus-visible { outline:1px solid var(--pink); }
+.ribbon-track { position:relative; display:flex; align-items:center; gap:clamp(90px,10vw,160px); padding-inline:clamp(36px,14vw,220px); height:100%; width:max-content; min-width:100%; }
+.ribbon-photo { position:relative; flex:none; width:clamp(240px,31vw,440px); margin:0; transform:translateY(var(--rise)) rotate(var(--turn)); z-index:2; }
+.ribbon-print { height:clamp(250px,46svh,460px); position:relative; display:grid; place-items:center; border:9px solid #c5c9d4; border-bottom-width:30px; background:linear-gradient(145deg,#646a78,#414858 70%); box-shadow:0 20px 42px #0005,inset 0 0 60px #11162733; transition:transform .35s cubic-bezier(.2,.75,.2,1); transform-origin:50% 70%; }
+.ribbon-photo:nth-of-type(even) .ribbon-print { background:linear-gradient(150deg,#586677,#3d4656); border-color:#b7c2d1; }
+.ribbon-print>span { font:italic 55px var(--serif); color:#d6d9e433; }
+.ribbon-photo figcaption { display:flex; justify-content:space-between; gap:15px; margin-top:18px; padding-inline:9px; font:13px var(--zh); color:#c6cfdf; }
+.ribbon-photo figcaption small { font:10px var(--mono); opacity:.6; }
+.ribbon-botany { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; }
+.ribbon-botany-back { z-index:1; }
+.ribbon-botany-front { z-index:3; }
+.ribbon-stem { fill:none; stroke:var(--stem); stroke-linecap:round; }
+.ribbon-leaf { fill:url(#ribbon-leaf); stroke:#9ec0ca75; stroke-width:.7; }
+.ribbon-vein { fill:none; stroke:#c2d8d54f; stroke-width:.8; }
+.ribbon-flower { filter:drop-shadow(1px 5px 5px #03142c55); }
+.ribbon-footer { height:76px; display:flex; align-items:center; gap:32px; color:var(--muted); font:11px var(--zh); }
+.ribbon-footer>a { white-space:nowrap; margin-left:auto; padding:12px 0; color:var(--pink); }
+.ribbon-progress { width:110px; height:1px; background:#adc1dd25; overflow:hidden; }
+.ribbon-progress i { display:block; height:100%; width:100%; background:var(--pink); transform:scaleX(0); transform-origin:0 50%; }
+.memory-ribbon.is-linked .ribbon-viewport { overflow:hidden; }
+.memory-ribbon.is-linked .ribbon-track { will-change:transform; }
+[data-theme="ocean"] .home-music { background:#bed6ef; color:#183553; border-color:#e5f3ff8a; box-shadow:0 8px 40px #729fe62e; }
+[data-theme="ocean"] .home-music:hover { background:#d7e7f7; }
+[data-theme="ocean"] .home-music small { color:#506980; }
+@media(hover:hover) and (prefers-reduced-motion:no-preference) {
+ .ribbon-photo:hover .ribbon-print { transform:rotate(calc(var(--turn) * -1)) scale(1.035); }
+}
+@media(max-width:760px) {
+ .site-header nav { gap:20px; }
+ .site-header nav a:nth-child(n+3) { display:block; }
+ .invitation-link { display:none; }
+ #home { min-height:820px; }
+ .hero-copy { padding-top:138px; }
+ .hero h1 { margin-bottom:28px; }
+ .hero h1 .zh { font-size:32px; }
+ .hero h1 em { font-size:29px; margin-top:8px; }
+ .home-music { min-width:270px; gap:16px; padding:12px 25px 12px 12px; }
+ .home-music-symbol { width:54px; height:54px; }
+ .home-music-zh { font-size:17px; }
+ .hero-art { top:320px; height:500px; }
+ .hero-bottom { bottom:34px; }
+ .music-toggle-label { min-width:48px; }
+ .entry-layout { padding:44px 28px 32px; min-height:0; }
+ #entry-title .zh { font-size:36px; }
+ #blue-hour { min-height:720px; padding-block:85px 50px; }
+ .ribbon-stage { height:max(680px,100svh); }
+ .ribbon-heading { height:120px; }
+ .ribbon-heading>em { display:none; }
+ .ribbon-heading h2 { font-size:23px; }
+ .ribbon-viewport { height:calc(100% - 205px); }
+ .ribbon-track { gap:95px; padding-inline:52px; }
+ .ribbon-photo { width:260px; }
+ .ribbon-print { height:min(360px,43svh); min-height:270px; border-width:7px; border-bottom-width:24px; }
+ .ribbon-photo figcaption { font-size:11px; }
+ .ribbon-footer { height:85px; font-size:10px; gap:14px; align-items:center; }
+ .ribbon-footer>span:first-child { max-width:155px; line-height:1.8; }
+ .ribbon-progress { width:35px; }
+ .twosky-heading h2>em { font-size:34px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .home-music,.ribbon-print { transition:none; }
+ .home-music:hover,.home-music:active { transform:none; }
+ .ribbon-track { transform:none !important; }
+}

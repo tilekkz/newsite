@@ -54,8 +54,8 @@
     dust.append(mote);
   }
   const idle = gsap?.to(drift,{phase:Math.PI*2,duration:34,repeat:-1,ease:'none',paused:true,onUpdate:markDirty});
-  const xTo = gsap?.quickTo(drift,'x',{duration:1.15,ease:'power3.out',onUpdate:markDirty});
-  const yTo = gsap?.quickTo(drift,'y',{duration:1.15,ease:'power3.out',onUpdate:markDirty});
+  const xTo = gsap?.quickTo(drift,'x',{duration:.55,ease:'power3.out',onUpdate:markDirty});
+  const yTo = gsap?.quickTo(drift,'y',{duration:.55,ease:'power3.out',onUpdate:markDirty});
   const engagementTo = gsap?.quickTo(drift,'engagement',{duration:.75,ease:'power2.out',onUpdate:markDirty});
 
   function frameScene(target) {
@@ -88,8 +88,8 @@
       const awayX=p.x-(drift.x+1)*skySize.width*.5;
       const awayY=p.y-(drift.y+1)*skySize.height*.5;
       const distance=Math.hypot(awayX,awayY);
-      const reach=Math.min(210,skySize.width*.48);
-      const force=Math.pow(Math.max(0,1-distance/reach),1.6)*(20+depth*.45)*drift.engagement;
+      const reach=Math.min(165,skySize.width*.36);
+      const force=Math.pow(Math.max(0,1-distance/reach),1.6)*(11+depth*.25)*drift.engagement;
       const ux=distance>.5?awayX/distance:Math.cos(i*2.4+.4);
       const uy=distance>.5?awayY/distance:Math.sin(i*2.4+.4);
       p.dx=moving?ux*force+Math.sin(drift.phase+i*1.7)*2.4:0;
@@ -275,7 +275,7 @@
     if(!gsap||reduced()){
       finish();if(open)frameScene(stage);return;
     }
-    letterTween=gsap.timeline({onComplete:finish,defaults:{ease:'power2.inOut'}});
+    letterTween=gsap.timeline({onComplete:finish,defaults:{ease:'power2.inOut'}}).timeScale(1.25);
     if(open){
       if(getComputedStyle(paper).visibility==='hidden')gsap.set(paper,{y:18,rotation:1.2});
       letterTween.addLabel('unseal',0)
@@ -336,9 +336,9 @@
 
   window.Afterglow = {
     animate({gsap,desktop}) {
-      gsap.fromTo('.sky-moon-depth',{y:desktop?24:10},{y:desktop?-28:-12,ease:'none',scrollTrigger:{trigger:'#starlight',start:'top bottom',end:'bottom top',scrub:1}});
-      gsap.fromTo('.sky-ambient',{y:desktop?35:15},{y:desktop?-35:-15,ease:'none',scrollTrigger:{trigger:'#starlight',start:'top bottom',end:'bottom top',scrub:1.2}});
-      gsap.fromTo('.keepsake-annotation',{y:14},{y:-12,ease:'none',scrollTrigger:{trigger:'#last-letter',start:'top bottom',end:'bottom top',scrub:1}});
+      gsap.fromTo('.sky-moon-depth',{y:desktop?24:10},{y:desktop?-28:-12,ease:'none',scrollTrigger:{trigger:'#starlight',start:'top bottom',end:'bottom top',scrub:.4}});
+      gsap.fromTo('.sky-ambient',{y:desktop?35:15},{y:desktop?-35:-15,ease:'none',scrollTrigger:{trigger:'#starlight',start:'top bottom',end:'bottom top',scrub:.4}});
+      gsap.fromTo('.keepsake-annotation',{y:14},{y:-12,ease:'none',scrollTrigger:{trigger:'#last-letter',start:'top bottom',end:'bottom top',scrub:.4}});
     }
   };
 })();

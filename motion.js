@@ -44,13 +44,13 @@
     if (desktop && Lenis) {
       lenis = new Lenis({
         autoRaf: false,
-        lerp: 0.12,
+        lerp: 0.20,
         smoothWheel: true,
         syncTouch: false,
         wheelMultiplier: 1,
         anchors: false,
         stopInertiaOnNavigate: false,
-        prevent: node => Boolean(node.closest?.('dialog'))
+        prevent: node => Boolean(node.closest?.('dialog, [data-lenis-prevent]'))
       });
       tick = seconds => lenis.raf(seconds * 1000);
       lenis.on('scroll', ScrollTrigger.update);
@@ -65,17 +65,17 @@
     gsap.fromTo('.hero-art img',
       { yPercent: 0, scale: desktop ? 1.16 : 1.1 },
       { yPercent: desktop ? 7 : 4, scale: desktop ? 1.18 : 1.1, ease: 'none',
-        scrollTrigger: { id: 'hero-depth', trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.9, invalidateOnRefresh: true } });
+        scrollTrigger: { id: 'hero-depth', trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.32, invalidateOnRefresh: true } });
     gsap.fromTo('.hero-copy', { y: 0 }, {
       y: -44 * amount,
       ease: 'none',
-      scrollTrigger: { id: 'hero-copy-depth', trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.7, invalidateOnRefresh: true }
+      scrollTrigger: { id: 'hero-copy-depth', trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.25, invalidateOnRefresh: true }
     });
     gsap.fromTo('.night-dust i', { autoAlpha: 0.12 }, {
       y: index => -(55 + index * 16) * amount,
       autoAlpha: 0.45,
       ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.4 }
     });
 
     let introTween;
@@ -84,7 +84,7 @@
       introPlayed = true;
       if (window.scrollY >= 80) return;
       introTween = gsap.from('.hero-copy > *', {
-        y: 22, autoAlpha: 0, duration: 1.25, stagger: 0.12, ease: 'power3.out', clearProps: 'transform,opacity,visibility'
+        y: 22, autoAlpha: 0, duration: 0.75, stagger: 0.075, ease: 'power3.out', clearProps: 'transform,opacity,visibility'
       });
     }
     document.addEventListener('site:entered', playIntro);
@@ -99,7 +99,7 @@
       gsap.from(element, {
         y: element.matches('.envelope-item') ? 32 : 20,
         autoAlpha: 0,
-        duration: 1.05,
+        duration: 0.68,
         ease: 'power2.out',
         delay: element.matches('.envelope-item') && desktop ? Number(element.dataset.letter) * 0.12 : 0,
         clearProps: 'transform,opacity,visibility',
@@ -112,20 +112,22 @@
 
     gsap.fromTo('.cat-side-note', { y: 25 * amount }, {
       y: -35 * amount, ease: 'none',
-      scrollTrigger: { trigger: '.cat-section', start: 'top bottom', end: 'bottom top', scrub: 1.2 }
+      scrollTrigger: { trigger: '.cat-section', start: 'top bottom', end: 'bottom top', scrub: 0.4 }
     });
     gsap.fromTo('.cat-background-word', { y: 30 * amount }, {
       y: -65 * amount, ease: 'none',
-      scrollTrigger: { trigger: '.cat-section', start: 'top bottom', end: 'bottom top', scrub: 1.4 }
+      scrollTrigger: { trigger: '.cat-section', start: 'top bottom', end: 'bottom top', scrub: 0.45 }
     });
     // The continuous photo trail shares this context and the existing Lenis clock.
     const cleanupJourney = window.MemoryJourney?.animate({ gsap, ScrollTrigger, desktop });
     window.Afterglow?.animate({ gsap, ScrollTrigger, desktop });
     window.ContinuationScenes?.animate({ gsap, ScrollTrigger, desktop });
+    const cleanupRibbon = window.MemoryRibbon?.animate({ gsap, ScrollTrigger });
+    ScrollTrigger.sort();
 
     gsap.fromTo('.closing-heart', { y: 20 * amount, scale: 0.92 }, {
       y: -12 * amount, scale: 1.06, ease: 'none',
-      scrollTrigger: { trigger: '.closing', start: 'top bottom', end: 'bottom top', scrub: 1 }
+      scrollTrigger: { trigger: '.closing', start: 'top bottom', end: 'bottom top', scrub: 0.35 }
     });
 
     function followAnchor(event) {
@@ -137,8 +139,8 @@
       if (!target) return;
       event.preventDefault();
       if (location.hash !== hash) history.pushState(null, '', hash);
-      lenis.scrollTo(target, {
-        offset: 0, duration: 1.35, lerp: 0,
+      lenis.scrollTo(window.MemoryRibbon?.scrollTarget(target) ?? target, {
+        offset: 0, duration: 0.85, lerp: 0,
         easing: progress => 1 - Math.pow(1 - progress, 4),
         onComplete: () => {
           if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
@@ -150,14 +152,14 @@
     function followHistory() {
       if (!lenis) return;
       const target = document.getElementById(location.hash.slice(1));
-      lenis.scrollTo(target || 0, { immediate: true, offset: 0 });
+      lenis.scrollTo(window.MemoryRibbon?.scrollTarget(target) ?? target ?? 0, { immediate: true, offset: 0 });
     }
 
     function frameScene(event) {
       if (!lenis) return;
       event.preventDefault();
       lenis.scrollTo(event.detail.target, {
-        offset: -innerHeight * .04, duration: .85, lerp: 0,
+        offset: -innerHeight * .04, duration: .55, lerp: 0,
         easing: progress => 1 - Math.pow(1 - progress, 3)
       });
     }
@@ -190,6 +192,7 @@
 
     return () => {
       cleanupJourney?.();
+      cleanupRibbon?.();
       document.removeEventListener('click', followAnchor);
       document.removeEventListener('site:frame-scene', frameScene);
       window.removeEventListener('hashchange', followHistory);
