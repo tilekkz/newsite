@@ -28,16 +28,18 @@
 [data-theme="ocean"] .birthday-chip > i { background:#9fd0ff; box-shadow:0 0 10px #6fb6ff; }
 
 /* ---------- Sky lanterns ---------- */
-.lantern-sky { position:relative; padding-top:var(--scene-space, 120px); background:linear-gradient(180deg, transparent, #120a1f 18%, #1a0e22 62%, #150a12); overflow:hidden; }
+/* Clip sideways only: lanterns climb out of the top into the sky of the two windows. */
+.lantern-sky { position:relative; z-index:3; padding-top:var(--scene-space, 120px); background:linear-gradient(180deg, transparent, #120a1f 18%, #1a0e22 62%, #150a12); overflow-x:clip; overflow-y:visible; }
 .lantern-heading { position:relative; z-index:2; text-align:center; }
 .lantern-heading h2 { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:20px; }
 .lantern-heading h2 .zh { font:400 clamp(30px, 3.6vw, 48px)/1.4 var(--zh); letter-spacing:.12em; }
 .lantern-heading h2 em { font:italic 400 clamp(22px, 2.4vw, 30px)/1.2 var(--serif); }
 .lantern-intro { margin:18px auto 0; max-width:30em; font:14px/2 var(--zh); letter-spacing:.08em; color:#c9b1bf; }
 .lantern-stage { position:relative; height:clamp(460px, 78svh, 760px); margin-top:20px; cursor:crosshair; touch-action:manipulation; }
-.lantern-stars, .lantern-field { position:absolute; inset:0; pointer-events:none; }
+.lantern-stars { position:absolute; inset:0; pointer-events:none; }
+.lantern-field { position:absolute; inset:calc(-1 * var(--lift, 0px)) 0 0; z-index:1; pointer-events:none; }
 .lantern-stars > i { position:absolute; left:var(--x); top:var(--y); width:var(--size); height:var(--size); border-radius:50%; background:#f7e7f0; opacity:.5; animation:lantern-twinkle 4s var(--delay) ease-in-out infinite alternate; }
-.lantern-hills { position:absolute; inset:auto 0 0; width:100%; height:30%; pointer-events:none; }
+.lantern-hills { position:absolute; inset:auto 0 0; z-index:2; width:100%; height:30%; pointer-events:none; }
 .hill-far { fill:#1c0f21; }
 .hill-near { fill:#100810; }
 .lantern-intro { max-width:34em; }
@@ -61,6 +63,19 @@
 .lantern-count { font:16px var(--serif); font-variant-numeric:lining-nums; letter-spacing:.2em; color:#e8c9a8; }
 .lantern-sky.is-complete .lantern-body { animation-duration:1.2s; }
 .lantern-sky.is-complete .lantern-next { color:#ffe2c7; border-color:#ffc8957a; }
+/* The 24th lantern: a heart, golden dust, and a line written in light. */
+.lantern-field::before { content:""; position:absolute; left:var(--heart-x, 50%); top:var(--heart-y, 50%); width:min(760px, 120vw); aspect-ratio:1; border-radius:50%; transform:translate(-50%, -50%) scale(.6); background:radial-gradient(circle, #ffb46a38, #ff8a4a14 42%, transparent 68%); opacity:0; transition:opacity 1.6s var(--motion), transform 2.4s var(--motion); }
+.lantern-field.is-heart::before { opacity:1; transform:translate(-50%, -50%) scale(1); }
+.is-heart .lantern-body { animation:lantern-heartbeat 1.5s ease-in-out infinite; }
+.lantern-dust { position:absolute; left:0; top:0; width:5px; height:5px; margin:-2.5px 0 0 -2.5px; border-radius:50%; background:#ffe6b0; box-shadow:0 0 10px 3px #ffc87a99; }
+.lantern-finale { position:absolute; left:50%; bottom:8%; z-index:3; width:min(94%, 40em); transform:translateX(-50%); text-align:center; pointer-events:none; }
+.lantern-finale[hidden] { display:none; }
+.finale-line { margin:0; font:400 clamp(26px, 3.6vw, 46px)/1.5 var(--zh); letter-spacing:.14em; color:#fff3e4; text-shadow:0 0 22px #ffb26a88, 0 0 60px #ff8a4a44; }
+.finale-line > span { display:inline-block; opacity:0; transform:translateY(18px) scale(.86); filter:blur(8px); transition:opacity 1s var(--motion), transform 1.3s var(--motion), filter 1.3s var(--motion); transition-delay:calc(var(--base, 0s) + var(--i) * 95ms); }
+.line-two { --base:.75s; }
+.is-writing .finale-line > span { opacity:1; transform:none; filter:none; }
+.finale-en { margin:14px 0 0; font:italic 400 clamp(18px, 2vw, 24px)/1.4 var(--serif); color:#f4c9a8; opacity:0; transform:translateY(8px); transition:opacity 1.4s 2.2s var(--motion), transform 1.4s 2.2s var(--motion); }
+.is-writing .finale-en { opacity:1; transform:none; }
 .lanterns-resting .lantern-bob, .lanterns-resting .lantern-body, .lanterns-resting .lantern-stars > i { animation-play-state:paused; }
 
 /* ---------- Cake finale ---------- */
@@ -128,6 +143,7 @@
 @keyframes bday-clock-turn { 0% { opacity:.2; } 100% { opacity:1; } }
 @keyframes lantern-bob { from { transform:translate(-3px, 2px) rotate(-2.5deg); } to { transform:translate(3px, -6px) rotate(2.5deg); } }
 @keyframes lantern-glow { from { filter:brightness(.92); } to { filter:brightness(1.12); } }
+@keyframes lantern-heartbeat { 0%, 100% { filter:brightness(1.05); transform:scale(1); } 18% { filter:brightness(1.45); transform:scale(1.12); } 34% { filter:brightness(1.15); transform:scale(1); } 50% { filter:brightness(1.4); transform:scale(1.08); } }
 @keyframes lantern-twinkle { from { opacity:.15; } to { opacity:.7; } }
 
 @media (max-width:760px) {
@@ -143,5 +159,6 @@
 @media (prefers-reduced-motion:reduce) {
   .cake-flame > i, .cake-tap > span, .birthday-chip > i, .cake-glow, .lantern-bob, .lantern-body, .lantern-stars > i, .lantern-tap { animation:none !important; }
   [data-cake="out"] .cake-flame::before, [data-cake="out"] .cake-flame::after { animation:none; }
-  .cake-lit, .lantern-wish { transition:none; }
+  .cake-lit, .lantern-wish, .finale-line > span, .finale-en { transition:none; }
+  .is-heart .lantern-body { animation:none !important; }
 }

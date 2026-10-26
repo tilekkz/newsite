@@ -92,23 +92,69 @@
     if (reduced.matches || typeof moon.animate !== 'function' || document.hidden) return;
     busy = true;
     moon.setAttribute('aria-disabled', 'true');
-    const distance = Math.min(stage.clientWidth * .35, 330);
-    const animations = [...section.querySelectorAll('.twosky-meteors i')].map((meteor, index) => meteor.animate([
-      {opacity:0, transform:'translate(0, 0) rotate(24deg) scaleX(.4)', offset:0},
-      {opacity:.95, offset:.15},
-      {opacity:.8, offset:.65},
-      {opacity:0, transform:'translate(' + distance + 'px, ' + (distance * .44) + 'px) rotate(24deg) scaleX(1)', offset:1}
-    ], {duration:1500, delay:index * 180, easing:'cubic-bezier(.18,.5,.35,1)'}));
-    animations.push(section.querySelector('.twosky-moon-face').animate([
+    const face = section.querySelector('.twosky-moon-face').animate([
       {transform:'scale(1)'}, {transform:'scale(1.06) rotate(-4deg)', offset:.4}, {transform:'scale(1)'}
-    ], {duration:1000, easing:'ease-in-out'}));
-    animations.forEach(animation => motions.add(animation));
-    Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
-      animations.forEach(animation => motions.delete(animation));
-      busy = false;
-      moon.removeAttribute('aria-disabled');
-    });
+    ], {duration:1000, easing:'ease-in-out'});
+    motions.add(face);
+    face.finished.catch(() => {}).finally(() => motions.delete(face));
+    shower();
+    // The shower keeps falling; the moon can be wished on again a little sooner.
+    setTimeout(() => { busy = false; moon.removeAttribute('aria-disabled'); }, 2600);
   });
+
+  /* A meteor shower from one radiant: dense at first, with a long thinning tail.
+     Far streaks pass behind the windows, every fifth one is a bright near streak. */
+  const farSky = section.querySelector('.twosky-meteors');
+  const nearSky = document.createElement('div');
+  nearSky.className = 'twosky-meteors twosky-meteors-near';
+  nearSky.setAttribute('aria-hidden', 'true');
+  stage.append(nearSky);
+  farSky.replaceChildren();
+  let showerTimer;
+  function spark(x, y) {
+    const dot = document.createElement('i');
+    dot.className = 'twosky-spark';
+    dot.style.left = x + 'px'; dot.style.top = y + 'px';
+    farSky.append(dot);
+    const glint = dot.animate([
+      {opacity:0, transform:'scale(.4)'}, {opacity:1, transform:'scale(1.7)', offset:.3}, {opacity:0, transform:'scale(.2)'}
+    ], {duration:1100, easing:'ease-out'});
+    motions.add(glint);
+    glint.finished.catch(() => {}).finally(() => { motions.delete(glint); dot.remove(); });
+  }
+  function shower() {
+    const width = stage.clientWidth, height = stage.clientHeight;
+    if (farSky.childElementCount + nearSky.childElementCount > 140) return;
+    const count = width < 760 ? 28 : 46;
+    const radiant = 26 + Math.random() * 10;
+    stage.classList.add('is-showering');
+    clearTimeout(showerTimer);
+    showerTimer = setTimeout(() => stage.classList.remove('is-showering'), 7600);
+    for (let i = 0; i < count; i += 1) {
+      const near = i % 5 === 0;
+      const meteor = document.createElement('i');
+      const length = near ? 170 + Math.random() * 130 : 50 + Math.random() * 130;
+      const thick = near ? 2.4 + Math.random() * 1.2 : .9 + Math.random() * 1.3;
+      const x = (-.12 + Math.random() * .9) * width, y = (-.1 + Math.random() * .55) * height;
+      meteor.style.cssText = '--mx:' + x + 'px;--my:' + y + 'px;--len:' + length + 'px;--thick:' + thick + 'px';
+      (near ? nearSky : farSky).append(meteor);
+      const angle = radiant + (Math.random() - .5) * 6, rad = angle * Math.PI / 180;
+      const distance = (near ? .62 : .28 + Math.random() * .3) * Math.max(width, 620);
+      const dx = Math.cos(rad) * distance, dy = Math.sin(rad) * distance;
+      const streak = meteor.animate([
+        {opacity:0, transform:'translate(0, 0) rotate(' + angle + 'deg) scaleX(.2)'},
+        {opacity:near ? 1 : .5 + Math.random() * .45, offset:.18},
+        {opacity:.75, offset:.72},
+        {opacity:0, transform:'translate(' + dx + 'px, ' + dy + 'px) rotate(' + angle + 'deg) scaleX(1)'}
+      ], {duration:near ? 950 + Math.random() * 500 : 1300 + Math.random() * 1200,
+        delay:Math.pow(Math.random(), 1.5) * 6200, easing:'cubic-bezier(.2,.55,.35,1)', fill:'both'});
+      motions.add(streak);
+      streak.finished.then(() => {
+        // The head is the streak's right end; it ends where the translation stops.
+        if (!near && Math.random() < .45) spark(x + length + dx, y + thick / 2 + dy);
+      }).catch(() => {}).finally(() => { motions.delete(streak); meteor.remove(); });
+    }
+  }
   document.addEventListener('visibilitychange', syncActivity);
   reduced.addEventListener('change', syncActivity);
   window.addEventListener('resize', () => moveTo(0, 0), {passive:true});

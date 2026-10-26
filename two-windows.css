@@ -47,7 +47,8 @@
 .twosky-crossbar:after { content:''; position:absolute; left:calc(50% - 3px); top:-300px; width:6px; height:600px; background:var(--frame); box-shadow:2px 0 0 var(--frame-dark),-1px 0 0 var(--frame-light); }
 .twosky-curtain { position:absolute; z-index:1; top:-3px; width:28%; height:105%; background:repeating-linear-gradient(90deg,#9ab2d5 0,#839bc3 7%,#6d89b3 15%,#b1c1db 25%); opacity:.9; clip-path:polygon(0 0,100% 0,83% 17%,69% 29%,38% 53%,22% 64%,60% 100%,0 100%); transform-origin:top left; animation:twosky-curtain-sway 8s ease-in-out infinite alternate; }
 .curtain-left { left:0; }
-.curtain-right { right:0; scale:-1 1; animation-delay:-4s; }
+/* Mirror around the curtain's own centre; a left origin would flip it into the middle of the window. */
+.curtain-right { right:0; scale:-1 1; transform-origin:top center; animation-delay:-4s; }
 .twosky-window-east .twosky-curtain { background:repeating-linear-gradient(90deg,#b0b8d3 0,#909bc0 7%,#7a87b1 15%,#c2c6dd 25%); }
 .twosky-shutter { position:absolute; z-index:1; top:22%; width:30%; height:77%; border:4px solid var(--frame-dark); border-radius:9px 9px 5px 5px; background:repeating-linear-gradient(0deg,var(--frame) 0,var(--frame) 10px,var(--frame-dark) 11px,var(--frame-light) 13px,var(--frame) 15px); box-shadow:inset 3px 0 0 #d4e7ff50,0 9px 13px #000c; }
 .shutter-left { left:-29%; transform-origin:right center; transform:skewY(12deg) scaleX(.85); }
@@ -79,9 +80,14 @@
 .twosky-cloud-far { left:27%; top:26%; opacity:.28; transform:scale(.7); }
 .twosky-cloud-near { right:1%; bottom:15%; opacity:.34; animation-delay:-9s; }
 .twosky-meteors { position:absolute; z-index:2; inset:0; overflow:hidden; pointer-events:none; }
-.twosky-meteors i { position:absolute; left:32%; top:22%; width:105px; height:2px; opacity:0; border-radius:50%; background:linear-gradient(90deg,transparent,#f5e6bc); transform-origin:right center; box-shadow:0 1px 6px #e9d7ac55; }
-.twosky-meteors i:after { content:''; position:absolute; right:0; top:-2px; width:5px; height:5px; border-radius:50%; background:#fff3d1; box-shadow:0 0 9px #ffebc0; }
-.twosky-meteors i:nth-child(2) { left:48%; top:12%; width:75px; }.twosky-meteors i:nth-child(3) { left:12%; top:18%; width:65px; }
+/* Meteor shower: far streaks behind the windows, a few bright near ones in front. */
+.twosky-meteors-near { z-index:7; }
+.twosky-meteors i { position:absolute; left:var(--mx,32%); top:var(--my,22%); width:var(--len,105px); height:var(--thick,2px); opacity:0; border-radius:50%; background:linear-gradient(90deg,transparent,#f5e6bc66 40%,#fff4d8); transform-origin:right center; box-shadow:0 0 calc(var(--thick,2px) * 4) #e9d7ac66; }
+.twosky-meteors i:after { content:''; position:absolute; right:-2px; top:50%; width:calc(var(--thick,2px) * 2.6); aspect-ratio:1; border-radius:50%; background:#fffaf0; transform:translateY(-50%); box-shadow:0 0 calc(var(--thick,2px) * 5) calc(var(--thick,2px) * 1.2) #ffe9b8, 0 0 calc(var(--thick,2px) * 14) #ffd7a066; }
+.twosky-spark { position:absolute; width:4px; height:4px; margin:-2px 0 0 -2px; border-radius:50%; background:#fff6dc; box-shadow:0 0 10px 3px #ffe6b4aa; opacity:0; pointer-events:none; }
+.twosky-stage.is-showering .twosky-star { animation-duration:1.4s; }
+.twosky-moon-halo { transition:filter 1.6s ease; }
+.twosky-stage.is-showering .twosky-moon-halo { filter:brightness(1.8); }
 .twosky-afterword { position:relative; z-index:3; text-align:center; margin-top:25px; }
 .twosky-wish-hint { color:#a6bddc; font:10px/1.9 var(--zh); letter-spacing:.06em; }
 .twosky-wish-hint span { display:block; font:11px/1.8 var(--sans); letter-spacing:0; }
