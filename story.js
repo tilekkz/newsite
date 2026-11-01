@@ -72,48 +72,48 @@
   }), { rootMargin:'0px 0px -12% 0px' });
   headings.forEach(zh => inked.observe(zh));
 
-  /* Scene stops: scrolling down catches at the start of each scene, holds a breath, then lets her through. */
+  /* Scene stops: nothing is ever blocked. Near the frame where a scene sits best, scrolling slows a little,
+     and when she stops just before it (or just past it) the camera glides the rest of the way. */
   const stops = ['#surprise', '#feeling', '#starlight', '#last-letter', '#tomorrow-postcard', '#moon-garden', '#two-windows', '#lanterns', '#birthday-finale']
     .map(selector => document.querySelector(selector)).filter(Boolean);
-  // Tall scenes stop at their top; short ones are centred.
+  // The frame: a scene up to 1.4 screens tall is centred (its main part in view); taller scenes start at their top.
   function stopFor(scene) {
     const box = scene.getBoundingClientRect();
     const top = box.top + scrollY;
-    return Math.round(Math.max(0, box.height < innerHeight ? top - (innerHeight - box.height) / 2 : top));
+    return Math.round(Math.max(0, box.height <= innerHeight * 1.4 ? top - (innerHeight - box.height) / 2 : top));
   }
-  function holdWithLenis(lenis) {
-    let held = false, heldAt = 0, lastWheel = 0, push = 0;
-    lenis.options.virtualScroll = ({ deltaY }) => {
-      const now = performance.now(), gap = now - lastWheel;
-      lastWheel = now;
-      if (deltaY <= 0) { held = false; return true; }
-      if (held) {
-        // After a breath, a fresh scroll (or a firm, continuous one) carries on.
-        if (now - heldAt < 750) return false;
-        push += deltaY;
-        if (gap > 160 || push > 1200) { held = false; return true; }
-        return false;
-      }
-      const from = lenis.targetScroll, to = from + deltaY;
-      const stop = stops.map(stopFor).find(y => y > from + 2 && y <= to);
-      if (stop === undefined) return true;
-      held = true; heldAt = now; push = 0;
-      lenis.scrollTo(stop, { duration:1.1, lerp:0, easing:t => 1 - Math.pow(1 - t, 3) });
-      return false;
+  // A stop ahead within a third of a screen, or one just overshot, in the direction she was going.
+  function nearStop(y, direction) {
+    return stops.map(stopFor).find(stop => {
+      const ahead = (stop - y) * direction;
+      return ahead > 3 && ahead < innerHeight * .3 || ahead <= -3 && ahead > -innerHeight * .15;
+    });
+  }
+  const glide = t => 1 - Math.pow(1 - t, 3);
+  function softenWithLenis(lenis) {
+    let timer = 0, direction = 1;
+    lenis.options.virtualScroll = event => {
+      if (event.deltaY) direction = Math.sign(event.deltaY);
+      // Friction near a frame: the wheel still moves, just more gently.
+      const y = lenis.targetScroll, zone = innerHeight * .18;
+      const stop = stops.map(stopFor).find(s => Math.abs(s - y) < zone);
+      if (stop !== undefined) event.deltaY *= .35 + .65 * Math.abs(stop - y) / zone;
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (document.querySelector('dialog[open]')) return;
+        const near = nearStop(lenis.targetScroll, direction);
+        if (near !== undefined) lenis.scrollTo(near, { duration:.9, lerp:0, easing:glide });
+      }, 220);
+      return true;
     };
-    return () => { lenis.options.virtualScroll = undefined; };
+    return () => { clearTimeout(timer); lenis.options.virtualScroll = undefined; };
   }
-  // Touch scrolling cannot be held mid-fling, so it settles: ending just before a scene (or just past it) glides to it.
   function settleNative() {
     let timer = 0, touching = false, quietUntil = 0, lastY = scrollY, direction = 1;
     const quiet = () => { quietUntil = performance.now() + 1600; };
     function settle() {
       if (touching || performance.now() < quietUntil || document.querySelector('dialog[open]')) return;
-      const y = scrollY;
-      const near = stops.map(stopFor).find(stop => {
-        const ahead = (stop - y) * direction;
-        return ahead > 3 && ahead < innerHeight * .22 || ahead <= -3 && ahead > -innerHeight * .1;
-      });
+      const near = nearStop(scrollY, direction);
       if (near === undefined) return;
       quietUntil = performance.now() + 900;
       scrollTo({ top:near, behavior:'smooth' });
@@ -165,7 +165,7 @@
     if (detail.reduced || detail.off) return;
     const { lenis } = detail;
     velocity = lenis ? () => lenis.velocity : () => { const pace = scrollY - lastScroll; lastScroll = scrollY; return pace; };
-    const release = lenis ? holdWithLenis(lenis) : settleNative();
+    const release = lenis ? softenWithLenis(lenis) : settleNative();
     const stopMotion = scrollMotion();
     detach = () => { release(); stopMotion(); };
   });
