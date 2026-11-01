@@ -29,7 +29,7 @@
 
 /* ---------- Sky lanterns ---------- */
 /* Clip sideways only: lanterns climb out of the top into the sky of the two windows. */
-.lantern-sky { position:relative; z-index:3; padding-top:var(--scene-space, 120px); background:linear-gradient(180deg, transparent, #120a1f 18%, #1a0e22 62%, #150a12 86%, transparent); overflow-x:clip; overflow-y:visible; }
+.lantern-sky { position:relative; z-index:3; padding-top:var(--scene-space, 120px); background:linear-gradient(180deg, transparent, #00000026 30%, #00000033 70%, transparent); overflow-x:clip; overflow-y:visible; }
 .lantern-heading { position:relative; z-index:2; text-align:center; }
 .lantern-heading h2 { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:20px; }
 .lantern-heading h2 .zh { font:400 clamp(30px, 3.6vw, 48px)/1.4 var(--zh); letter-spacing:.12em; }
@@ -79,7 +79,7 @@
 .lanterns-resting .lantern-bob, .lanterns-resting .lantern-body, .lanterns-resting .lantern-stars > i { animation-play-state:paused; }
 
 /* ---------- Cake finale ---------- */
-.cake-finale { --breath:0; position:relative; padding:var(--scene-space, 120px) 0 calc(var(--scene-space, 120px) * .8); text-align:center; background:radial-gradient(ellipse 60% 50% at 50% 58%, #3a1220a6, transparent 72%), linear-gradient(180deg, transparent, #150a12 16%, #150a12 80%, transparent); overflow:hidden; }
+.cake-finale { --breath:0; position:relative; padding:var(--scene-space, 120px) 0 calc(var(--scene-space, 120px) * .8); text-align:center; background:radial-gradient(ellipse 60% 50% at 50% 58%, #3a122080, transparent 72%), linear-gradient(180deg, transparent, #00000026 25%, #00000026 75%, transparent); overflow:hidden; }
 .cake-heading h2 { display:flex; flex-direction:column; align-items:center; gap:10px; margin-top:20px; }
 .cake-heading h2 .zh { font:400 clamp(32px, 4vw, 54px)/1.4 var(--zh); letter-spacing:.14em; }
 .cake-heading h2 em { font:italic 400 clamp(22px, 2.6vw, 32px)/1.2 var(--serif); }

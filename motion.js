@@ -36,6 +36,7 @@
     const { desktop, reduced } = context.conditions;
     if (reduced) {
       root.classList.remove('motion-ready', 'motion-smooth');
+      document.dispatchEvent(new CustomEvent('site:scroller', { detail: { reduced: true } }));
       return;
     }
 
@@ -59,6 +60,8 @@
     }
 
     root.classList.add('motion-ready');
+    // Scene stops (story.js) steer Lenis on desktop and native scrolling elsewhere.
+    document.dispatchEvent(new CustomEvent('site:scroller', { detail: { lenis } }));
     const amount = desktop ? 1 : 0.42;
 
     // The parent owns parallax; its children own their entrance animations.
@@ -205,6 +208,7 @@
         gsap.killTweensOf(dialog);
         gsap.set(dialog, { clearProps: 'transform,opacity,visibility' });
       });
+      document.dispatchEvent(new CustomEvent('site:scroller', { detail: { off: true } }));
       if (lenis) {
         gsap.ticker.remove(tick);
         lenis.off('scroll', ScrollTrigger.update);

@@ -54,6 +54,19 @@ html[data-act="7"] { --act-tint:rgb(150 170 255 / .13); }
 html[data-act="8"] { --act-tint:rgb(240 160 70 / .17); }
 html[data-act="9"] { --act-tint:rgb(245 150 120 / .16); }
 
+/* Section headings ink in character by character. */
+.ink-heading span { opacity:0; filter:blur(7px); transition:opacity .8s,filter .8s; transition-delay:calc(.15s + var(--i) * .06s); }
+.ink-heading.is-in span { opacity:1; filter:none; }
+
+/* The night's specks trail behind fast scrolling (translate composes with their own drift animation). */
+.night-speck { translate:0 calc(var(--drift,0) * 1px); }
+.night-speck:nth-of-type(3n) { translate:0 calc(var(--drift,0) * 1.8px); }
+.night-speck:nth-of-type(4n) { translate:0 calc(var(--drift,0) * .5px); }
+
+/* A soft light that follows the pointer, behind the scenes. */
+.pointer-light { position:fixed; left:0; top:0; z-index:0; width:520px; height:520px; margin:-260px 0 0 -260px; border-radius:50%; pointer-events:none; background:radial-gradient(circle,rgba(var(--night-glow),.22),transparent 65%); opacity:0; transition:opacity 1.2s; }
+.pointer-light.is-on { opacity:1; }
+
 @media(max-width:760px) {
   .act-title { min-height:52svh; padding:60px 20px; }
   .act-name { font-size:32px; letter-spacing:.24em; text-indent:.24em; }
@@ -65,6 +78,7 @@ html[data-act="9"] { --act-tint:rgb(245 150 120 / .16); }
 }
 @media(prefers-reduced-motion:reduce) {
   .grey-veil:after,.is-grey .home-music { animation:none; }
-  .act-title [data-chars] span,.act-no,.act-en { opacity:1; filter:none; transform:none; transition:none; }
+  .act-title [data-chars] span,.act-no,.act-en,.ink-heading span { opacity:1; filter:none; transform:none; transition:none; }
+  .night-speck { translate:none; }
   .act-title:before { transform:none; transition:none; }
 }

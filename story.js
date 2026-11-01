@@ -54,6 +54,134 @@
   addEventListener('resize', locate);
   locate();
 
+  /* Section headings write themselves in, one character at a time (inline spans keep Chinese line breaking). */
+  const headings = [...document.querySelectorAll('main h2 .zh')].filter(zh => !zh.closest('.act-title') && zh.children.length === 0);
+  headings.forEach(zh => {
+    zh.classList.add('ink-heading');
+    zh.replaceChildren(...[...zh.textContent].map((char, i) => {
+      const span = document.createElement('span');
+      span.textContent = char;
+      span.style.setProperty('--i', i);
+      return span;
+    }));
+  });
+  const inked = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('is-in');
+    inked.unobserve(entry.target);
+  }), { rootMargin:'0px 0px -12% 0px' });
+  headings.forEach(zh => inked.observe(zh));
+
+  /* Scene stops: scrolling down catches at the start of each scene, holds a breath, then lets her through. */
+  const stops = ['#surprise', '#feeling', '#starlight', '#last-letter', '#tomorrow-postcard', '#moon-garden', '#two-windows', '#lanterns', '#birthday-finale']
+    .map(selector => document.querySelector(selector)).filter(Boolean);
+  // Tall scenes stop at their top; short ones are centred.
+  function stopFor(scene) {
+    const box = scene.getBoundingClientRect();
+    const top = box.top + scrollY;
+    return Math.round(Math.max(0, box.height < innerHeight ? top - (innerHeight - box.height) / 2 : top));
+  }
+  function holdWithLenis(lenis) {
+    let held = false, heldAt = 0, lastWheel = 0, push = 0;
+    lenis.options.virtualScroll = ({ deltaY }) => {
+      const now = performance.now(), gap = now - lastWheel;
+      lastWheel = now;
+      if (deltaY <= 0) { held = false; return true; }
+      if (held) {
+        // After a breath, a fresh scroll (or a firm, continuous one) carries on.
+        if (now - heldAt < 750) return false;
+        push += deltaY;
+        if (gap > 160 || push > 1200) { held = false; return true; }
+        return false;
+      }
+      const from = lenis.targetScroll, to = from + deltaY;
+      const stop = stops.map(stopFor).find(y => y > from + 2 && y <= to);
+      if (stop === undefined) return true;
+      held = true; heldAt = now; push = 0;
+      lenis.scrollTo(stop, { duration:1.1, lerp:0, easing:t => 1 - Math.pow(1 - t, 3) });
+      return false;
+    };
+    return () => { lenis.options.virtualScroll = undefined; };
+  }
+  // Touch scrolling cannot be held mid-fling, so it settles: ending just before a scene (or just past it) glides to it.
+  function settleNative() {
+    let timer = 0, touching = false, quietUntil = 0, lastY = scrollY, direction = 1;
+    const quiet = () => { quietUntil = performance.now() + 1600; };
+    function settle() {
+      if (touching || performance.now() < quietUntil || document.querySelector('dialog[open]')) return;
+      const y = scrollY;
+      const near = stops.map(stopFor).find(stop => {
+        const ahead = (stop - y) * direction;
+        return ahead > 3 && ahead < innerHeight * .22 || ahead <= -3 && ahead > -innerHeight * .1;
+      });
+      if (near === undefined) return;
+      quietUntil = performance.now() + 900;
+      scrollTo({ top:near, behavior:'smooth' });
+    }
+    const onScroll = () => {
+      if (scrollY !== lastY) direction = Math.sign(scrollY - lastY);
+      lastY = scrollY;
+      clearTimeout(timer);
+      timer = setTimeout(settle, 180);
+    };
+    const onTouch = event => { touching = event.type === 'touchstart'; if (!touching) onScroll(); };
+    const onLink = event => { if (event.target.closest('a[href^="#"]')) quiet(); };
+    addEventListener('scroll', onScroll, { passive:true });
+    addEventListener('touchstart', onTouch, { passive:true });
+    addEventListener('touchend', onTouch, { passive:true });
+    document.addEventListener('site:frame-scene', quiet);
+    document.addEventListener('click', onLink);
+    return () => {
+      clearTimeout(timer);
+      removeEventListener('scroll', onScroll);
+      removeEventListener('touchstart', onTouch);
+      removeEventListener('touchend', onTouch);
+      document.removeEventListener('site:frame-scene', quiet);
+      document.removeEventListener('click', onLink);
+    };
+  }
+
+  /* Motion that follows the scroll: act titles drift away as they leave, the night's specks trail behind fast scrolling. */
+  const atmosphere = document.querySelector('.night-atmosphere');
+  let velocity = () => 0, drift = 0, lastScroll = scrollY;
+  function scrollMotion() {
+    const { gsap } = window;
+    acts.forEach(act => gsap.fromTo(act, { opacity:1, y:0, filter:'blur(0px)' }, {
+      opacity:0, y:-70, filter:'blur(6px)', ease:'none',
+      scrollTrigger:{ trigger:act, start:'center 38%', end:'bottom top', scrub:.4 }
+    }));
+    const follow = () => {
+      const pace = velocity();
+      drift += (Math.max(-60, Math.min(60, -pace * .9)) - drift) * .08;
+      if (Math.abs(drift) > .05) atmosphere?.style.setProperty('--drift', drift.toFixed(2));
+    };
+    gsap.ticker.add(follow);
+    return () => gsap.ticker.remove(follow);
+  }
+  let detach = () => {};
+  document.addEventListener('site:scroller', ({ detail }) => {
+    detach();
+    detach = () => {};
+    if (detail.reduced || detail.off) return;
+    const { lenis } = detail;
+    velocity = lenis ? () => lenis.velocity : () => { const pace = scrollY - lastScroll; lastScroll = scrollY; return pace; };
+    const release = lenis ? holdWithLenis(lenis) : settleNative();
+    const stopMotion = scrollMotion();
+    detach = () => { release(); stopMotion(); };
+  });
+
+  /* A soft light that follows the pointer through the sky behind the scenes. */
+  if (matchMedia('(pointer: fine)').matches && !reduced() && window.gsap) {
+    const light = document.createElement('i');
+    light.className = 'pointer-light';
+    light.setAttribute('aria-hidden', 'true');
+    document.body.append(light);
+    const toX = gsap.quickTo(light, 'x', { duration:1.1, ease:'power3.out' });
+    const toY = gsap.quickTo(light, 'y', { duration:1.1, ease:'power3.out' });
+    addEventListener('pointermove', event => { toX(event.clientX); toY(event.clientY); light.classList.add('is-on'); }, { passive:true });
+    document.addEventListener('pointerleave', () => light.classList.remove('is-on'));
+  }
+
   /* Black and white until the music starts (or until she walks on without it). */
   if (!root.classList.contains('is-grey')) return;
   const veil = document.createElement('div');
