@@ -2,10 +2,11 @@
    Empty slots keep their placeholder frame. JPG/WebP around 1200px wide is plenty. */
 (() => {
   'use strict';
-  const TRAIL = [ /* up to 32, e.g. '01.jpg', '02.jpg' */ ];
-  const RIBBON = [ /* up to 12, the blue garden photos */ ];
+  const number = i => String(i + 1).padStart(2, '0');
+  const TRAIL = Array.from({ length:32 }, (_, i) => `trail-${number(i)}.webp`);
+  const RIBBON = Array.from({ length:12 }, (_, i) => `ribbon-${number(i)}.webp`);
 
-  function fill(frames, names) {
+  function fill(frames, names, label) {
     names.slice(0, frames.length).forEach((name, index) => {
       const frame = frames[index];
       const image = new Image();
@@ -14,12 +15,15 @@
       image.decoding = 'async';
       image.draggable = false;
       image.className = 'memory-photo';
-      image.addEventListener('load', () => frame.classList.add('has-photo'), { once:true });
+      image.addEventListener('load', () => { frame.classList.add('has-photo'); label(frame, index); }, { once:true });
       image.addEventListener('error', () => image.remove(), { once:true });
       image.src = `assets/photos/${name}`;
       frame.prepend(image);
     });
   }
-  fill([...document.querySelectorAll('.memory-square')], TRAIL);
-  fill([...document.querySelectorAll('.ribbon-print')], RIBBON);
+  // Once a photo is in, the frame is no longer an empty "photo space".
+  fill([...document.querySelectorAll('.memory-square')], TRAIL, (frame, i) =>
+    frame.closest('.memory-card')?.setAttribute('aria-label', `回忆 ${number(i)}，点击放大 / Memory ${number(i)}, press to enlarge`));
+  fill([...document.querySelectorAll('.ribbon-print')], RIBBON, frame =>
+    frame.setAttribute('aria-label', frame.closest('figure')?.querySelector('figcaption span')?.textContent || '回忆'));
 })();
