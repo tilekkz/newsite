@@ -74,13 +74,30 @@
 
   /* Scene stops: nothing is ever blocked. Near the frame where a scene sits best, scrolling slows a little,
      and when she stops just before it (or just past it) the camera glides the rest of the way. */
-  const stops = ['#surprise', '#feeling', '#starlight', '#last-letter', '#tomorrow-postcard', '#moon-garden', '#two-windows', '#lanterns', '#birthday-finale']
-    .map(selector => document.querySelector(selector)).filter(Boolean);
-  // The frame: a scene up to 1.4 screens tall is centred (its main part in view); taller scenes start at their top.
-  function stopFor(scene) {
-    const box = scene.getBoundingClientRect();
-    const top = box.top + scrollY;
-    return Math.round(Math.max(0, box.height <= innerHeight * 1.4 ? top - (innerHeight - box.height) / 2 : top));
+  // Each scene lists what the camera should hold, most complete first: [first element, last element].
+  // The first span that fits the screen is centred, so a short MacBook screen drops the heading before the controls.
+  const stops = [
+    ['#surprise', [['.cat-heading', '.cat-controls'], ['.cat-heading', '#cat-stage'], ['#cat-stage', '.cat-controls']]],
+    ['#feeling', []],
+    ['#starlight', [['.sky-layout', '.sky-layout']]],
+    ['#last-letter', [['.keepsake-heading', '.keepsake-controls'], ['.keepsake-heading', '.keepsake-stage'], ['.keepsake-stage', '.keepsake-controls']]],
+    ['#tomorrow-postcard', [['.postcard-heading', '.postcard-actions'], ['.postcard-stage', '.postcard-actions']]],
+    ['#moon-garden', []],
+    ['#two-windows', [['.twosky-heading', '.twosky-afterword'], ['#twosky-windows-title', '.twosky-stage'], ['.twosky-stage', '.twosky-afterword'], ['.twosky-stage', '.twosky-stage']]],
+    ['#lanterns', [['.lantern-heading', '.lantern-controls'], ['#lantern-title', '.lantern-controls'], ['#lantern-stage', '.lantern-controls']]],
+    ['#birthday-finale', [['.cake-heading', '.cake-tap'], ['#closing-title', '.cake-tap'], ['.cake-heading', '.cake-stage'], ['.cake-stage', '.cake-tap']]]
+  ].map(([selector, spans]) => ({ scene:document.querySelector(selector), spans })).filter(stop => stop.scene);
+  // No span fits (or none listed): short scenes are centred, tall ones (the photo trail, the pinned garden) start at their top.
+  function stopFor({ scene, spans }) {
+    const page = scrollY, room = innerHeight - 40;
+    for (const [first, last] of spans) {
+      const a = scene.querySelector(first), b = scene.querySelector(last);
+      if (!a?.offsetHeight || !b?.offsetHeight) continue;
+      const top = a.getBoundingClientRect().top + page, span = b.getBoundingClientRect().bottom + page - top;
+      if (span <= room) return Math.round(Math.max(0, top - (innerHeight - span) / 2));
+    }
+    const box = scene.getBoundingClientRect(), top = box.top + page;
+    return Math.round(Math.max(0, box.height <= innerHeight ? top - (innerHeight - box.height) / 2 : top));
   }
   // A stop ahead within a third of a screen, or one just overshot, in the direction she was going.
   function nearStop(y, direction) {
