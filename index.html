@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11090e">
-  <script>try{if(sessionStorage.getItem('520am-theme')==='ocean')document.documentElement.dataset.theme='ocean'}catch(e){}</script>
+  <script>try{if(sessionStorage.getItem('520am-theme')==='ocean')document.documentElement.dataset.theme='ocean'}catch(e){}try{if(sessionStorage.getItem('520am-color')!=='yes')document.documentElement.classList.add('is-grey')}catch(e){document.documentElement.classList.add('is-grey')}</script>
   <meta name="description" content="一封只写给你的情书。A little midnight world, kept just for you.">
   <title>5:20 AM — 只为你 · Just for you</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="assets/fonts/fonts.css?v=3">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=4">
   <link rel="stylesheet" href="assets/vendor/lenis-1.3.26.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="motion.css">
@@ -24,13 +24,14 @@
   <link rel="stylesheet" href="quiet-garden.css?v=1">
   <link rel="stylesheet" href="moon-garden.css?v=repair2">
   <link rel="stylesheet" href="garden-panorama.css?v=3">
-  <link rel="stylesheet" href="birthday.css?v=10">
+  <link rel="stylesheet" href="birthday.css?v=11">
+  <link rel="stylesheet" href="story.css?v=1">
   <script src="assets/vendor/gsap-3.15.0.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger-3.15.0.min.js" defer></script>
   <script src="assets/vendor/lenis-1.3.26.min.js" defer></script>
   <script src="app.js?v=local-music1" defer></script>
   <script src="music.js?v=quiet-garden1" defer></script>
-  <script src="birthday.js?v=8" defer></script>
+  <script src="birthday.js?v=9" defer></script>
   <script src="photos.js?v=1" defer></script>
   <script src="lanterns.js?v=6" defer></script>
   <script src="scene-runtime.js?v=1" defer></script>
@@ -45,6 +46,7 @@
   <script src="continuity.js?v=moon-garden1" defer></script>
   <script src="two-windows.js?v=shower1" defer></script>
   <script src="memory-ribbon.js?v=panorama2" defer></script>
+  <script src="story.js?v=2" defer></script>
   <script src="motion.js?v=birthday3" defer></script>
 </head>
 <body>
@@ -65,6 +67,7 @@
       <div class="hero-copy wrap">
         <p class="birthday-chip" id="birthday-chip"><i aria-hidden="true"></i><span>11 月 3 日 · 生日快乐</span></p>
         <h1 id="hero-title"><span class="zh">再陪我一会儿。</span><em lang="en">Just a little longer.</em></h1>
+        <p class="hero-story" id="hero-story" data-after="后来，你来了。世界就有了颜色。" data-after-en="Then you came, and the world found its colours."><span class="zh">在你出现以前，世界是黑白的。</span><em lang="en">Before you, the world was black and white.</em></p>
         <button type="button" class="home-music" id="home-music-rose" aria-pressed="false" aria-label="播放音乐">
           <span class="home-music-symbol" aria-hidden="true">▷</span>
           <span><span class="home-music-zh">听听这首歌</span><small>5:20AM · 刀酱</small></span>
@@ -74,6 +77,8 @@
       </div>
       <div class="hero-bottom wrap"><a href="#surprise" class="scroll-cue"><span class="scroll-line" aria-hidden="true"></span> 慢慢往下</a></div>
     </section>
+    <div class="act-title" id="act-2" data-no="第二幕" data-name="礼物"><p class="act-no">第二幕</p><p class="act-name" data-chars="礼物">礼物</p><p class="act-line" data-chars="后来，有一份小小的礼物，在路上了。">后来，有一份小小的礼物，在路上了。</p><p class="act-en" lang="en">Then, a little gift was on its way.</p></div>
+
 
     <section class="cat-section" id="surprise" aria-labelledby="cat-title">
       <div class="cat-ambience" aria-hidden="true"><span class="cat-halo halo-one"></span><span class="cat-halo halo-two"></span><span class="cat-halo halo-three"></span><span class="cat-background-word">closer.</span><i>✧</i><i>✦</i><i>♡</i><i>✧</i></div>
@@ -106,6 +111,8 @@
       </div>
       <div class="cat-controls wrap"><div class="cat-steps" aria-label="靠近进度 / Getting closer"><i></i><i></i><i></i><i></i><span>♡</span><i></i><i></i></div><p id="cat-instruction" aria-live="polite">每一次靠近，都是心动。<span lang="en">Every click, a little closer.</span></p><button class="sfx-toggle" type="button" data-sfx-toggle aria-pressed="true" aria-label="关闭音效 / Turn sound effects off">♪ <span>轻柔音效 <small lang="en">Gentle sounds on</small></span></button></div>
     </section>
+    <div class="act-title" id="act-3" data-no="第三幕" data-name="回忆"><p class="act-no">第三幕</p><p class="act-name" data-chars="回忆">回忆</p><p class="act-line" data-chars="我们走过的每一步，我都悄悄记着。">我们走过的每一步，我都悄悄记着。</p><p class="act-en" lang="en">Every step we took, I kept.</p></div>
+
 
     <section class="memory-journey" id="feeling" aria-labelledby="journey-title">
       <header class="journey-intro wrap">
@@ -228,6 +235,8 @@
         <div class="journey-notes" aria-label="几封悄悄话 / Little letters for you"><button class="text-button" type="button" data-letter="0" aria-haspopup="dialog">想念的时候 <small lang="en">When I miss you</small> ↗</button><button class="text-button" type="button" data-letter="1" aria-haspopup="dialog">晚安的话 <small lang="en">After midnight</small> ↗</button><button class="text-button" type="button" data-letter="2" aria-haspopup="dialog">只是因为你 <small lang="en">Just because</small> ↗</button></div>
       </div>
     </section>
+    <div class="act-title" id="act-4" data-no="第四幕" data-name="星光"><p class="act-no">第四幕</p><p class="act-name" data-chars="星光">星光</p><p class="act-line" data-chars="夜深了，替你把星星一颗一颗点亮。">夜深了，替你把星星一颗一颗点亮。</p><p class="act-en" lang="en">When the night got deep, I lit the stars for you.</p></div>
+
     <section class="starlight afterglow-scene" id="starlight" aria-labelledby="starlight-title">
       <div class="sky-ambient" aria-hidden="true"></div>
       <div class="sky-layout wrap">
@@ -263,6 +272,8 @@
         </div>
       </div>
     </section>
+    <div class="act-title" id="act-5" data-no="第五幕" data-name="心里话"><p class="act-no">第五幕</p><p class="act-name" data-chars="心里话">心里话</p><p class="act-line" data-chars="有些话，当面说不出口，就写在纸上。">有些话，当面说不出口，就写在纸上。</p><p class="act-en" lang="en">Some things are easier to say on paper.</p></div>
+
 
     <section class="keepsake afterglow-scene wrap" id="last-letter" aria-labelledby="keepsake-title">
       <header class="keepsake-heading reveal"><span class="keepsake-handwriting" lang="en">a little something to keep.</span><h2 class="afterglow-heading" id="keepsake-title"><span class="zh">有些话，想慢慢说。</span><em lang="en">For the softer<br>part of your day.</em></h2></header>
@@ -313,6 +324,8 @@
       <div class="postcard-actions"><button class="text-button" id="postcard-flip" type="button" aria-controls="postcard-back" aria-expanded="false">翻到另一面 <small lang="en">Turn it over ↻</small></button><button class="text-button" id="postcard-keep" type="button" aria-pressed="false" hidden>珍藏这一刻 <small lang="en">Keep this little moment ♡</small></button></div>
       <p class="postcard-feedback" id="postcard-feedback" role="status">有些风景，想和你一起看。<em lang="en">Some views are better with you.</em></p>
     </section>
+    <div class="act-title" id="act-6" data-no="第六幕" data-name="蓝色时刻"><p class="act-no">第六幕</p><p class="act-name" data-chars="蓝色时刻">蓝色时刻</p><p class="act-line" data-chars="夜再深一点，一切都会变成蓝色。">夜再深一点，一切都会变成蓝色。</p><p class="act-en" lang="en">A little deeper into the night, everything turns blue.</p></div>
+
 
     <div class="garden-journey" id="moon-garden">
       <div class="garden-camera" tabindex="0" role="region" aria-label="蓝色花园与回忆" aria-describedby="ribbon-hint">
@@ -364,6 +377,8 @@
         </div>
       </div>
     </div>
+    <div class="act-title" id="act-7" data-no="第七幕" data-name="同一轮月亮"><p class="act-no">第七幕</p><p class="act-name" data-chars="同一轮月亮">同一轮月亮</p><p class="act-line" data-chars="你在你的城市，我在我的城市。">你在你的城市，我在我的城市。</p><p class="act-en" lang="en">You in your city, me in mine.</p></div>
+
 
     <section class="shared-sky" id="two-windows" aria-labelledby="twosky-windows-title">
       <div class="twosky-heading wrap">
@@ -413,6 +428,8 @@
         <p class="twosky-wish-message" role="status" aria-live="polite" aria-atomic="true"><span>月光落在两扇窗前，就像我们并肩看着夜空。</span><em lang="en" hidden></em></p>
       </div>
     </section>
+    <div class="act-title" id="act-8" data-no="第八幕" data-name="二十四盏灯"><p class="act-no">第八幕</p><p class="act-name" data-chars="二十四盏灯">二十四盏灯</p><p class="act-line" data-chars="二十四年，每一年都值得一盏灯。">二十四年，每一年都值得一盏灯。</p><p class="act-en" lang="en">Twenty-four years. Each one deserves a light.</p></div>
+
 
 
     <section class="lantern-sky" id="lanterns" aria-labelledby="lantern-title">
@@ -435,6 +452,8 @@
         <a class="text-button lantern-next" href="#birthday-finale">去吹蜡烛 <span aria-hidden="true">↓</span></a>
       </div>
     </section>
+    <div class="act-title" id="act-9" data-no="终幕" data-name="许愿"><p class="act-no">终幕</p><p class="act-name" data-chars="许愿">许愿</p><p class="act-line" data-chars="天快亮了，蜡烛还亮着。">天快亮了，蜡烛还亮着。</p><p class="act-en" lang="en">Almost dawn. The candles are still burning.</p></div>
+
 
     <section class="cake-finale" id="birthday-finale" aria-labelledby="closing-title" data-cake="lit">
       <div class="cake-heading wrap">

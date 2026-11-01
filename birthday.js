@@ -188,7 +188,8 @@
         .from('.bday-today', { autoAlpha:0, y:16, duration:1.1, ease:'power3.out' }, 4.2)
         .from('.bday-enter, .bday-note', { opacity:0, y:12, duration:.8, stagger:.15, ease:'power2.out', clearProps:'transform,opacity' }, 5);
     }
-    enter.addEventListener('click', () => { playSong(); close(); });
+    // The song waits for the opening page: pressing play there is what gives the world its colour.
+    enter.addEventListener('click', close);
     intro.querySelector('.bday-skip').addEventListener('click', close);
     intro.addEventListener('click', event => { if (event.target.closest('.bday-prelude') && !event.target.closest('button')) prelude?.progress(1); });
     intro.addEventListener('cancel', event => { event.preventDefault(); close(); });

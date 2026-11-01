@@ -1,0 +1,70 @@
+/* One night in nine acts: black and white before the song, act titles between scenes, a rail for the place. */
+
+/* Before the music: an old film. The veil greys everything beneath it; dialogs live in the top layer, so they get their own filter. */
+.grey-veil { position:fixed; inset:0; z-index:45; pointer-events:none; -webkit-backdrop-filter:grayscale(1) contrast(1.08) brightness(.92); backdrop-filter:grayscale(1) contrast(1.08) brightness(.92); }
+.grey-veil:before { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 80% 70% at 50% 45%,transparent 55%,#000000a8); }
+.grey-veil:after { content:""; position:absolute; inset:-40px; background:url('assets/film-grain.webp') 0 0/180px 180px; opacity:.09; mix-blend-mode:overlay; animation:film-jitter .5s steps(3) infinite; }
+.grey-veil.is-opening { -webkit-mask-image:radial-gradient(circle at var(--cx) var(--cy),transparent var(--r,0px),#000 calc(var(--r,0px) + 22vmax)); mask-image:radial-gradient(circle at var(--cx) var(--cy),transparent var(--r,0px),#000 calc(var(--r,0px) + 22vmax)); }
+.is-grey dialog { filter:grayscale(1) contrast(1.06); }
+.color-bloom { position:fixed; z-index:46; width:80px; height:80px; margin:-40px 0 0 -40px; border-radius:50%; pointer-events:none; background:radial-gradient(circle,#ffc4d6 0%,#f387b566 34%,#e9a2bc1f 58%,transparent 72%); mix-blend-mode:screen; }
+@keyframes film-jitter { 33% { transform:translate(-14px,9px); } 66% { transform:translate(11px,-12px); } }
+
+/* The opening line changes with the colour. */
+.hero-story { margin:-6px 0 4px; max-width:460px; color:#cdb6c2; transition:opacity .7s,filter .7s; }
+.hero-story .zh { display:block; font-size:15px; letter-spacing:.08em; }
+.hero-story em { display:block; margin-top:3px; font:italic 15px/1.4 var(--serif); color:#b49aa8; }
+.hero-story.is-changing { opacity:0; filter:blur(6px); }
+.is-grey .home-music { animation:press-me 2.6s ease-in-out infinite; }
+@keyframes press-me { 50% { box-shadow:0 0 0 9px #ffffff0d,0 0 34px #ffffff22; } }
+
+/* Act titles: a pause between scenes, written in as they arrive. */
+.act-title { position:relative; z-index:1; display:grid; place-content:center; justify-items:center; min-height:62svh; padding:80px 24px; text-align:center; }
+.act-title:before { content:""; width:1px; height:64px; margin-bottom:26px; background:linear-gradient(transparent,var(--pink)); transform:scaleY(0); transform-origin:top; transition:transform 1.2s var(--motion); }
+.act-no { font:10px/1 var(--mono); letter-spacing:.32em; color:var(--muted); opacity:0; transition:opacity 1s .2s; }
+.act-name { margin-top:16px; font:400 clamp(34px,4.4vw,56px)/1.2 var(--zh); letter-spacing:.32em; text-indent:.32em; color:var(--ink); }
+.act-line { margin-top:20px; font:15px/1.9 var(--zh); letter-spacing:.1em; color:#d8c2cc; }
+.act-en { margin-top:8px; font:italic 17px/1.4 var(--serif); color:var(--pink); opacity:0; transition:opacity 1.2s; }
+.act-title [data-chars] span { display:inline-block; opacity:0; filter:blur(8px); transform:translateY(.25em); transition:opacity .9s,filter .9s,transform .9s var(--motion); transition-delay:calc(var(--base,0s) + var(--i) * var(--step,.07s)); }
+.act-name { --base:.35s; --step:.16s; }
+.act-line { --base:1s; }
+.act-title.is-in:before { transform:none; }
+.act-title.is-in .act-no { opacity:1; }
+.act-title.is-in [data-chars] span { opacity:1; filter:none; transform:none; }
+.act-title.is-in .act-en { opacity:1; transition-delay:2.6s; }
+
+/* The rail: nine marks, the current act written vertically beside them. */
+.act-rail { position:fixed; left:22px; top:50%; z-index:9; display:flex; gap:12px; align-items:center; transform:translateY(-50%); opacity:0; pointer-events:none; transition:opacity .8s; }
+.act-rail.is-shown { opacity:1; pointer-events:auto; }
+.act-rail ol { display:grid; gap:4px; margin:0; padding:0; list-style:none; }
+.act-rail a { display:grid; place-items:center; width:22px; height:22px; }
+.act-rail i { width:5px; height:5px; border-radius:50%; border:1px solid var(--muted); opacity:.6; transition:background .5s,transform .5s,opacity .5s; }
+.act-rail a:hover i { opacity:1; transform:scale(1.4); }
+.act-rail a[aria-current] i { background:var(--pink); border-color:var(--pink); opacity:1; transform:scale(1.5); box-shadow:0 0 10px var(--pink); }
+.act-rail-label { margin:0; writing-mode:vertical-rl; font:11px/1 var(--zh); letter-spacing:.3em; color:var(--muted); }
+
+/* Each act tints the night a little: rose, amber, violet, paper, blue, moon, lantern gold, candle. */
+@property --act-tint { syntax:'<color>'; inherits:true; initial-value:transparent; }
+.night-atmosphere:after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 90% 60% at 50% 100%,var(--act-tint),transparent 70%); transition:--act-tint 2.4s ease; }
+html[data-act="2"] { --act-tint:rgb(214 94 140 / .14); }
+html[data-act="3"] { --act-tint:rgb(206 140 90 / .13); }
+html[data-act="4"] { --act-tint:rgb(122 102 222 / .15); }
+html[data-act="5"] { --act-tint:rgb(225 160 130 / .11); }
+html[data-act="6"] { --act-tint:rgb(60 120 230 / .16); }
+html[data-act="7"] { --act-tint:rgb(150 170 255 / .13); }
+html[data-act="8"] { --act-tint:rgb(240 160 70 / .17); }
+html[data-act="9"] { --act-tint:rgb(245 150 120 / .16); }
+
+@media(max-width:760px) {
+  .act-title { min-height:52svh; padding:60px 20px; }
+  .act-name { font-size:32px; letter-spacing:.24em; text-indent:.24em; }
+  .act-line { font-size:14px; letter-spacing:.06em; }
+  .act-en { font-size:15px; }
+  .act-rail { display:none; }
+  .hero-story .zh { font-size:13px; }
+  .hero-story em { font-size:13px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .grey-veil:after,.is-grey .home-music { animation:none; }
+  .act-title [data-chars] span,.act-no,.act-en { opacity:1; filter:none; transform:none; transition:none; }
+  .act-title:before { transform:none; transition:none; }
+}
