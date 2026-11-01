@@ -50,6 +50,8 @@
 .garden-world .is-grown .garden-reveal { animation:cluster-unfurl 1.15s cubic-bezier(.2,.65,.2,1) var(--growth-delay,0s) both; }
 .garden-world .garden-vine .garden-reveal { transform-origin:50% 50%; }
 .garden-world .garden-plant:not(.is-grown) .garden-sway { animation:none; }
+/* Flowers wait for the blue hour: `plant-seen` (any scroll into view) must not reveal them in the rose night. */
+.garden-world .garden-plant:not(.is-grown) .garden-reveal { animation:none; opacity:0; }
 .garden-world .garden-milestone { position:absolute; top:64px; margin:0; font:24px/1.6 var(--zh); color:var(--muted); letter-spacing:.13em; z-index:4; pointer-events:none; }
 .garden-awake .garden-world .garden-spine { visibility:visible; }
 .garden-world .garden-spine:not(.is-grown) { pointer-events:none; }
