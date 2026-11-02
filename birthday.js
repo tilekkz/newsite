@@ -162,7 +162,8 @@
     const greeting = intro.querySelector('.bday-today');
     greeting.textContent = state.phase === 'today' ? `${name ? name + '，' : ''}今天，是你的生日。`
       : state.phase === 'after' ? `${name ? name + '，' : ''}生日快乐，晚一点也算数。`
-      : `还有 ${Math.ceil(state.ms / 864e5)} 天，就是你的生日。`;
+      // Under a day away, count hours, as the chip on the first page does.
+      : state.ms < 864e5 ? `再过 ${Math.max(1, Math.floor(state.ms / 36e5))} 小时，就是你的生日。` : `还有 ${Math.ceil(state.ms / 864e5)} 天，就是你的生日。`;
     const enter = intro.querySelector('.bday-enter');
     function close() {
       if (!intro.open) return;

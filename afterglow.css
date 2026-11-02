@@ -214,7 +214,8 @@
 .sky-star[data-star="3"] .sky-star-label { left:auto; right:55%; transform:none; text-align:right; width:auto; white-space:nowrap; }
 .sky-star[data-star="5"] .sky-star-label { left:55%; transform:none; text-align:left; width:auto; white-space:nowrap; }
 /* The letter: the note beside the envelope stays readable, programmatic focus leaves no box, the words appear as if being written, and a few sparks escape when it opens. */
-.keepsake-ready .keepsake-annotation { z-index:6; max-width:135px; }
+@media(min-width:761px){ .keepsake-ready .keepsake-annotation { z-index:6; max-width:135px; } }
+@media(max-width:760px){ .keepsake-paper .keepsake-zh { font-size:13px; line-height:1.9; } .keepsake-stage[data-letter-state=open] .keepsake-annotation { opacity:0; } }
 .keepsake-paper h3:focus:not(:focus-visible) { outline:none; }
 .keepsake-stage.is-open .keepsake-paper > * { animation:keepsake-ink 1.1s cubic-bezier(.3,.6,.2,1) both; }
 .keepsake-stage.is-open .keepsake-paper > :nth-child(1) { animation-delay:1.05s; }

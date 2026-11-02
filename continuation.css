@@ -103,3 +103,4 @@
 .postcard-ps { margin-top:26px; font:13px/1.7 var(--zh); color:#8a5a72; transform:rotate(-2deg); transform-origin:left; }
 .postcard-ps em { display:block; font:italic 22px/1.2 var(--serif); color:#a0607f; }
 @media(max-width:760px){ .postcard-ps { margin-top:12px; font-size:11px; } .postcard-ps em { font-size:17px; } }
+@media(max-width:760px){ .postcard-scribble { display:none; } }

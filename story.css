@@ -10,7 +10,7 @@
 @keyframes film-jitter { 33% { transform:translate(-14px,9px); } 66% { transform:translate(11px,-12px); } }
 
 /* The opening line changes with the colour. */
-.hero-story { margin:-6px 0 4px; max-width:460px; color:#cdb6c2; transition:opacity .7s,filter .7s; }
+.hero-story { margin:-6px 0 24px; max-width:460px; color:#cdb6c2; transition:opacity .7s,filter .7s; }
 .hero-story .zh { display:block; font-size:15px; letter-spacing:.08em; }
 .hero-story em { display:block; margin-top:3px; font:italic 15px/1.4 var(--serif); color:#b49aa8; }
 .hero-story.is-changing { opacity:0; filter:blur(6px); }
@@ -75,7 +75,7 @@ html[data-act="12"] { --act-tint:rgb(243 135 181 / .18); }
 html body :is(.invitation-link, .home-music small, .scroll-cue, .eyebrow, .sfx-toggle > span, .sfx-toggle small, .journey-hint, .journey-hint small,
   .journey-touch-hint, .journey-touch-hint small, .journey-notes .text-button, .sky-next-link, .sky-star-label, .sky-footnote span, .continuation-next,
   .postcard-actions .text-button, .postcard-feedback, .blue-track p, .blue-track a, .ribbon-kicker, .twosky-eyebrow, .twosky-country, .twosky-wish-hint,
-  .letter-done, .site-footer span, .wordmark > span) { font-size:11px; }
+  .letter-done, .site-footer span, .wordmark > span, .sky-note-index, .keepsake-recipient, .keepsake-signature, .postcard-edition, .postcard-small, .postcard-address > span, .postcard-address > small, .blue-next, .blue-next button, .ribbon-photo figcaption small, .bday-intro label small, label small) { font-size:11px !important; }
 
 @media(max-width:760px) {
   .act-title { min-height:52svh; padding:60px 20px; }
