@@ -170,3 +170,21 @@
   .cake-lit, .lantern-wish, .finale-line > span, .finale-en { transition:none; }
   .is-heart .lantern-body { animation:none !important; }
 }
+/* Lanterns: a puff of embers where each one leaves, and the hills warm up as the sky fills. */
+.lantern-ember { position:absolute; left:0; top:0; width:4px; height:4px; margin:-2px; border-radius:50%; background:#ffd29a; box-shadow:0 0 8px 2px #ff9a4a99; pointer-events:none; }
+.lantern-stage::after { content:''; position:absolute; left:0; right:0; bottom:0; height:55%; z-index:1; pointer-events:none; background:radial-gradient(ellipse 70% 80% at 50% 100%,#ff9b5a38,#ff8a6a12 50%,transparent 75%); opacity:var(--lit,0); transition:opacity 1.4s ease; }
+.lantern-all small { display:block; font:italic 17px var(--serif); }
+/* Making the wish: everything but the candles falls quiet for a few seconds. */
+.cake-wishing { position:absolute; left:50%; bottom:-6px; z-index:3; width:max-content; max-width:90vw; transform:translateX(-50%); text-align:center; font:15px/1.6 var(--zh); letter-spacing:.2em; color:#ffe6d2; opacity:0; pointer-events:none; transition:opacity .8s; }
+.cake-wishing em { display:block; font:italic 22px/1.3 var(--serif); letter-spacing:0; color:#f5b8cf; }
+.cake-wishing span { animation:cake-dot 1.4s infinite both; }
+.cake-wishing span:nth-child(2) { animation-delay:.25s; }
+.cake-wishing span:nth-child(3) { animation-delay:.5s; }
+@keyframes cake-dot { 0%,100% { opacity:.15; } 50% { opacity:1; } }
+.cake-heading, .cake-tap, .cake-img.cake-lit { transition:opacity 1.2s ease, filter 1.2s ease; }
+[data-cake="wishing"] .cake-wishing { opacity:1; }
+[data-cake="wishing"] :is(.cake-heading, .cake-tap) { opacity:.12; }
+[data-cake="wishing"] .cake-img.cake-lit { filter:brightness(.72); }
+[data-cake="wishing"] .cake-glow { scale:1.25; transition:scale 2s ease, opacity 1s; }
+[data-cake="wishing"] .cake-button { cursor:pointer; }
+@media(prefers-reduced-motion:reduce){ .cake-wishing span { animation:none; opacity:1; } }

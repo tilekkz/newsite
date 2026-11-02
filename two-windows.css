@@ -132,4 +132,17 @@
   .shared-sky *, .shared-sky *:before, .shared-sky *:after { animation:none !important; transition:none !important; }
   .twosky-window-illustration,.twosky-window-east .twosky-window-illustration { transform:rotate(var(--lean)); }
   .twosky-ready .twosky-window { opacity:1; translate:none; }.twosky-moon-position,.twosky-star { transform:none; }
-}
+}/* Softer clouds, warm lamplight in both windows, and the thread a wish draws between them. */
+.twosky-cloud { box-shadow:none; background:linear-gradient(#a8c2ea,#6f8fc2); filter:blur(2.5px); }
+.twosky-window-opening::after { content:''; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at 50% 100%,#ffc98a40,#ffb27a14 45%,transparent 70%); animation:twosky-lamp 5s ease-in-out infinite alternate; }
+.twosky-window-east .twosky-window-opening::after { animation-delay:-2.5s; }
+@keyframes twosky-lamp { from { opacity:.65; } to { opacity:1; } }
+.twosky-thread { position:absolute; inset:0; width:100%; height:100%; z-index:3; overflow:visible; pointer-events:none; fill:none; }
+.twosky-thread path { stroke:#ffe1b0; stroke-width:1.6; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; filter:drop-shadow(0 0 5px #ffcf8f) drop-shadow(0 0 12px #ff9fc4aa); }
+.has-thread .twosky-thread path { stroke-dashoffset:0; opacity:.45; }
+.is-threading .twosky-thread path { animation:twosky-thread 2.2s cubic-bezier(.45,.1,.25,1) both; }
+@keyframes twosky-thread { 0% { stroke-dashoffset:1; opacity:1; } 70% { stroke-dashoffset:0; opacity:1; } 100% { stroke-dashoffset:0; opacity:.45; } }
+.twosky-traveller { position:absolute; left:0; top:0; z-index:4; offset-rotate:0deg; font:18px/1 var(--serif); font-style:normal; color:#ffe6ef; text-shadow:0 0 10px #ff9cc4,0 0 22px #ffcf8f; opacity:0; pointer-events:none; }
+.is-threading .twosky-traveller { animation:twosky-travel 2.2s cubic-bezier(.45,.1,.25,1) both; }
+@keyframes twosky-travel { 0% { offset-distance:0%; opacity:0; } 10% { opacity:1; } 88% { opacity:1; } 100% { offset-distance:100%; opacity:0; transform:scale(1.6); } }
+@media(prefers-reduced-motion:reduce){ .is-threading .twosky-thread path, .is-threading .twosky-traveller, .twosky-window-opening::after { animation:none; } }

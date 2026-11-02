@@ -248,8 +248,24 @@
     listening = null;
     finale.style.setProperty('--breath', '0');
   }
+  // A tap first asks her to close her eyes: the room dims for a few breaths, then the candles go out.
+  // A second tap, the microphone or reduced motion skip the wait.
+  let wishing = 0;
+  const hush = document.createElement('p');
+  hush.className = 'cake-wishing';
+  hush.setAttribute('aria-hidden', 'true');
+  hush.innerHTML = '闭上眼睛，许个愿<span>.</span><span>.</span><span>.</span><em lang="en">Close your eyes. Make a wish.</em>';
+  cake.closest('.cake-stage').append(hush);
+  function makeWish() {
+    if (blown) return;
+    if (wishing || reduced()) { blow(); return; }
+    finale.dataset.cake = 'wishing';
+    status.textContent = '闭上眼睛，许个愿……';
+    wishing = setTimeout(blow, 3400);
+  }
   function blow() {
     if (blown) return;
+    clearTimeout(wishing); wishing = 0;
     blown = true;
     stopListening();
     finale.dataset.cake = 'out';
@@ -321,7 +337,7 @@
       mic.textContent = '麦克风不可用，轻触烛火就好';
     }
   }
-  cake.addEventListener('click', blow);
+  cake.addEventListener('click', makeWish);
   mic.addEventListener('click', listen);
   finale.querySelector('#finale-relight').addEventListener('click', relight);
   finale.querySelector('#finale-wish').addEventListener('click', event => {

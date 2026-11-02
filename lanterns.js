@@ -112,6 +112,19 @@
       { transform:place(rest.x, rest.y, rest.s) }
     ], { duration:item.duration, delay, fill:'both' });
   }
+  function embers(x, y) {
+    if (reduced()) return;
+    for (let i = 0; i < 9; i++) {
+      const dot = document.createElement('i');
+      dot.className = 'lantern-ember';
+      field.append(dot);
+      const angle = -Math.PI / 2 + (Math.random() - .5) * 1.6, reach = 40 + Math.random() * 70;
+      dot.animate([
+        { transform:`translate(${x}px, ${y + lift}px) scale(1)`, opacity:1 },
+        { transform:`translate(${x + Math.cos(angle) * reach}px, ${y + lift + Math.sin(angle) * reach}px) scale(.3)`, opacity:0 }
+      ], { duration:900 + Math.random() * 700, easing:'cubic-bezier(.2,.7,.3,1)' }).finished.catch(() => {}).finally(() => dot.remove());
+    }
+  }
   function launch(xRatio) {
     if (released >= total) return;
     const index = released++;
@@ -134,6 +147,10 @@
     drift(item, { x, y:height + 40, s:Math.min(1.25, depth + .35), o:0 });
     showWish(wishes[index]);
     count.textContent = `${released} / ${total}`;
+    // The more lanterns are up, the warmer the hills below; after a few, the rest can go together.
+    section.style.setProperty('--lit', (released / total).toFixed(3));
+    all.hidden = released < 5 || released >= total || all.disabled;
+    embers(x, height - 24);
     section.dataset.lanterns = String(released);
     if (released === total) celebrate();
   }
@@ -227,6 +244,11 @@
     launch((event.clientX - bounds.left) / bounds.width);
   });
   release.addEventListener('click', () => launch());
+  const all = section.querySelector('#lantern-all');
+  all.addEventListener('click', () => {
+    all.hidden = all.disabled = true;
+    for (let i = released; i < total; i++) setTimeout(launch, (i - released) * 230);
+  });
   // Pause the idle bobbing while no lantern is on screen.
   new IntersectionObserver(entries => {
     section.classList.toggle('lanterns-resting', !entries[0].isIntersecting);

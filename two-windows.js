@@ -82,6 +82,34 @@
   });
   stage.addEventListener('pointerleave', () => moveTo(0, 0));
 
+  /* A wish draws a thread of light from my window, past the moon, to yours, and a small heart travels along it.
+     The thread stays, faint, once it has been drawn. */
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const thread = document.createElementNS(svgNS, 'svg');
+  thread.classList.add('twosky-thread'); thread.setAttribute('aria-hidden', 'true');
+  const line = document.createElementNS(svgNS, 'path'); line.setAttribute('pathLength', '1');
+  thread.append(line);
+  const traveller = document.createElement('i'); traveller.className = 'twosky-traveller'; traveller.setAttribute('aria-hidden', 'true'); traveller.textContent = '♡';
+  stage.append(thread, traveller);
+  function threadPath() {
+    const box = stage.getBoundingClientRect();
+    const centre = (el, down) => { const r = el.getBoundingClientRect(); return [r.left - box.left + r.width / 2, r.top - box.top + r.height * down]; };
+    const [ax, ay] = centre(section.querySelector('.twosky-window-west .twosky-window-opening'), .55);
+    const [bx, by] = centre(section.querySelector('.twosky-window-east .twosky-window-opening'), .55);
+    const [mx, my] = centre(moon, .5);
+    // The control point that makes the curve pass through the moon's middle.
+    const cx = 2 * mx - (ax + bx) / 2, cy = 2 * my - (ay + by) / 2;
+    thread.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+    return `M${ax.toFixed(1)} ${ay.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}`;
+  }
+  function drawThread() {
+    const d = threadPath();
+    line.setAttribute('d', d);
+    traveller.style.offsetPath = `path('${d}')`;
+    stage.classList.remove('is-threading'); void stage.offsetWidth; stage.classList.add('is-threading', 'has-thread');
+  }
+  new ResizeObserver(() => { if (stage.classList.contains('has-thread')) { const d = threadPath(); line.setAttribute('d', d); traveller.style.offsetPath = `path('${d}')`; } }).observe(stage);
+
   moon.addEventListener('click', () => {
     if (busy) return;
     const copy = wishes[wish % wishes.length];
@@ -89,6 +117,7 @@
     message.querySelector('span').textContent = copy[0];
     message.querySelector('em').textContent = copy[1];
     stage.dataset.wishes = String(wish);
+    drawThread();
     if (reduced.matches || typeof moon.animate !== 'function' || document.hidden) return;
     busy = true;
     moon.setAttribute('aria-disabled', 'true');

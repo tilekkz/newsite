@@ -18,7 +18,11 @@
   label(keep,kept?'已经珍藏':'珍藏这一刻',kept?'Kept close ♡':'Keep this little moment ♡');setFeedback(kept);
   if(!gsap){mark.style.opacity=kept?'.78':'0';mark.style.transform='rotate(-15deg)';return}
   if(animate&&!reduced()){
-   stampTween=kept?gsap.fromTo(mark,{scale:1.4,rotation:-23,autoAlpha:0},{scale:1,rotation:-15,autoAlpha:.78,duration:.55,ease:'back.out(1.25)'}):gsap.to(mark,{autoAlpha:0,scale:1.12,duration:.25});
+   // The stamp comes down hard, the card gives a little under it, and the ink spreads in a ring.
+   stampTween=kept?gsap.timeline({onStart:()=>{stage.classList.remove('is-stamping');void stage.offsetWidth;stage.classList.add('is-stamping')}})
+    .fromTo(mark,{scale:2.3,rotation:-32,autoAlpha:0},{scale:.92,rotation:-15,autoAlpha:.9,duration:.26,ease:'power4.in'})
+    .to(turn,{y:5,duration:.08,ease:'power2.out',yoyo:true,repeat:1},'<.2')
+    .to(mark,{scale:1,autoAlpha:.8,duration:.45,ease:'back.out(2)'}):gsap.to(mark,{autoAlpha:0,scale:1.12,duration:.25});
   }else gsap.set(mark,{scale:1,rotation:-15,autoAlpha:kept ? .78 : 0});
  }
  function accessibleSide(isBack){front.inert=isBack;back.inert=!isBack}
@@ -33,7 +37,9 @@
    else turn.style.transform=`rotate(${showingBack?1:-3}deg) rotateY(${showingBack?180:0}deg)`;
    finish();return;
   }
-  flipTween=gsap.to(turn,{rotationY:showingBack?180:0,rotation:showingBack?1:-3,duration:.95,ease:'power2.inOut',onUpdate:()=>accessibleSide(Math.abs(gsap.getProperty(turn,'rotationY'))>90),onComplete:finish});
+  // Lifted off the table, turned over in the air, set down again.
+  gsap.fromTo(turn,{y:0,scale:1},{y:-26,scale:1.04,duration:.5,ease:'power2.out',yoyo:true,repeat:1,overwrite:false});
+  flipTween=gsap.to(turn,{rotationY:showingBack?180:0,rotation:showingBack?1:-3,duration:1,ease:'power2.inOut',onUpdate:()=>accessibleSide(Math.abs(gsap.getProperty(turn,'rotationY'))>90),onComplete:finish});
  }
  flip.addEventListener('click',flipCard);
  keep.addEventListener('click',()=>{if(flipping)return;kept=!kept;try{localStorage.setItem('520am-postcard-kept',kept?'yes':'no')}catch{}ink(true)});

@@ -44,7 +44,8 @@
     node.setAttribute('class',css);
     return node;
   };
-  const guidePaths = stars.slice(1).map(()=>{
+  // The stars sit on a heart; the faint guide runs all the way round it.
+  const guidePaths = stars.map(()=>{
     const path = element('path','sky-guide'); guides.append(path); return path;
   });
   // A small deterministic field: no random layout jumps after reload or resize.
@@ -66,8 +67,12 @@
     const a=positions[from],b=positions[to];
     const x=a.x+a.dx,y=a.y+a.dy,ex=b.x+b.dx,ey=b.y+b.dy;
     const length=Math.hypot(ex-x,ey-y)||1;
-    const bend=(from%2?1:-1)*Math.min(15,length*.065);
-    return {x,y,ex,ey,cx:(x+ex)/2-(ey-y)/length*bend,cy:(y+ey)/2+(ex-x)/length*bend};
+    // Sides of the heart bow outwards, away from its middle, so the lobes come out round.
+    const side=Math.abs(from-to)===1||Math.abs(from-to)===stars.length-1;
+    let bend=side?Math.min(34,length*.16):(from%2?1:-1)*Math.min(15,length*.065);
+    const mx=(x+ex)/2,my=(y+ey)/2,nx=-(ey-y)/length,ny=(ex-x)/length;
+    if(side&&(mx-skySize.width/2)*nx+(my-skySize.height/2)*ny<0) bend=-bend;
+    return {x,y,ex,ey,cx:mx+nx*bend,cy:my+ny*bend};
   }
   function drawEdge(edge) {
     const g=geometry(edge.from,edge.to),t=edge.progress;
@@ -96,7 +101,7 @@
       p.dy=moving?uy*force+Math.cos(drift.phase+i*1.3)*2:0;
       stars[i].style.transform=`translate(calc(-50% + ${p.dx.toFixed(3)}px),calc(-50% + ${p.dy.toFixed(3)}px))`;
     });
-    guidePaths.forEach((path,i)=>{const g=geometry(i,i+1);path.setAttribute('d',`M ${g.x} ${g.y} Q ${g.cx} ${g.cy} ${g.ex} ${g.ey}`)});
+    guidePaths.forEach((path,i)=>{const g=geometry(i,(i+1)%stars.length);path.setAttribute('d',`M ${g.x} ${g.y} Q ${g.cx} ${g.cy} ${g.ex} ${g.ey}`)});
     edges.forEach(drawEdge);
     haze.style.transform=`translate(${moving?-drift.x*9:0}px,${moving?-drift.y*6:0}px)`;
     dust.style.transform=`translate(${moving?-drift.x*5:0}px,${moving?-drift.y*4:0}px)`;
@@ -168,6 +173,7 @@
     reset.hidden=seen.size===0;
     const wasComplete=!complete.hidden;complete.hidden=seen.size!==stars.length;
     board.classList.toggle('is-constellation-complete',!complete.hidden);
+    if(!wasComplete&&!complete.hidden) formHeart();
     noteTween?.kill();sparkTween?.kill();ringTween?.kill();
     if(gsap){gsap.set('.sky-star-mark',{clearProps:'transform'});gsap.set('.sky-click-ring',{autoAlpha:0})}
     renderNote(index);
@@ -179,6 +185,13 @@
       }
       if(!wasComplete&&!complete.hidden){completeTween?.kill();completeTween=gsap.fromTo(complete,{y:8,autoAlpha:0},{y:0,autoAlpha:1,delay:.65,duration:.8,clearProps:'transform,opacity,visibility'})}
     }
+  }
+  // All eight lit: the missing sides of the heart draw themselves one after another, the lines she drew
+  // across it fade back, and the heart glows once (afterglow.css).
+  function formHeart() {
+    const outline=stars.map((_,i)=>[i,(i+1)%stars.length]);
+    edges.forEach(edge=>[edge.path,edge.glow].forEach(line=>line.classList.toggle('is-inner',!outline.some(([a,b])=>(edge.from===a&&edge.to===b)||(edge.from===b&&edge.to===a)))));
+    outline.forEach(([a,b],k)=>setTimeout(()=>{if(!complete.hidden)traceEdge(a,b)},reduced()?0:350+k*140));
   }
   stars.forEach((star,index)=>star.addEventListener('click',()=>updateSky(index)));
   reset.addEventListener('click',()=>{
@@ -222,6 +235,13 @@
     previousAnchor=undefined;
   }
   stage.classList.add('keepsake-ready');
+  // A few hearts and sparks slip out of the envelope as it opens (afterglow.css).
+  for(let i=0;i<14;i++){
+    const spark=document.createElement('i');spark.className='keepsake-spark';spark.setAttribute('aria-hidden','true');
+    spark.textContent=i%3?'✦':'♡';
+    spark.style.cssText=`--sx:${((i*37)%100-50)*4.4}px;--sy:${-120-(i*53)%160}px;--sr:${(i%2?1:-1)*(20+i*9)}deg;--sd:${.55+(i%5)*.12}s;--ss:${10+(i*7)%9}px`;
+    envelope.append(spark);
+  }
   stage.dataset.letterState='closed';
   paper.inert = true;
   try {
