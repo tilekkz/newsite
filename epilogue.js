@@ -79,6 +79,16 @@
   addEventListener('keydown', event => { if (event.key === 'Escape') hide(); });
   addEventListener('scroll', () => { if (peek.classList.contains('is-open')) hide(); }, { passive:true });
 
+  // The very last line waits until she reaches it.
+  const last = document.querySelector('#epilogue-last');
+  if (last && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    new IntersectionObserver((entries, observer) => {
+      if (!entries.at(-1).isIntersecting) return;
+      observer.disconnect();
+      last.classList.add('is-shown');
+    }, { threshold:.6 }).observe(last);
+  } else last?.classList.add('is-shown');
+
   // Begin again: the black-and-white opening, the clock and the song, as on the first visit.
   document.querySelector('#epilogue-replay')?.addEventListener('click', () => {
     try { ['520am-color', '520am-birthday-seen', '520am-theme'].forEach(key => sessionStorage.removeItem(key)); } catch { /* Optional. */ }

@@ -47,3 +47,13 @@
 .epilogue-peek.is-centred.is-open { pointer-events:auto; }
 .epilogue-peek.is-centred img { max-height:80vh; }
 @media(prefers-reduced-motion:reduce){ .epilogue-peek { transition:none; } }
+
+/* The very last line of the site: a question, left open. */
+.epilogue-last { margin:120px auto 0; padding-bottom:40px; }
+.epilogue-last .zh { display:block; font:clamp(28px,3.4vw,44px)/1.4 var(--zh); letter-spacing:.14em; color:#f6e2ea; }
+.epilogue-last em { display:block; margin-top:10px; font:italic clamp(24px,2.6vw,34px)/1.2 var(--serif); color:var(--pink); }
+.epilogue-last > * { opacity:0; transform:translateY(16px); filter:blur(6px); transition:opacity 1.6s ease, transform 1.6s var(--motion), filter 1.6s ease; }
+.epilogue-last > em { transition-delay:1.1s; }
+.epilogue-last.is-shown > * { opacity:1; transform:none; filter:none; }
+@media(max-width:760px){ .epilogue-last { margin-top:80px; } }
+@media(prefers-reduced-motion:reduce){ .epilogue-last > * { transition:none; } }
