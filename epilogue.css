@@ -36,3 +36,14 @@
   .epilogue-tile,.epilogue-words > * { transition:none; }
   .epilogue-heart.is-gathered { animation:none; }
 }
+
+/* A closer look at one photo of the heart. */
+.epilogue-heart.is-gathered .epilogue-tile { cursor:zoom-in; }
+.epilogue-tile.is-peeked { z-index:2; box-shadow:0 0 0 2px #f6c3d6, 0 6px 16px #0008; scale:1.25; transition:transform 1.8s cubic-bezier(.2,.7,.15,1) var(--delay), opacity 1s ease var(--delay), scale .2s ease; }
+.epilogue-peek { position:fixed; z-index:40; margin:0; display:grid; place-items:center; pointer-events:none; opacity:0; transform:scale(.92); transition:opacity .22s ease, transform .22s ease; }
+.epilogue-peek img { max-width:100%; max-height:100%; border:6px solid #efe4dc; border-radius:4px; box-shadow:0 18px 44px #000a; background:#efe4dc; }
+.epilogue-peek.is-open { opacity:1; transform:none; }
+.epilogue-peek.is-centred { inset:0; padding:6vh 6vw; background:#0b070acc; cursor:zoom-out; }
+.epilogue-peek.is-centred.is-open { pointer-events:auto; }
+.epilogue-peek.is-centred img { max-height:80vh; }
+@media(prefers-reduced-motion:reduce){ .epilogue-peek { transition:none; } }
