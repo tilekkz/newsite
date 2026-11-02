@@ -43,7 +43,8 @@
   let stem = [], reachX = [], reachY = [], plants = [], sprouts = [], motes = [];
   let width = 0, height = 0, ground = Infinity, dpr = 1, mobile = false;
   let grownS = 0, reach = { x:0, y:0 }, lastTime = 0, frame = 0, pointer = null;
-  const awake = () => root.classList.contains('garden-awake');
+  // The blue song wakes the garden; walking into the ribbon without it wakes it too, so the ribbon is never bare.
+  const awake = () => root.classList.contains('garden-awake') || root.classList.contains('garden-entered');
 
   // A branch is a list of points from its base; it ends in a flower, a bud or a curling tendril.
   function shape(length, angle, curl, tendril) {
@@ -294,7 +295,7 @@
     }
   }
 
-  function drawStem(now, left, right) {
+  function drawStem(now, left, right, bottom) {
     const ctx = bctx;
     let first = stem.findIndex(point => point.x > left - 40);
     if (first < 0) return;
@@ -359,7 +360,7 @@
     }
     if (!awake() || !stem.length) return;
     drawSprouts(now, left, right);
-    drawStem(now, left, right);
+    drawStem(now, left, right, bottom);
     for (const p of plants) if (p.right > left && p.left < right && p.y > top - 200 && p.y < bottom + 200) drawPlant(p, now);
     drawMotes(now, dt, left, right);
   }
@@ -375,6 +376,7 @@
     return box.bottom > 0 && box.top < innerHeight;
   }
   function wake() {
+    if (camera.getBoundingClientRect().top <= 1 && inView()) root.classList.add('garden-entered');
     if (reduced.matches) paint(performance.now());
     else if (!frame && inView() && awake() && !document.hidden) { lastTime = 0; frame = requestAnimationFrame(loop); }
   }

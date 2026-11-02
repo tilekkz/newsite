@@ -63,7 +63,7 @@
       let x,y;
       if(i<diagonal){
         // Alternate either side of the diagonal (perpendicular to it is (1,-1)).
-        const t=i+.75,side=(i%2?1:-1)*wave*.7/Math.SQRT2;
+        const t=i+.45,side=(i%2?1:-1)*wave*.7/Math.SQRT2;
         x=vw*.5+t*unit+side;y=vh*.5+t*unit-side;
       }else{
         const k=i-diagonal;

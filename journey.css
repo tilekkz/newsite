@@ -125,3 +125,11 @@ main { background: radial-gradient(ellipse 75% 16% at 22% 45%, #4d28342c, transp
 }
 
 .memory-node:is(.is-previewing,.is-expanded,.is-returning,.is-keyboard-preview) .memory-card { will-change:transform; }
+/* Air between the photos: slow fireflies, and now and then a petal falling. */
+.journey-air { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.journey-firefly { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #ffe2b8; box-shadow: 0 0 8px 2px #ffc58a88; opacity: 0; animation: journey-firefly var(--d) var(--delay) ease-in-out infinite; }
+.journey-petal { position: absolute; width: 9px; height: 6px; border-radius: 80% 0 80% 0; background: linear-gradient(135deg, #f6b8cc, #c9708f); opacity: 0; animation: journey-petal calc(var(--d) * 2) var(--delay) linear infinite; }
+@keyframes journey-firefly { 0%, 100% { opacity: 0; transform: translate(0, 0); } 30% { opacity: .9; } 50% { opacity: .35; transform: translate(var(--dx), -26px); } 70% { opacity: .8; } }
+@keyframes journey-petal { 0% { opacity: 0; transform: translate(0, -60px) rotate(0); } 10% { opacity: .75; } 90% { opacity: .6; } 100% { opacity: 0; transform: translate(calc(var(--dx) * 3), 260px) rotate(320deg); } }
+.journey-canvas:not(.has-path-motion) .journey-air { display: none; }
+@media (prefers-reduced-motion: reduce) { .journey-air { display: none; } }

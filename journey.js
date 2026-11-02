@@ -207,6 +207,16 @@
     guide.setAttribute('d', path);
     drawn.setAttribute('d', path);
   }
+  // Fireflies and a few falling petals drift between the photos (journey.css); a fixed pattern, no layout jumps.
+  const air = document.createElement('div');
+  air.className = 'journey-air'; air.setAttribute('aria-hidden', 'true');
+  for (let i = 0; i < 26; i++) {
+    const mote = document.createElement('i');
+    mote.className = i % 3 ? 'journey-firefly' : 'journey-petal';
+    mote.style.cssText = `left:${(i * 37 + 11) % 96}%;top:${(i * 53 + 7) % 97}%;--d:${7 + (i * 5) % 9}s;--delay:${-i * 1.3}s;--dx:${(i % 2 ? 1 : -1) * (14 + i % 5 * 9)}px`;
+    air.append(mote);
+  }
+  canvas.prepend(air);
   const relayout = () => { layout(); drawPath(); };
   relayout();
   // Captions in the web font are a little taller than in the fallback.

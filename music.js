@@ -5,7 +5,7 @@
   // Keep the full extraction alongside it; native looping uses the entry file.
   const tracks = {
     rose: { title:'5:20AM — 刀酱', src:'assets/520am.mp3', available:true },
-    ocean: { title:'特別的人 — Khalil Fong', src:'assets/special-person-entry.m4a', available:true }
+    ocean: { title:'特別的人 — Khalil Fong', src:'assets/special-person-entry.m4a?v=2', available:true }
   };
   const LEVEL = .3, CROSSFADE = 2400, FADE_IN = 800, FADE_OUT = 220;
   const button = document.querySelector('[data-music-toggle]');
