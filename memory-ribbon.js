@@ -26,51 +26,13 @@
     const rect=el.getBoundingClientRect(),scene=world.getBoundingClientRect();
     return {x:rect.left-scene.left,y:rect.top-scene.top};
   }
-  function makePlant(kind,container,extraClass){
-    const plant=document.createElement('div');plant.className='garden-plant '+extraClass;
-    const reveal=document.createElement('div');reveal.className='garden-reveal';
-    const sway=document.createElement('div');sway.className='garden-sway';
-    sway.append(MoonGarden.createImage(kind));reveal.append(sway);plant.append(reveal);container.append(plant);
-    MoonGarden.watch(plant);return plant;
-  }
-  const vines=photos.map(()=>makePlant('vine',backPlants,'garden-vine'));
-  const sprays=photos.map(()=>makePlant('spray',frontPlants,'garden-spray'));
-  const bridge=Array.from({length:3},()=>makePlant('spray',connectors,'garden-spray'));
   const milestones=[['花开的时候，想起你。',4],['每一刻，都值得珍藏。',8],['未完待续。',11]].map(([text,index])=>{
     const el=document.createElement('p');el.className='garden-milestone';el.textContent=text;world.append(el);return {el,index};
   });
-  function place(plant,x,y,width,turn,mirror=1){
-    Object.assign(plant.style,{left:n(x)+'px',top:n(y)+'px',width:n(width)+'px'});
-    plant.style.setProperty('--plant-turn',turn+'deg');plant.style.setProperty('--plant-mirror',mirror);
-    plant.style.setProperty('--breeze-delay',(-x*.008).toFixed(2)+'s');
-  }
   function fitY(y,size,turn,mirror,height){
     const sh=size*1199/1312,rad=turn*Math.PI/180;
     const ys=[[0,0],[size,0],[0,sh],[size,sh]].map(([x,y])=>(x-size*.04)*mirror*Math.sin(rad)+(y-sh*.94)*Math.cos(rad));
     return Math.max(28-Math.min(...ys),Math.min(height-38-Math.max(...ys),y));
-  }
-  function register(el,x,key,delay=.12){
-    el.style.setProperty('--growth-delay',delay+'s');
-    if(grown.has(key))el.classList.add('is-grown','was-grown');
-    growth.push({el,x,key});
-  }
-  function leaves(x,y,angle,key){
-    const group=node('g',{transform:'translate('+n(x)+' '+n(y)+') rotate('+angle+')'},svg);
-    const sprout=node('g',{'class':'garden-leaf'},group);
-    node('path',{d:'M0 0 C-25 -3 -39 -23 -44 -40 C-16 -39 2 -24 0 0Z',fill:'url(#garden-leaf-light)'},sprout);
-    node('path',{d:'M0 0 Q-19 -24 -39 -35',fill:'none',stroke:'#b7c8a8', 'stroke-opacity':'.48','stroke-width':'.65'},sprout);
-    register(group,x,key,.12);
-  }
-  function flower(x,y,scale,key){
-    const group=node('g',{transform:'translate('+n(x)+' '+n(y)+') scale('+scale+')'},svg);
-    for(let i=0;i<10;i++){
-      const turn=node('g',{transform:'rotate('+(i*36)+')'},group);
-      node('path',{'class':'garden-petal',d:'M0 1 C-16 -3 -22 -29 -10 -35 C2 -45 16 -28 11 -16 C8 -8 4 -2 0 1Z',fill:'url(#garden-petal-light)',stroke:'#b9ddff','stroke-width':'.45',style:'--petal-delay:'+(i*.035)+'s'},turn);
-    }
-    const center=node('g',{'class':'garden-flower-center'},group);
-    node('circle',{r:5,fill:'#dddeb0'},center);
-    for(let i=0;i<7;i++)node('circle',{cx:n(Math.cos(i)*7),cy:n(Math.sin(i)*7),r:1.1,fill:'#f3e8b9'},center);
-    register(group,x,key,.38);
   }
   function atmosphere(width,height){
     air.replaceChildren();
@@ -90,16 +52,13 @@
     svg.setAttribute('viewBox','0 0 '+w+' '+h);
     svg.innerHTML='<defs><linearGradient id="garden-stem-light" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#789d85"/><stop offset=".5" stop-color="#4c725e"/><stop offset="1" stop-color="#9cb5a0"/></linearGradient><linearGradient id="garden-leaf-light"><stop stop-color="#294a42"/><stop offset=".58" stop-color="#527b65"/><stop offset="1" stop-color="#729479"/></linearGradient><radialGradient id="garden-petal-light" cx=".48" cy=".75"><stop stop-color="#405bb1"/><stop offset=".58" stop-color="#6c9edc"/><stop offset="1" stop-color="#b8d8ef"/></radialGradient></defs>';
     atmosphere(w,h);
-    const mobile=camera.clientWidth<761,origin=layoutPoint(track),gap=photos[1].offsetLeft-photos[0].offsetLeft;
+    const mobile=camera.clientWidth<761,origin=layoutPoint(track);
     const anchors=photos.map((photo,i)=>{
       const rise=parseFloat(photo.style.getPropertyValue('--rise'))||0;
       const top=photo.offsetTop+rise,ph=photo.querySelector('.ribbon-print').offsetHeight;
       const size=mobile?160:205+(i%3)*10,turn=i%2?8:-8,mirror=i%2?-1:1;
       const y=fitY(i%2?top+155:top+ph-30,size,turn,mirror,h);
       const x=photo.offsetLeft+(i%2?65:photo.offsetWidth-65);
-      place(sprays[i],x,y,size,turn,mirror);register(sprays[i],origin.x+x,'spray-'+i,.27);
-      place(vines[i],photo.offsetLeft+photo.offsetWidth*.5,h*.53,Math.min(820,gap*1.36),i%2?3:-3,i%3===1?-1:1);
-      register(vines[i],origin.x+photo.offsetLeft,'vine-'+i,.08);
       return {x:origin.x+x,y:origin.y+y};
     });
     const button=world.querySelector('#blue-play'),buttonPoint=layoutPoint(button);
@@ -115,34 +74,13 @@
       node('path',{'class':'garden-spine-path garden-spine-shadow',d,pathLength:1},group);
       const path=node('path',{'class':'garden-spine-path garden-spine-core',d,pathLength:1},group);
       segments.push({el:group,start:previous.x,end:a.x});
-      const length=path.getTotalLength();
-      for(let j=80;j<length-35;j+=96){
-        const point=path.getPointAtLength(j),next=path.getPointAtLength(Math.min(length,j+2));
-        if(i===0&&point.x<join.x-30)continue;
-        const angle=Math.atan2(next.y-point.y,next.x-point.x)*180/Math.PI+(j%192?20:175);
-        leaves(point.x,point.y,angle,'leaf-'+i+'-'+j);
-      }
-      if(i===0){
-        const count=mobile?1:3,entryX=origin.x+photos[0].offsetLeft-35;
-        bridge.forEach((plant,j)=>{
-          plant.hidden=j>=count;if(plant.hidden)return;
-          const wantedX=join.x+(entryX-join.x)*(j+1)/(count+1);
-          let low=0,high=length;
-          for(let k=0;k<18;k++){const mid=(low+high)/2;if(path.getPointAtLength(mid).x<wantedX)low=mid;else high=mid;}
-          const point=path.getPointAtLength((low+high)/2);
-          const size=mobile?105:155,turn=j%2?15:-8,mirror=j%2?-1:1;
-          const y=fitY(point.y,size,turn,mirror,h);
-          place(plant,point.x,y,size,turn,mirror);register(plant,point.x,'bridge-'+j,.28+j*.08);
-        });
-      }
-      for(let j=0;j<2;j++){
-        const point=path.getPointAtLength(length*(j?.72:.34));
-        if(i===0&&point.x<join.x)continue;
-        flower(point.x,point.y,(mobile?.48:.65)+(j*.12),'flower-'+i+'-'+j);
-      }
       previous=a;
     });
     milestones.forEach(({el,index})=>{el.style.left=(origin.x+photos[index].offsetLeft)+'px'});
+    // The living garden draws from this geometry: the vine's paths and each photo's frame, in world pixels.
+    document.dispatchEvent(new CustomEvent('garden:layout',{detail:{width:w,height:h,
+      paths:segments.map(({el})=>el.querySelector('.garden-spine-core')),
+      photos:photos.map(photo=>{const print=photo.querySelector('.ribbon-print'),at=layoutPoint(print);return {x:at.x,y:at.y,w:print.offsetWidth,h:print.offsetHeight};})}}));
     updateGrowth();
   }
   function offset(){return tween?Math.max(0,-Number(window.gsap.getProperty(world,'x'))):camera.scrollLeft;}

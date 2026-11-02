@@ -7,9 +7,7 @@
   if(!buttonStage)return;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const sources={
-    canopy:{src:'assets/garden-canopy-v2.webp',width:1774,height:887},
-    vine:{src:'assets/garden-vine-v2.webp',width:1942,height:809},
-    spray:{src:'assets/garden-spray-hd.webp',width:1312,height:1199}
+    canopy:{src:'assets/garden-canopy-v2.webp',width:1774,height:887}
   };
   let preparing=false, ready=Promise.resolve(), washGrow;
   const observers='IntersectionObserver' in window?new IntersectionObserver(entries=>{

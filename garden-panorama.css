@@ -53,7 +53,13 @@
 /* Flowers wait for the blue hour: `plant-seen` (any scroll into view) must not reveal them in the rose night. */
 .garden-world .garden-plant:not(.is-grown) .garden-reveal { animation:none; opacity:0; }
 .garden-world .garden-milestone { position:absolute; top:64px; margin:0; font:24px/1.6 var(--zh); color:var(--muted); letter-spacing:.13em; z-index:4; pointer-events:none; }
-.garden-awake .garden-world .garden-spine { visibility:visible; }
+/* The SVG spine is only geometry now; living-garden.js draws the vine, branches and blossoms on canvas. */
+.garden-awake .garden-world .garden-spine { visibility:hidden; }
+.garden-camera { isolation:isolate; }
+.garden-world { z-index:1; }
+.living-garden { position:absolute; left:0; top:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0; transition:opacity .9s; }
+.living-garden-front { z-index:2; }
+.garden-awake .living-garden { opacity:1; }
 .garden-world .garden-spine:not(.is-grown) { pointer-events:none; }
 .was-grown .garden-leaf,.was-grown .garden-petal,.was-grown .garden-flower-center { animation:none; opacity:1; transform:none; }
 @keyframes leaf-unfurl { from { opacity:0; transform:scale(.06) rotate(-15deg); } to { opacity:1; transform:scale(1) rotate(0); } }
