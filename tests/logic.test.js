@@ -100,3 +100,15 @@ test('points along the camera path', () => {
   assert.deepEqual(L.pointAlong(path, 999), { x:100, y:100 });
   assert.deepEqual(L.pointAlong([{ x:0, y:0 }, { x:30, y:40 }], 25), { x:15, y:20 });
 });
+
+test('the photo heart is symmetric, two-lobed and comes to a point', () => {
+  const cols = 13, rows = 12, cells = L.heartCells(cols, rows);
+  const has = (col, row) => cells.some(c => c.col === col && c.row === row);
+  assert.equal(cells.length, 92);
+  for (const { col, row } of cells) assert.ok(has(cols - 1 - col, row), `mirror of ${col},${row}`);
+  const middle = (cols - 1) / 2;
+  assert.equal(has(middle, 0), false, 'a dip between the lobes');
+  assert.ok(has(middle - 3, 0) && has(middle + 3, 0), 'two lobes on top');
+  const bottom = cells.filter(c => c.row === Math.max(...cells.map(d => d.row)));
+  assert.deepEqual(bottom, [{ col:middle, row:bottom[0].row }], 'a single point at the bottom');
+});

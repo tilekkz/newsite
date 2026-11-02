@@ -55,6 +55,7 @@ html[data-act="8"] { --act-tint:rgb(150 170 255 / .13); }
 html[data-act="9"] { --act-tint:rgb(190 150 240 / .14); }
 html[data-act="10"] { --act-tint:rgb(240 160 70 / .17); }
 html[data-act="11"] { --act-tint:rgb(245 150 120 / .16); }
+html[data-act="12"] { --act-tint:rgb(243 135 181 / .18); }
 
 /* Section headings ink in character by character. */
 .ink-heading span { opacity:0; filter:blur(7px); transition:opacity .8s,filter .8s; transition-delay:calc(.15s + var(--i) * .06s); }
@@ -68,6 +69,13 @@ html[data-act="11"] { --act-tint:rgb(245 150 120 / .16); }
 /* A soft light that follows the pointer, behind the scenes. */
 .pointer-light { position:fixed; left:0; top:0; z-index:0; width:520px; height:520px; margin:-260px 0 0 -260px; border-radius:50%; pointer-events:none; background:radial-gradient(circle,rgba(var(--night-glow),.22),transparent 65%); opacity:0; transition:opacity 1.2s; }
 .pointer-light.is-on { opacity:1; }
+
+/* A legibility floor for what she taps or reads along the way: 11px, phones included.
+   (The tiny print drawn inside the postcard illustration stays part of the picture.) */
+html body :is(.invitation-link, .home-music small, .scroll-cue, .eyebrow, .sfx-toggle > span, .sfx-toggle small, .journey-hint, .journey-hint small,
+  .journey-touch-hint, .journey-touch-hint small, .journey-notes .text-button, .sky-next-link, .sky-star-label, .sky-footnote span, .continuation-next,
+  .postcard-actions .text-button, .postcard-feedback, .blue-track p, .blue-track a, .ribbon-kicker, .twosky-eyebrow, .twosky-country, .twosky-wish-hint,
+  .letter-done, .site-footer span, .wordmark > span) { font-size:11px; }
 
 @media(max-width:760px) {
   .act-title { min-height:52svh; padding:60px 20px; }

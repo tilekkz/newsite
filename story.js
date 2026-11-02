@@ -87,7 +87,8 @@
     ['#two-windows', [['.twosky-heading', '.twosky-afterword'], ['#twosky-windows-title', '.twosky-stage'], ['.twosky-stage', '.twosky-afterword'], ['.twosky-stage', '.twosky-stage']]],
     ['#puzzle-game', [['.game-heading', '.puzzle-controls'], ['.puzzle-frame', '#puzzle-status']]],
     ['#lanterns', [['.lantern-heading', '.lantern-controls'], ['#lantern-title', '.lantern-controls'], ['#lantern-stage', '.lantern-controls']]],
-    ['#birthday-finale', [['.cake-heading', '.cake-tap'], ['#closing-title', '.cake-tap'], ['.cake-heading', '.cake-stage'], ['.cake-stage', '.cake-tap']]]
+    ['#birthday-finale', [['.cake-heading', '.cake-tap'], ['#closing-title', '.cake-tap'], ['.cake-heading', '.cake-stage'], ['.cake-stage', '.cake-tap']]],
+    ['#epilogue', [['.epilogue-heart', '.epilogue-words h2'], ['.epilogue-heart', '.epilogue-heart']]]
   ].map(([selector, spans]) => ({ scene:document.querySelector(selector), spans })).filter(stop => stop.scene);
   // No span fits (or none listed): short scenes are centred, tall ones (the photo trail, the pinned garden) start at their top.
   function stopFor({ scene, spans }) {

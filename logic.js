@@ -99,7 +99,21 @@
     return { ...points[points.length - 1] };
   }
 
-  const api = { random, shuffle, memoryDeal, memoryTurn, memoryHide, memoryDone, solvedBoard, slide, scramble, isSolved, solvable, pathLength, pointAlong };
+  /* The epilogue's photo heart: grid cells whose centres fall inside the classic heart curve
+     (x² + y² − 1)³ − x²y³ ≤ 0, row 0 at the top. */
+  function heartCells(cols, rows) {
+    const cells = [];
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const x = ((col + .5) / cols * 2 - 1) * 1.3;
+        const y = 1.32 - (row + .5) / rows * 2.4;
+        if ((x * x + y * y - 1) ** 3 - x * x * y ** 3 <= 0) cells.push({ col, row });
+      }
+    }
+    return cells;
+  }
+
+  const api = { random, shuffle, memoryDeal, memoryTurn, memoryHide, memoryDone, solvedBoard, slide, scramble, isSolved, solvable, pathLength, pointAlong, heartCells };
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.SiteLogic = api;
 })(typeof window === 'object' ? window : globalThis);

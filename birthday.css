@@ -138,7 +138,11 @@
 .has-photo > .memory-photo { opacity:1; }
 /* Portraits: keep faces in the cropped frames. */
 .memory-square > .memory-photo, .ribbon-print > .memory-photo { object-position:50% 28%; }
-.has-photo > i, .has-photo > span { visibility:hidden; }
+/* Every frame has a photo now: while one is on its way it shimmers softly instead of showing a numbered placeholder. */
+.memory-square > i, .memory-square > span, .ribbon-print > span { visibility:hidden; }
+.memory-square:not(.has-photo, .photo-missing), .ribbon-print:not(.has-photo, .photo-missing) { background:linear-gradient(110deg, #ffffff08 30%, #ffffff1f 50%, #ffffff08 70%) 0 0 / 300% 100%, #4a4248; animation:photo-wait 1.6s linear infinite; }
+@keyframes photo-wait { to { background-position:-300% 0, 0 0; } }
+@media(prefers-reduced-motion:reduce) { .memory-square, .ribbon-print { animation:none !important; } }
 
 @keyframes bday-flicker { 0% { transform:skewX(calc(var(--breath) * -24deg)) scale(1, 1); } 35% { transform:skewX(calc(var(--breath) * -24deg + 2deg)) scale(.95, 1.07); } 70% { transform:skewX(calc(var(--breath) * -24deg - 2deg)) scale(1.04, .95); } 100% { transform:skewX(calc(var(--breath) * -24deg + 1deg)) scale(.98, 1.04); } }
 @keyframes bday-glow-flicker { 0% { opacity:1; } 40% { opacity:.84; } 70% { opacity:.97; } 100% { opacity:.9; } }

@@ -8,7 +8,7 @@
   <meta name="description" content="一封只写给你的情书。A little midnight world, kept just for you.">
   <title>5:20 AM — 只为你 · Just for you</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="assets/fonts/fonts.css?v=6">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=7">
   <link rel="stylesheet" href="assets/vendor/lenis-1.3.26.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="motion.css">
@@ -24,16 +24,17 @@
   <link rel="stylesheet" href="quiet-garden.css?v=1">
   <link rel="stylesheet" href="moon-garden.css?v=repair2">
   <link rel="stylesheet" href="garden-panorama.css?v=descent1">
-  <link rel="stylesheet" href="birthday.css?v=15">
-  <link rel="stylesheet" href="story.css?v=4">
+  <link rel="stylesheet" href="birthday.css?v=16">
+  <link rel="stylesheet" href="story.css?v=6">
   <link rel="stylesheet" href="games.css?v=2">
+  <link rel="stylesheet" href="epilogue.css?v=1">
   <script src="assets/vendor/gsap-3.15.0.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger-3.15.0.min.js" defer></script>
   <script src="assets/vendor/lenis-1.3.26.min.js" defer></script>
   <script src="app.js?v=local-music1" defer></script>
   <script src="music.js?v=quiet-garden1" defer></script>
   <script src="birthday.js?v=10" defer></script>
-  <script src="photos.js?v=4" defer></script>
+  <script src="photos.js?v=5" defer></script>
   <script src="lanterns.js?v=6" defer></script>
   <script src="scene-runtime.js?v=1" defer></script>
   <script src="bouquet-depth.js?v=polish1" defer></script>
@@ -46,11 +47,12 @@
   <script src="blue-hour.js?v=moon-garden1" defer></script>
   <script src="continuity.js?v=moon-garden1" defer></script>
   <script src="two-windows.js?v=shower1" defer></script>
-  <script src="logic.js?v=1" defer></script>
+  <script src="logic.js?v=2" defer></script>
   <script src="living-garden.js?v=4" defer></script>
   <script src="memory-ribbon.js?v=descent2" defer></script>
   <script src="games.js?v=1" defer></script>
-  <script src="story.js?v=7" defer></script>
+  <script src="epilogue.js?v=2" defer></script>
+  <script src="story.js?v=8" defer></script>
   <script src="motion.js?v=birthday4" defer></script>
 </head>
 <body>
@@ -485,9 +487,22 @@
           <button class="primary-button" id="finale-wish" type="button">再许一个愿 <span aria-hidden="true">✧</span></button>
           <button class="text-button" id="finale-relight" type="button">再点一次蜡烛 ↺</button>
         </div>
-        <a href="#home" class="text-button finale-home bday-after">回到我们的时刻 <span aria-hidden="true">↑</span></a>
+        <a href="#epilogue" class="text-button finale-home bday-after">还有最后几句话 <span aria-hidden="true">↓</span></a>
       </div>
       <span class="sr-only cake-status" role="status" aria-live="polite"></span>
+    </section>
+    <div class="act-title" id="act-12" data-no="尾声" data-name="我们"><p class="act-no">尾声</p><p class="act-name" data-chars="我们">我们</p><p class="act-line" data-chars="故事还很长，我们慢慢写。">故事还很长，我们慢慢写。</p><p class="act-en" lang="en">It's a long story. We'll write it slowly.</p></div>
+    <section class="epilogue" id="epilogue" aria-labelledby="epilogue-title">
+      <div class="epilogue-heart" id="epilogue-heart" role="img" aria-label="用我们的照片拼成的一颗心 / A heart made of our photos"></div>
+      <div class="epilogue-words wrap">
+        <span class="eyebrow">尾声 · EPILOGUE</span>
+        <h2 id="epilogue-title"><span class="zh">二十四岁，生日快乐。</span><em lang="en">Happy twenty-fourth, my dear.</em></h2>
+        <p class="epilogue-letter">谢谢你来到这个世界，<br>也谢谢你走进我的世界。<br>往后的每一个生日，每一个平凡的早晨，<br>我都想在你身边。</p>
+        <p class="epilogue-letter-en" lang="en">Thank you for coming into the world, and into mine. Every birthday after this one, every ordinary morning, I want to be right there.</p>
+        <p class="epilogue-sign">永远爱你的我<span lang="en">always, me ♡</span></p>
+        <button class="primary-button epilogue-replay" type="button" id="epilogue-replay">从头再看一遍 <span aria-hidden="true">↺</span></button>
+        <p class="epilogue-credit">5:20 AM · 2026.11.03 · for you, my dear</p>
+      </div>
     </section>
   </main>
   <footer class="site-footer wrap"><a class="wordmark" href="#home">5:20<span>AM</span></a><span>小小天地，满满心意。</span><span aria-hidden="true">♡</span></footer>
