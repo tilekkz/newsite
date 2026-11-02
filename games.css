@@ -1,0 +1,60 @@
+/* Two small games between the scenes. */
+.mini-game { position:relative; z-index:1; padding:var(--scene-space,80px) 0; text-align:center; }
+.game-heading .eyebrow { display:block; }
+.game-heading h2 { margin-top:18px; }
+.game-heading h2 .zh { display:block; font-size:clamp(26px,3vw,40px); line-height:1.4; color:var(--ink); }
+.game-heading h2 em { display:block; margin-top:6px; font:italic clamp(24px,2.6vw,34px)/1.2 var(--serif); }
+.game-intro { margin-top:14px; font:14px/1.8 var(--zh); color:var(--muted); }
+.game-status { margin-top:22px; font:13px/1.6 var(--zh); letter-spacing:.06em; color:var(--muted); }
+.game-finish { margin-top:18px; }
+.game-finish-line { font:17px/1.8 var(--zh); color:var(--ink); }
+.game-finish-line em { display:block; font:italic 20px/1.4 var(--serif); }
+.game-finish .text-button { margin-top:12px; }
+.game-finish:not([hidden]) { animation:game-arrive .9s var(--motion) both; }
+@keyframes game-arrive { from { opacity:0; transform:translateY(10px); } }
+
+/* Memory: cards turn in 3D; a found pair glows and stays. */
+.memory-board { --size:min(132px,calc((100vw - 64px) / 3 - 12px)); position:relative; display:grid; grid-template-columns:repeat(4,var(--size)); gap:14px; justify-content:center; margin:34px auto 0; perspective:900px; }
+.memory-tile { position:relative; width:var(--size); aspect-ratio:3/4; padding:0; border:0; background:none; cursor:pointer; animation:game-deal .6s var(--motion) calc(var(--i) * .04s) both; }
+.memory-tile:disabled { cursor:default; }
+.memory-tile-inner { position:absolute; inset:0; transform-style:preserve-3d; transition:transform .6s cubic-bezier(.3,.7,.2,1.15); }
+.memory-tile.is-open .memory-tile-inner { transform:rotateY(180deg); }
+.memory-tile-back,.memory-tile-face { position:absolute; inset:0; border-radius:10px; backface-visibility:hidden; -webkit-backface-visibility:hidden; overflow:hidden; }
+.memory-tile-back { display:grid; place-content:center; gap:4px; font:28px var(--serif); color:#f4d5e2; background:radial-gradient(circle at 50% 35%,#7a3f5c,#3d1f30 70%); border:1px solid #e9a2bc4a; box-shadow:0 10px 24px #0006, inset 0 0 0 5px #ffffff08; }
+.memory-tile-back small { font:10px var(--mono); letter-spacing:.2em; color:#d6a5ba; }
+.memory-tile:hover:not(:disabled) .memory-tile-back { border-color:#e9a2bcaa; }
+.memory-tile-face { transform:rotateY(180deg); border:5px solid #efe4dc; background:#2b1b24; box-shadow:0 10px 24px #0006; }
+.memory-tile-face img { width:100%; height:100%; object-fit:cover; object-position:50% 28%; }
+.memory-tile.is-matched .memory-tile-face { box-shadow:0 0 0 2px #f6c9da, 0 0 28px #f387b566; }
+.memory-tile.is-matched .memory-tile-inner { animation:game-found .6s var(--motion); }
+.memory-tile:focus-visible { outline:2px solid var(--pink); outline-offset:5px; border-radius:12px; }
+@keyframes game-deal { from { opacity:0; transform:translateY(18px) rotate(-4deg); } }
+@keyframes game-found { 50% { transform:rotateY(180deg) scale(1.08); } }
+
+/* Sliding puzzle: each tile carries its own piece of the photo and slides to its place. */
+.puzzle-frame { --board:min(390px,calc(100vw - 48px)); position:relative; width:var(--board); aspect-ratio:1; margin:34px auto 0; padding:6px; border-radius:14px; background:#efe4dc; box-shadow:0 22px 50px #0007; }
+.puzzle-board { position:relative; width:100%; height:100%; }
+.puzzle-tile { --piece:calc((var(--board) - 12px) / 3); position:absolute; left:0; top:0; width:var(--piece); height:var(--piece); padding:0; border:0; border-radius:4px; background:url('assets/photos/puzzle.webp') calc(var(--col) * 50%) calc(var(--row) * 50%) / 300% 300%; box-shadow:inset 0 0 0 1px #ffffff40; transform:translate(calc(var(--x) * 100%), calc(var(--y) * 100%)); transition:transform .28s cubic-bezier(.3,.7,.2,1.1), box-shadow .3s; cursor:pointer; }
+.puzzle-tile.is-movable { box-shadow:inset 0 0 0 1px #ffffff80, 0 0 0 1px #f6c9da; }
+.puzzle-tile.is-movable:hover { filter:brightness(1.08); }
+.puzzle-tile:focus-visible { outline:2px solid var(--pink); outline-offset:-3px; z-index:2; }
+.puzzle-tile.is-stuck { animation:game-stuck .3s; }
+.puzzle-last { --x:2; --y:2; opacity:0; transition:opacity .9s .25s; pointer-events:none; }
+.puzzle-frame.is-solved .puzzle-last { opacity:1; }
+.puzzle-frame.is-solved .puzzle-tile { box-shadow:none; border-radius:0; cursor:default; }
+.puzzle-peek-image { position:absolute; inset:6px; width:calc(100% - 12px); height:calc(100% - 12px); border-radius:4px; object-fit:cover; opacity:0; transition:opacity .4s; pointer-events:none; }
+.puzzle-frame.is-peeking .puzzle-peek-image { opacity:1; }
+.puzzle-controls { display:flex; justify-content:center; gap:28px; margin-top:20px; }
+@keyframes game-stuck { 25% { translate:-3px 0; } 75% { translate:3px 0; } }
+
+/* Petals from a finished board. */
+.game-petal { position:absolute; left:50%; top:50%; width:10px; height:14px; border-radius:60% 40% 60% 40%; background:linear-gradient(135deg,#ffd1e1,#f387b5); pointer-events:none; z-index:3; animation:game-petal 1.6s cubic-bezier(.2,.7,.3,1) var(--delay) both; }
+@keyframes game-petal { from { opacity:1; transform:translate(-50%,-50%) rotate(0) scale(.4); } to { opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy) + 60px)) rotate(var(--spin)) scale(1); } }
+
+@media(max-width:760px) {
+  .memory-board { grid-template-columns:repeat(3,var(--size)); gap:10px; }
+  .game-intro { font-size:13px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .memory-tile,.memory-tile-inner,.puzzle-tile,.game-finish:not([hidden]) { animation:none; transition:none; }
+}

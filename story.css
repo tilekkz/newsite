@@ -42,17 +42,19 @@
 .act-rail a[aria-current] i { background:var(--pink); border-color:var(--pink); opacity:1; transform:scale(1.5); box-shadow:0 0 10px var(--pink); }
 .act-rail-label { margin:0; writing-mode:vertical-rl; font:11px/1 var(--zh); letter-spacing:.3em; color:var(--muted); }
 
-/* Each act tints the night a little: rose, amber, violet, paper, blue, moon, lantern gold, candle. */
+/* Each act tints the night a little: rose, amber, violet, paper, game pink, blue, moon, lilac, lantern gold, candle. */
 @property --act-tint { syntax:'<color>'; inherits:true; initial-value:transparent; }
 .night-atmosphere:after { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 90% 60% at 50% 100%,var(--act-tint),transparent 70%); transition:--act-tint 2.4s ease; }
 html[data-act="2"] { --act-tint:rgb(214 94 140 / .14); }
 html[data-act="3"] { --act-tint:rgb(206 140 90 / .13); }
 html[data-act="4"] { --act-tint:rgb(122 102 222 / .15); }
 html[data-act="5"] { --act-tint:rgb(225 160 130 / .11); }
-html[data-act="6"] { --act-tint:rgb(60 120 230 / .16); }
-html[data-act="7"] { --act-tint:rgb(150 170 255 / .13); }
-html[data-act="8"] { --act-tint:rgb(240 160 70 / .17); }
-html[data-act="9"] { --act-tint:rgb(245 150 120 / .16); }
+html[data-act="6"] { --act-tint:rgb(236 130 170 / .13); }
+html[data-act="7"] { --act-tint:rgb(60 120 230 / .16); }
+html[data-act="8"] { --act-tint:rgb(150 170 255 / .13); }
+html[data-act="9"] { --act-tint:rgb(190 150 240 / .14); }
+html[data-act="10"] { --act-tint:rgb(240 160 70 / .17); }
+html[data-act="11"] { --act-tint:rgb(245 150 120 / .16); }
 
 /* Section headings ink in character by character. */
 .ink-heading span { opacity:0; filter:blur(7px); transition:opacity .8s,filter .8s; transition-delay:calc(.15s + var(--i) * .06s); }

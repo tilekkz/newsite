@@ -40,9 +40,9 @@
   g.fillStyle = halo;
   g.fillRect(0, 0, 64, 64);
 
-  let stem = [], reachX = [], plants = [], sprouts = [], motes = [];
-  let width = 0, height = 0, dpr = 1, mobile = false;
-  let grownS = 0, reach = 0, lastTime = 0, frame = 0, pointer = null;
+  let stem = [], reachX = [], reachY = [], plants = [], sprouts = [], motes = [];
+  let width = 0, height = 0, ground = Infinity, dpr = 1, mobile = false;
+  let grownS = 0, reach = { x:0, y:0 }, lastTime = 0, frame = 0, pointer = null;
   const awake = () => root.classList.contains('garden-awake');
 
   // A branch is a list of points from its base; it ends in a flower, a bud or a curling tendril.
@@ -77,9 +77,9 @@
 
   function layout({ detail }) {
     seed = 520;
-    ({ width, height } = detail);
+    ({ width, height, ground } = detail);
     mobile = camera.clientWidth < 761;
-    // Sample the vine into points with their running length; reachX is the furthest x reached so far.
+    // Sample the vine into points with their running length; reachX and reachY are the furthest x and y reached so far.
     stem = [];
     let s = 0, previous = null;
     for (const path of detail.paths) {
@@ -91,9 +91,10 @@
         previous = p;
       }
     }
-    let furthest = -Infinity;
-    reachX = stem.map(point => (furthest = Math.max(furthest, point.x)));
-    const nearest = x => stem.reduce((best, point) => Math.abs(point.x - x) < Math.abs(best.x - x) ? point : best, stem[0]);
+    let furthestX = -Infinity, furthestY = -Infinity;
+    reachX = stem.map(point => (furthestX = Math.max(furthestX, point.x)));
+    reachY = stem.map(point => (furthestY = Math.max(furthestY, point.y)));
+    const nearest = (x, y) => stem.reduce((best, point) => Math.hypot(point.x - x, point.y - y) < Math.hypot(best.x - x, best.y - y) ? point : best, stem[0]);
 
     plants = [];
     const total = stem.at(-1)?.s ?? 0;
@@ -111,7 +112,7 @@
     // Climbers find each photo and bloom at its top corners, a little in front of the frame.
     detail.photos.forEach((photo, i) => {
       for (const right of mobile ? [i % 2 === 0] : [false, true]) {
-        const edge = right ? photo.x + photo.w + 6 : photo.x - 6, base = nearest(edge);
+        const edge = right ? photo.x + photo.w + 6 : photo.x - 6, base = nearest(edge, photo.y + photo.h * .7);
         const target = { x:edge - (right ? 18 : -18), y:photo.y + between(10, 40) };
         const points = [];
         for (let k = 0; k <= 26; k++) {
@@ -123,10 +124,10 @@
       }
     });
     plants.sort((a, b) => a.s - b.s);
-    // Grass and small flowers along the ground, from the first photo onwards.
+    // Grass and small flowers along the ground, from the first photo until the ribbon turns downwards.
     sprouts = [];
     const start = detail.photos[0] ? detail.photos[0].x - 260 : 0;
-    for (let x = start; x < width; x += between(mobile ? 22 : 13, mobile ? 40 : 26)) {
+    for (let x = start; x < Math.min(width, ground); x += between(mobile ? 22 : 13, mobile ? 40 : 26)) {
       const flowering = rand() < .34;
       sprouts.push({ x, h:between(12, flowering ? 90 : 56) * (mobile ? .8 : 1), lean:between(-.35, .35), born:null, phase:rand() * 6.3,
         flower:flowering ? { color:PETALS[Math.floor(rand() * PETALS.length)], size:between(3, 8), petals:5 + Math.floor(rand() * 2), spin:rand() * 6.3, phase:rand() * 6.3 } : null });
@@ -143,14 +144,19 @@
       canvas.height = Math.round(camera.clientHeight * dpr);
     }
   }
-  const offset = () => camera.getBoundingClientRect().left - world.getBoundingClientRect().left;
+  // Where the view sits in the world: the world moves left, and later up, under the pinned camera.
+  function offset() {
+    const view = camera.getBoundingClientRect(), scene = world.getBoundingClientRect();
+    return { x:view.left - scene.left, y:view.top - scene.top };
+  }
 
   function grow(now, dt) {
     if (!awake() || !stem.length) return;
-    reach = Math.max(reach, offset() + camera.clientWidth * .85);
-    // The furthest stretch of vine whose x stays within reach (reachX only rises along the vine).
+    const at = offset();
+    reach = { x:Math.max(reach.x, at.x + camera.clientWidth * .85), y:Math.max(reach.y, at.y + camera.clientHeight * .85) };
+    // The furthest stretch of vine that stays within reach on both axes (reachX and reachY only rise along the vine).
     let low = 0, high = stem.length - 1;
-    while (low < high) { const mid = (low + high + 1) >> 1; if (reachX[mid] <= reach) low = mid; else high = mid - 1; }
+    while (low < high) { const mid = (low + high + 1) >> 1; if (reachX[mid] <= reach.x && reachY[mid] <= reach.y) low = mid; else high = mid - 1; }
     const target = stem[low].s;
     if (reduced.matches) grownS = target;
     else grownS = Math.min(target, grownS + Math.max(260, (target - grownS) * 2.4) * dt);
@@ -303,7 +309,7 @@
         const point = stem[i];
         if (i === first) ctx.moveTo(point.x, point.y); else ctx.lineTo(point.x, point.y);
         head = point;
-        if (reachX[i] > right + 60) break;
+        if (reachX[i] > right + 60 && reachY[i] > bottom + 60) break;
       }
       ctx.stroke();
     }
@@ -341,19 +347,20 @@
     const dt = Math.min(.05, lastTime ? (now - lastTime) / 1000 : 0);
     lastTime = now;
     grow(now, dt);
-    const shift = offset(), left = shift - 120, right = shift + camera.clientWidth + 120;
+    const shift = offset(), left = shift.x - 120, right = shift.x + camera.clientWidth + 120;
+    const top = shift.y - 160, bottom = shift.y + camera.clientHeight + 160;
     // Without the pinned camera (reduced motion) the canvases ride along inside the scrolling frame.
     const native = journey.classList.contains('is-linked') ? 0 : camera.scrollLeft;
     for (const canvas of [back, front]) canvas.style.transform = native ? `translateX(${native}px)` : '';
     for (const ctx of [bctx, fctx]) {
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, back.width, back.height);
-      ctx.setTransform(dpr, 0, 0, dpr, -shift * dpr, 0);
+      ctx.setTransform(dpr, 0, 0, dpr, -shift.x * dpr, -shift.y * dpr);
     }
     if (!awake() || !stem.length) return;
     drawSprouts(now, left, right);
     drawStem(now, left, right);
-    for (const p of plants) if (p.right > left && p.left < right) drawPlant(p, now);
+    for (const p of plants) if (p.right > left && p.left < right && p.y > top - 200 && p.y < bottom + 200) drawPlant(p, now);
     drawMotes(now, dt, left, right);
   }
 
@@ -378,13 +385,14 @@
   new ResizeObserver(() => { resize(); paint(performance.now()); }).observe(camera);
   camera.addEventListener('pointermove', event => {
     const box = camera.getBoundingClientRect();
-    pointer = { x:event.clientX - box.left + offset(), y:event.clientY - box.top };
+    const at = offset();
+    pointer = { x:event.clientX - box.left + at.x, y:event.clientY - box.top + at.y };
   }, { passive:true });
   camera.addEventListener('pointerleave', () => { pointer = null; });
   document.addEventListener('garden:theme', ({ detail }) => {
     if (!detail.blue) {
       // Back to the rose night: the garden returns to seed, ready to grow again.
-      grownS = 0; reach = 0; motes = [];
+      grownS = 0; reach = { x:0, y:0 }; motes = [];
       for (const item of [...plants, ...sprouts]) item.born = null;
     }
     requestAnimationFrame(wake);

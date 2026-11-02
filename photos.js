@@ -4,7 +4,7 @@
   'use strict';
   const number = i => String(i + 1).padStart(2, '0');
   const TRAIL = Array.from({ length:16 }, (_, i) => `trail-${number(i)}.webp`);
-  const RIBBON = Array.from({ length:12 }, (_, i) => `ribbon-${number(i)}.webp`);
+  const RIBBON = Array.from({ length:22 }, (_, i) => `ribbon-${number(i)}.webp`);
 
   function fill(frames, names, label) {
     names.slice(0, frames.length).forEach((name, index) => {

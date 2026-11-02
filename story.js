@@ -82,8 +82,10 @@
     ['#starlight', [['.sky-layout', '.sky-layout']]],
     ['#last-letter', [['.keepsake-heading', '.keepsake-controls'], ['.keepsake-heading', '.keepsake-stage'], ['.keepsake-stage', '.keepsake-controls']]],
     ['#tomorrow-postcard', [['.postcard-heading', '.postcard-actions'], ['.postcard-stage', '.postcard-actions']]],
+    ['#memory-game', [['.game-heading', '#memory-status'], ['#memory-board', '#memory-status']]],
     ['#moon-garden', []],
     ['#two-windows', [['.twosky-heading', '.twosky-afterword'], ['#twosky-windows-title', '.twosky-stage'], ['.twosky-stage', '.twosky-afterword'], ['.twosky-stage', '.twosky-stage']]],
+    ['#puzzle-game', [['.game-heading', '.puzzle-controls'], ['.puzzle-frame', '#puzzle-status']]],
     ['#lanterns', [['.lantern-heading', '.lantern-controls'], ['#lantern-title', '.lantern-controls'], ['#lantern-stage', '.lantern-controls']]],
     ['#birthday-finale', [['.cake-heading', '.cake-tap'], ['#closing-title', '.cake-tap'], ['.cake-heading', '.cake-stage'], ['.cake-stage', '.cake-tap']]]
   ].map(([selector, spans]) => ({ scene:document.querySelector(selector), spans })).filter(stop => stop.scene);

@@ -186,7 +186,8 @@
         .from('.bday-line', { autoAlpha:0, y:14, duration:1, stagger:.7, ease:'power2.out' }, 1.7)
         .from('.bday-date', { autoAlpha:0, letterSpacing:'.6em', duration:1.4, ease:'power3.out' }, 3.1)
         .from('.bday-today', { autoAlpha:0, y:16, duration:1.1, ease:'power3.out' }, 4.2)
-        .from('.bday-enter, .bday-note', { opacity:0, y:12, duration:.8, stagger:.15, ease:'power2.out', clearProps:'transform,opacity' }, 5);
+        .from('.bday-gentle', { autoAlpha:0, y:10, filter:'blur(6px)', duration:1.2, ease:'power2.out', clearProps:'filter' }, 5)
+        .from('.bday-enter, .bday-note', { opacity:0, y:12, duration:.8, stagger:.15, ease:'power2.out', clearProps:'transform,opacity' }, 6.1);
     }
     // The song waits for the opening page: pressing play there is what gives the world its colour.
     enter.addEventListener('click', close);

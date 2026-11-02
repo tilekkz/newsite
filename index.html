@@ -8,7 +8,7 @@
   <meta name="description" content="一封只写给你的情书。A little midnight world, kept just for you.">
   <title>5:20 AM — 只为你 · Just for you</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="assets/fonts/fonts.css?v=5">
+  <link rel="stylesheet" href="assets/fonts/fonts.css?v=6">
   <link rel="stylesheet" href="assets/vendor/lenis-1.3.26.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="motion.css">
@@ -23,16 +23,17 @@
   <link rel="stylesheet" href="two-windows.css?v=curtains2">
   <link rel="stylesheet" href="quiet-garden.css?v=1">
   <link rel="stylesheet" href="moon-garden.css?v=repair2">
-  <link rel="stylesheet" href="garden-panorama.css?v=living1">
-  <link rel="stylesheet" href="birthday.css?v=14">
-  <link rel="stylesheet" href="story.css?v=3">
+  <link rel="stylesheet" href="garden-panorama.css?v=descent1">
+  <link rel="stylesheet" href="birthday.css?v=15">
+  <link rel="stylesheet" href="story.css?v=4">
+  <link rel="stylesheet" href="games.css?v=1">
   <script src="assets/vendor/gsap-3.15.0.min.js" defer></script>
   <script src="assets/vendor/ScrollTrigger-3.15.0.min.js" defer></script>
   <script src="assets/vendor/lenis-1.3.26.min.js" defer></script>
   <script src="app.js?v=local-music1" defer></script>
   <script src="music.js?v=quiet-garden1" defer></script>
-  <script src="birthday.js?v=9" defer></script>
-  <script src="photos.js?v=3" defer></script>
+  <script src="birthday.js?v=10" defer></script>
+  <script src="photos.js?v=4" defer></script>
   <script src="lanterns.js?v=6" defer></script>
   <script src="scene-runtime.js?v=1" defer></script>
   <script src="bouquet-depth.js?v=polish1" defer></script>
@@ -45,9 +46,11 @@
   <script src="blue-hour.js?v=moon-garden1" defer></script>
   <script src="continuity.js?v=moon-garden1" defer></script>
   <script src="two-windows.js?v=shower1" defer></script>
-  <script src="living-garden.js?v=3" defer></script>
-  <script src="memory-ribbon.js?v=living1" defer></script>
-  <script src="story.js?v=6" defer></script>
+  <script src="logic.js?v=1" defer></script>
+  <script src="living-garden.js?v=4" defer></script>
+  <script src="memory-ribbon.js?v=descent2" defer></script>
+  <script src="games.js?v=1" defer></script>
+  <script src="story.js?v=7" defer></script>
   <script src="motion.js?v=birthday4" defer></script>
 </head>
 <body>
@@ -277,7 +280,22 @@
       <div class="postcard-actions"><button class="text-button" id="postcard-flip" type="button" aria-controls="postcard-back" aria-expanded="false">翻到另一面 <small lang="en">Turn it over ↻</small></button><button class="text-button" id="postcard-keep" type="button" aria-pressed="false" hidden>珍藏这一刻 <small lang="en">Keep this little moment ♡</small></button></div>
       <p class="postcard-feedback" id="postcard-feedback" role="status">有些风景，想和你一起看。<em lang="en">Some views are better with you.</em></p>
     </section>
-    <div class="act-title" id="act-6" data-no="第六幕" data-name="蓝色时刻"><p class="act-no">第六幕</p><p class="act-name" data-chars="蓝色时刻">蓝色时刻</p><p class="act-line" data-chars="夜再深一点，一切都会变成蓝色。">夜再深一点，一切都会变成蓝色。</p><p class="act-en" lang="en">A little deeper into the night, everything turns blue.</p></div>
+    <div class="act-title" id="act-6" data-no="第六幕" data-name="翻翻看"><p class="act-no">第六幕</p><p class="act-name" data-chars="翻翻看">翻翻看</p><p class="act-line" data-chars="有些回忆，要翻开才看得见。">有些回忆，要翻开才看得见。</p><p class="act-en" lang="en">Some memories show only when you turn them over.</p></div>
+    <section class="mini-game memory-game" id="memory-game" aria-labelledby="memory-title">
+      <div class="game-heading wrap">
+        <span class="eyebrow reveal">小游戏 · 翻翻看 / A LITTLE GAME</span>
+        <h2 class="reveal" id="memory-title"><span class="zh">找到一样的回忆。</span><em lang="en">Find the matching memories.</em></h2>
+        <p class="game-intro reveal">翻开两张，一样的就会留下来。</p>
+      </div>
+      <div class="memory-board" id="memory-board" role="group" aria-label="回忆卡片 / Memory cards"></div>
+      <p class="game-status" id="memory-status" role="status">已找到 0 / 6 对</p>
+      <div class="game-finish" id="memory-finish" hidden>
+        <p class="game-finish-line">每一张，都是你。<em lang="en">Every one of them is you.</em></p>
+        <button class="text-button" type="button" id="memory-again">再玩一次 ↺</button>
+      </div>
+    </section>
+
+    <div class="act-title" id="act-7" data-no="第七幕" data-name="蓝色时刻"><p class="act-no">第七幕</p><p class="act-name" data-chars="蓝色时刻">蓝色时刻</p><p class="act-line" data-chars="夜再深一点，一切都会变成蓝色。">夜再深一点，一切都会变成蓝色。</p><p class="act-en" lang="en">A little deeper into the night, everything turns blue.</p></div>
 
 
     <div class="garden-journey" id="moon-garden">
@@ -326,11 +344,23 @@
         <footer class="ribbon-footer wrap"><span id="ribbon-hint">慢慢滚动，让回忆沿着花开。</span><span class="ribbon-progress" aria-hidden="true"><i></i></span></footer>
       </div>
     </section>
+    <div class="garden-descent" id="garden-descent" aria-label="往下走，还有我们 / Further down, still us">
+          <figure class="ribbon-photo descent-photo" style="--turn:-3deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 13"><span>13</span></div><figcaption><span>墙上的花窗</span><small>13</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:4deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 14"><span>14</span></div><figcaption><span>灯笼下的你</span><small>14</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:-2deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 15"><span>15</span></div><figcaption><span>六角形的窗</span><small>15</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:3deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 16"><span>16</span></div><figcaption><span>绿藤和你</span><small>16</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:-4deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 17"><span>17</span></div><figcaption><span>和兔子合影</span><small>17</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:2deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 18"><span>18</span></div><figcaption><span>大屏幕前</span><small>18</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:-3deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 19"><span>19</span></div><figcaption><span>你镜头里的我</span><small>19</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:4deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 20"><span>20</span></div><figcaption><span>洞窟里的光</span><small>20</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:-2deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 21"><span>21</span></div><figcaption><span>你说这幅画好看</span><small>21</small></figcaption></figure>
+          <figure class="ribbon-photo descent-photo" style="--turn:3deg;--rise:0px"><div class="ribbon-print" role="img" aria-label="照片占位 22"><span>22</span></div><figcaption><span>一起吃的火锅</span><small>22</small></figcaption></figure>
+    </div>
 
         </div>
       </div>
     </div>
-    <div class="act-title" id="act-7" data-no="第七幕" data-name="同一轮月亮"><p class="act-no">第七幕</p><p class="act-name" data-chars="同一轮月亮">同一轮月亮</p><p class="act-line" data-chars="你在你的城市，我在我的城市。">你在你的城市，我在我的城市。</p><p class="act-en" lang="en">You in your city, me in mine.</p></div>
+    <div class="act-title" id="act-8" data-no="第八幕" data-name="同一轮月亮"><p class="act-no">第八幕</p><p class="act-name" data-chars="同一轮月亮">同一轮月亮</p><p class="act-line" data-chars="你在你的城市，我在我的城市。">你在你的城市，我在我的城市。</p><p class="act-en" lang="en">You in your city, me in mine.</p></div>
 
 
     <section class="shared-sky" id="two-windows" aria-labelledby="twosky-windows-title">
@@ -381,7 +411,28 @@
         <p class="twosky-wish-message" role="status" aria-live="polite" aria-atomic="true"><span>月光落在两扇窗前，就像我们并肩看着夜空。</span><em lang="en" hidden></em></p>
       </div>
     </section>
-    <div class="act-title" id="act-8" data-no="第八幕" data-name="二十四盏灯"><p class="act-no">第八幕</p><p class="act-name" data-chars="二十四盏灯">二十四盏灯</p><p class="act-line" data-chars="二十四年，每一年都值得一盏灯。">二十四年，每一年都值得一盏灯。</p><p class="act-en" lang="en">Twenty-four years. Each one deserves a light.</p></div>
+    <div class="act-title" id="act-9" data-no="第九幕" data-name="拼起来"><p class="act-no">第九幕</p><p class="act-name" data-chars="拼起来">拼起来</p><p class="act-line" data-chars="把我们，一块一块拼在一起。">把我们，一块一块拼在一起。</p><p class="act-en" lang="en">Piece by piece, us.</p></div>
+    <section class="mini-game puzzle-game" id="puzzle-game" aria-labelledby="puzzle-title">
+      <div class="game-heading wrap">
+        <span class="eyebrow reveal">小游戏 · 拼起来 / A LITTLE PUZZLE</span>
+        <h2 class="reveal" id="puzzle-title"><span class="zh">把我们，拼在一起。</span><em lang="en">Put us back together.</em></h2>
+        <p class="game-intro reveal">点一下空格旁边的那一块，它就会滑过去。</p>
+      </div>
+      <div class="puzzle-frame">
+        <div class="puzzle-board" id="puzzle-board" role="group" aria-label="拼图 / Sliding puzzle"></div>
+        <img class="puzzle-peek-image" src="assets/photos/puzzle.webp" alt="" width="960" height="960" loading="lazy" decoding="async">
+      </div>
+      <div class="puzzle-controls">
+        <button class="text-button" type="button" id="puzzle-peek" aria-pressed="false">看看原图</button>
+        <button class="text-button" type="button" id="puzzle-shuffle">重新打乱 ↺</button>
+      </div>
+      <p class="game-status" id="puzzle-status" role="status">已经走了 0 步</p>
+      <div class="game-finish" id="puzzle-finish" hidden>
+        <p class="game-finish-line">拼好了。我们，本来就是一起的。<em lang="en">There. We were always meant to fit.</em></p>
+      </div>
+    </section>
+
+    <div class="act-title" id="act-10" data-no="第十幕" data-name="二十四盏灯"><p class="act-no">第十幕</p><p class="act-name" data-chars="二十四盏灯">二十四盏灯</p><p class="act-line" data-chars="二十四年，每一年都值得一盏灯。">二十四年，每一年都值得一盏灯。</p><p class="act-en" lang="en">Twenty-four years. Each one deserves a light.</p></div>
 
 
 
@@ -405,7 +456,7 @@
         <a class="text-button lantern-next" href="#birthday-finale">去吹蜡烛 <span aria-hidden="true">↓</span></a>
       </div>
     </section>
-    <div class="act-title" id="act-9" data-no="终幕" data-name="许愿"><p class="act-no">终幕</p><p class="act-name" data-chars="许愿">许愿</p><p class="act-line" data-chars="天快亮了，蜡烛还亮着。">天快亮了，蜡烛还亮着。</p><p class="act-en" lang="en">Almost dawn. The candles are still burning.</p></div>
+    <div class="act-title" id="act-11" data-no="终幕" data-name="许愿"><p class="act-no">终幕</p><p class="act-name" data-chars="许愿">许愿</p><p class="act-line" data-chars="天快亮了，蜡烛还亮着。">天快亮了，蜡烛还亮着。</p><p class="act-en" lang="en">Almost dawn. The candles are still burning.</p></div>
 
 
     <section class="cake-finale" id="birthday-finale" aria-labelledby="closing-title" data-cake="lit">
@@ -454,6 +505,7 @@
         <p class="bday-line">世界悄悄地，多了一点温柔。</p>
         <p class="bday-date"><small>2002</small><strong>11 · 03</strong></p>
         <h2 class="bday-today" id="bday-title"><span class="bday-name"></span>生日快乐。</h2>
+        <p class="bday-gentle">慢慢滑，轻轻看。<br>每一页，都藏着一点心意。<em lang="en">Scroll gently. Take your time with every page.</em></p>
         <button class="primary-button bday-enter" type="button">走进为你准备的小世界 <span aria-hidden="true">↗</span></button>
         <p class="bday-note">最后，有一个蛋糕在等你。</p>
       </div>

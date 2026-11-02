@@ -26,6 +26,9 @@
 .garden-world .ribbon-track { height:100%; padding-inline:clamp(80px,10vw,150px); gap:clamp(130px,13vw,210px); }
 .garden-world .ribbon-print { height:clamp(250px,48svh,460px); }
 .garden-world .ribbon-photo { z-index:2; }
+/* The descent: a flex stretch whose photos are placed along a 45-degree slope and then down in waves (memory-ribbon.js). */
+.garden-descent { position:relative; flex:none; height:100%; }
+.garden-world .descent-photo { position:absolute; margin:0; transform:translate(-50%,-50%) rotate(var(--turn)); }
 .garden-world .ribbon-botany-back { display:none; }
 .garden-world .ribbon-overgrowth { overflow:visible; }
 .garden-world .ribbon-footer { position:absolute; bottom:34px; left:0; width:var(--garden-screen,100vw); max-width:none; height:35px; padding:0 clamp(36px,5vw,74px); margin:0; }
