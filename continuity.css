@@ -95,7 +95,6 @@ body:after { background-image:url('assets/film-grain.webp'); background-size:180
   html .hero-bottom { bottom:78px; }
   html .journey-chapter .eyebrow { font-size:9px; letter-spacing:.1em; }
   html .journey-whisper { font-size:10px; }
-  html .memory-number { font-size:8px; }
   html .cat-cursor-note, html .note-right p { font-size:10px; }
   html .note-left .tiny-label, html .note-serial { display:none; }
   html .site-header nav a { font-size:12px; }

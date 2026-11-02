@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const number = i => String(i + 1).padStart(2, '0');
-  const TRAIL = Array.from({ length:32 }, (_, i) => `trail-${number(i)}.webp`);
+  const TRAIL = Array.from({ length:16 }, (_, i) => `trail-${number(i)}.webp`);
   const RIBBON = Array.from({ length:12 }, (_, i) => `ribbon-${number(i)}.webp`);
 
   function fill(frames, names, label) {
@@ -15,15 +15,14 @@
       image.decoding = 'async';
       image.draggable = false;
       image.className = 'memory-photo';
-      image.addEventListener('load', () => { frame.classList.add('has-photo'); label(frame, index); }, { once:true });
+      image.addEventListener('load', () => { frame.classList.add('has-photo'); label?.(frame, index); }, { once:true });
       image.addEventListener('error', () => image.remove(), { once:true });
       image.src = `assets/photos/${name}`;
       frame.prepend(image);
     });
   }
-  // Once a photo is in, the frame is no longer an empty "photo space".
-  fill([...document.querySelectorAll('.memory-square')], TRAIL, (frame, i) =>
-    frame.closest('.memory-card')?.setAttribute('aria-label', `回忆 ${number(i)}，点击放大 / Memory ${number(i)}, press to enlarge`));
+  // Trail cards are named by their captions in the markup; a filled ribbon print takes its caption as its name.
+  fill([...document.querySelectorAll('.memory-square')], TRAIL);
   fill([...document.querySelectorAll('.ribbon-print')], RIBBON, frame =>
     frame.setAttribute('aria-label', frame.closest('figure')?.querySelector('figcaption span')?.textContent || '回忆'));
 })();
