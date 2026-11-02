@@ -8,14 +8,14 @@
   const cells = window.SiteLogic.heartCells(cols, rows);
   const rand = window.SiteLogic.random(1103);
   const number = i => String(i + 1).padStart(2, '0');
-  const photos = [...Array.from({ length:16 }, (_, i) => `trail-${number(i)}`), ...Array.from({ length:22 }, (_, i) => `ribbon-${number(i)}`)];
+  const photos = [...Array.from({ length:24 }, (_, i) => `trail-${number(i)}`), ...Array.from({ length:22 }, (_, i) => `ribbon-${number(i)}`)];
   heart.style.setProperty('--cols', cols);
   heart.style.setProperty('--rows', rows);
   heart.replaceChildren(...cells.map(({ col, row }, i) => {
     const tile = document.createElement('i');
     tile.className = 'epilogue-tile';
-    // A stride of 7 through the 38 photos keeps neighbouring tiles different.
-    tile.style.cssText = `--col:${col};--row:${row};background-image:url('assets/photos/${photos[(i * 7) % photos.length]}.webp');`
+    // A stride of 7 through the 46 photos keeps neighbouring tiles different.
+    tile.style.cssText = `--col:${col};--row:${row};background-image:url('assets/photos/${photos[(i * 7) % photos.length]}.webp?v=2');`
       + `--fx:${(rand() - .5) * 160}vw;--fy:${(rand() - .3) * 120}vh;--fr:${(rand() - .5) * 220}deg;`
       // Tiles land from the middle outwards, so the heart grows from its centre.
       + `--delay:${(Math.hypot(col - (cols - 1) / 2, row - rows * .45) * .09 + rand() * .25).toFixed(2)}s`;

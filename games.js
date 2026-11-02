@@ -23,7 +23,7 @@
   /* Memory: six of the photos, twice each. */
   const memoryBoard = document.querySelector('#memory-board');
   if (memoryBoard) {
-    const faces = ['trail-04', 'trail-06', 'trail-09', 'trail-11', 'trail-14', 'ribbon-12'];
+    const faces = ['trail-06', 'trail-09', 'trail-12', 'trail-15', 'trail-20', 'ribbon-12'];
     const status = document.querySelector('#memory-status'), finish = document.querySelector('#memory-finish');
     let state, waiting = 0;
     function render() {
@@ -44,7 +44,7 @@
         button.type = 'button';
         button.className = 'memory-tile';
         button.style.setProperty('--i', i);
-        button.innerHTML = `<span class="memory-tile-inner"><span class="memory-tile-back" aria-hidden="true">♡<small>05:20</small></span><span class="memory-tile-face" aria-hidden="true"><img src="assets/photos/${card.face}.webp" alt="" loading="lazy" decoding="async" draggable="false"></span></span>`;
+        button.innerHTML = `<span class="memory-tile-inner"><span class="memory-tile-back" aria-hidden="true">♡<small>05:20</small></span><span class="memory-tile-face" aria-hidden="true"><img src="assets/photos/${card.face}.webp?v=2" alt="" loading="lazy" decoding="async" draggable="false"></span></span>`;
         button.addEventListener('click', () => turn(i));
         return button;
       }));

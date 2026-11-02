@@ -152,11 +152,47 @@
     });
   });
 
+  /* Each photo keeps its own shape, so the trail is laid out here rather than on a fixed grid:
+     the path meanders across the width, and every card rises as high as it can beside the
+     cards before it without covering a photo, a caption or a side note. */
+  const phone = matchMedia('(max-width: 600px)');
+  function layout() {
+    const width = canvas.clientWidth;
+    const pad = 10; // rotated corners
+    const obstacles = [...canvas.querySelectorAll('.journey-chapter, .journey-whisper')]
+      .filter(note => note.offsetParent)
+      .map(note => ({ x: note.offsetLeft - 24, y: note.offsetTop - 34, w: note.offsetWidth + 48, h: note.offsetHeight + 68 }));
+    const placed = [...obstacles];
+    const step = (nodes[0]?.offsetWidth || 160) * .3;
+    let previous = phone.matches ? 140 : 160, bottom = 0;
+    nodes.forEach((node, i) => {
+      const w = node.offsetWidth;
+      const h = node.querySelector('.memory-square').offsetHeight + node.querySelector('.memory-caption').offsetHeight + 22;
+      // Golden-ratio steps scatter the cards over the whole width without a regular zigzag.
+      const lane = ((i * .618 + .2) % 1) * 2 - 1;
+      const x = width / 2 + lane * (width / 2 - w / 2 - 6);
+      let y = previous, moved = true;
+      while (moved) {
+        moved = false;
+        for (const r of placed) {
+          if (x - w / 2 - pad < r.x + r.w && x + w / 2 + pad > r.x && y < r.y + r.h && y + h > r.y) { y = r.y + r.h; moved = true; }
+        }
+      }
+      node.style.left = `${x}px`;
+      node.style.top = `${y}px`;
+      placed.push({ x: x - w / 2, y, w, h });
+      // A card pushed down by a side note does not drag the next one with it: that one may fill the gap beside it.
+      previous = Math.max(previous + step, y - w * .9);
+      bottom = Math.max(bottom, y + h);
+    });
+    canvas.style.height = `${bottom + (phone.matches ? 90 : 130)}px`;
+  }
+
   function drawPath() {
     // Offset geometry belongs to the static nodes, never to the animated children.
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
-    const points = nodes.map(node => ({ x: node.offsetLeft + node.offsetWidth / 2, y: node.offsetTop + node.offsetWidth / 2 }));
+    const points = nodes.map(node => ({ x: node.offsetLeft + node.offsetWidth / 2, y: node.offsetTop + node.firstElementChild.offsetHeight / 2 }));
     points.unshift({ x: width / 2, y: 0 });
     points.push({ x: width / 2, y: height - 15 });
     let path = `M ${points[0].x} ${points[0].y}`;
@@ -171,13 +207,16 @@
     guide.setAttribute('d', path);
     drawn.setAttribute('d', path);
   }
-  drawPath();
+  const relayout = () => { layout(); drawPath(); };
+  relayout();
+  // Captions in the web font are a little taller than in the fallback.
+  document.fonts?.ready.then(() => { relayout(); window.ScrollTrigger?.refresh(); });
   const observer = new ResizeObserver(entries => {
     const width = entries[0].contentRect.width;
     if (Math.abs(width - canvasWidth) < 1) return;
     canvasWidth = width;
     cancelAnimationFrame(resizeFrame);
-    resizeFrame = requestAnimationFrame(drawPath);
+    resizeFrame = requestAnimationFrame(relayout);
   });
   observer.observe(canvas);
 

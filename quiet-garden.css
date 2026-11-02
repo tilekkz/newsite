@@ -53,8 +53,8 @@
 .ribbon-viewport { position:relative; height:calc(100% - 210px); overflow-x:auto; overflow-y:hidden; scrollbar-width:thin; scrollbar-color:#7790b866 transparent; outline-offset:-5px; }
 .ribbon-viewport:focus-visible { outline:1px solid var(--pink); }
 .ribbon-track { position:relative; display:flex; align-items:center; gap:clamp(90px,10vw,160px); padding-inline:clamp(36px,14vw,220px); height:100%; width:max-content; min-width:100%; }
-.ribbon-photo { position:relative; flex:none; width:clamp(240px,31vw,440px); margin:0; transform:translateY(var(--rise)) rotate(var(--turn)); z-index:2; }
-.ribbon-print { height:clamp(250px,46svh,460px); position:relative; display:grid; place-items:center; border:9px solid #c5c9d4; border-bottom-width:30px; background:linear-gradient(145deg,#646a78,#414858 70%); box-shadow:0 20px 42px #0005,inset 0 0 60px #11162733; transition:transform .35s cubic-bezier(.2,.75,.2,1); transform-origin:50% 70%; }
+.ribbon-photo { position:relative; flex:none; width:auto; margin:0; transform:translateY(var(--rise)) rotate(var(--turn)); z-index:2; }
+.ribbon-print { aspect-ratio:var(--ar,.75); height:min(clamp(250px,46svh,460px), calc((100vw - 48px) / var(--ar,.75))); position:relative; display:grid; place-items:center; border:9px solid #c5c9d4; border-bottom-width:30px; background:linear-gradient(145deg,#646a78,#414858 70%); box-shadow:0 20px 42px #0005,inset 0 0 60px #11162733; transition:transform .35s cubic-bezier(.2,.75,.2,1); transform-origin:50% 70%; }
 .ribbon-photo:nth-of-type(even) .ribbon-print { background:linear-gradient(150deg,#586677,#3d4656); border-color:#b7c2d1; }
 .ribbon-print>span { font:italic 55px var(--serif); color:#d6d9e433; }
 .ribbon-photo figcaption { display:flex; justify-content:space-between; gap:15px; margin-top:18px; padding-inline:9px; font:13px var(--zh); color:#c6cfdf; }
@@ -102,8 +102,7 @@
  .ribbon-heading h2 { font-size:23px; }
  .ribbon-viewport { height:calc(100% - 205px); }
  .ribbon-track { gap:95px; padding-inline:52px; }
- .ribbon-photo { width:260px; }
- .ribbon-print { height:min(360px,43svh); min-height:270px; border-width:7px; border-bottom-width:24px; }
+ .ribbon-print { height:min(360px,43svh,calc((100vw - 48px) / var(--ar,.75))); min-height:0; border-width:7px; border-bottom-width:24px; }
  .ribbon-photo figcaption { font-size:11px; }
  .ribbon-footer { height:85px; font-size:10px; gap:14px; align-items:center; }
  .ribbon-footer>span:first-child { max-width:155px; line-height:1.8; }

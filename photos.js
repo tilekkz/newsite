@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const number = i => String(i + 1).padStart(2, '0');
-  const TRAIL = Array.from({ length:16 }, (_, i) => `trail-${number(i)}.webp`);
+  const TRAIL = Array.from({ length:24 }, (_, i) => `trail-${number(i)}.webp`);
   const RIBBON = Array.from({ length:22 }, (_, i) => `ribbon-${number(i)}.webp`);
 
   // Photos load ahead of her, a few at a time, in the order she meets them; a frame coming
@@ -44,7 +44,7 @@
       image.addEventListener('load', () => { frame.classList.add('has-photo'); label?.(frame, index); }, { once:true });
       image.addEventListener('error', () => { frame.classList.add('photo-missing'); image.remove(); }, { once:true });
       frame.prepend(image);
-      queue.push({ frame, image, src:`assets/photos/${name}`, started:false });
+      queue.push({ frame, image, src:`assets/photos/${name}?v=2`, started:false });
       near?.observe(frame);
     });
   }
